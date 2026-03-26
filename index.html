@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BorealQuest – Explore the Boreal Forest</title>
+<style>
+/* ===== RESET & BASE ===== */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-serif;display:flex;justify-content:center;align-items:center;overflow:hidden}
+
+/* ===== PHONE FRAME ===== */
+.phone-wrap{position:relative;width:390px;height:844px;background:#0a1a0c;border-radius:44px;box-shadow:0 0 0 2px #2d4a2f,0 0 0 6px #1a2e1c,0 30px 80px rgba(0,0,0,.7);overflow:hidden;display:flex;flex-direction:column}
+.phone-wrap::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:30px;background:#0a1a0c;border-radius:0 0 20px 20px;z-index:100}
+
+/* ===== STATUS BAR ===== */
+.status-bar{height:44px;background:rgba(10,26,12,.9);display:flex;align-items:center;justify-content:space-between;padding:0 28px;flex-shrink:0;z-index:50;position:relative}
+.status-time{color:#e8f5e9;font-size:13px;font-weight:600;letter-spacing:.5px}
+.status-icons{display:flex;align-items:center;gap:6px}
+.signal-bars{display:flex;align-items:flex-end;gap:2px;height:13px}
+.signal-bars span{background:#e8f5e9;width:3px;border-radius:1px}
+.signal-bars span:nth-child(1){height:4px}
+.signal-bars span:nth-child(2){height:7px}
+.signal-bars span:nth-child(3){height:10px}
+.signal-bars span:nth-child(4){height:13px}
+.battery{display:flex;align-items:center;gap:2px;color:#e8f5e9;font-size:11px}
+.battery-icon{width:22px;height:11px;border:1.5px solid #e8f5e9;border-radius:2px;position:relative;display:flex;align-items:center;padding:1.5px}
+.battery-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:#e8f5e9;border-radius:0 1px 1px 0}
+.battery-fill{height:100%;background:#66bb6a;border-radius:1px;width:70%}
+.wifi-icon{color:#e8f5e9;font-size:12px}
+
+/* ===== SCREENS ===== */
+.screens{flex:1;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.active{display:block}
+.screen.slide-in{animation:slideIn .3s ease forwards}
+.screen.slide-out{animation:slideOut .3s ease forwards}
+
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(-100%);opacity:0}}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{height:72px;background:rgba(10,26,12,.95);border-top:1px solid #2d4a2f;display:flex;justify-content:space-around;align-items:center;flex-shrink:0;padding-bottom:6px;z-index:50}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 16px;border:none;background:transparent;cursor:pointer;color:#5a8a5e;transition:all .2s;border-radius:12px;min-width:70px}
+.nav-btn.active{color:#66bb6a}
+.nav-btn .nav-icon{font-size:22px;transition:transform .2s}
+.nav-btn.active .nav-icon{transform:scale(1.2)}
+.nav-btn span:last-child{font-size:10px;font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+
+/* ===== HOME SCREEN ===== */
+.home-screen{background:linear-gradient(180deg,#0d2b10 0%,#1a4020 40%,#1e5025 60%,#0d2b10 100%)}
+.home-hero{position:relative;height:280px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+
+/* Forest scene layers */
+.sky-layer{position:absolute;inset:0;background:linear-gradient(180deg,#0a1628 0%,#1a3a5c 40%,#2d6e3e 100%)}
+.stars{position:absolute;inset:0}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{from{opacity:.3}to{opacity:1}}
+.moon{position:absolute;top:20px;right:40px;width:36px;height:36px;background:#ffeaa7;border-radius:50%;box-shadow:0 0 20px #ffeaa7;animation:moonGlow 3s ease-in-out infinite alternate}
+@keyframes moonGlow{from{box-shadow:0 0 20px #ffeaa7}to{box-shadow:0 0 40px #ffeaa7,0 0 60px rgba(255,234,167,.3)}}
+.mountains{position:absolute;bottom:80px;left:0;right:0}
+.mountain{position:absolute;bottom:0;border-style:solid;border-color:transparent transparent #1a3d20 transparent}
+.tree-line{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:flex-end;justify-content:space-around}
+.tree-svg{font-size:32px;filter:brightness(0.6) hue-rotate(10deg);animation:treeSway 3s ease-in-out infinite}
+.tree-svg:nth-child(2n){animation-delay:-.5s}
+.tree-svg:nth-child(3n){animation-delay:-.8s;font-size:26px}
+.tree-svg:nth-child(5n){animation-delay:-1.2s;font-size:38px}
+@keyframes treeSway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}
+
+.hero-text{position:relative;z-index:2}
+.hero-title{font-size:28px;font-weight:800;color:#e8f5e9;text-shadow:0 2px 8px rgba(0,0,0,.5);line-height:1.1}
+.hero-subtitle{font-size:14px;color:#a5d6a7;margin-top:6px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+
+.home-content{padding:16px}
+.stats-row{display:flex;gap:12px;margin-bottom:16px}
+.stat-card{flex:1;background:rgba(45,90,39,.3);border:1px solid #2d5a27;border-radius:16px;padding:14px;text-align:center;backdrop-filter:blur(8px)}
+.stat-number{font-size:26px;font-weight:800;color:#66bb6a}
+.stat-label{font-size:11px;color:#81c784;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+
+.section-title{font-size:16px;font-weight:700;color:#a5d6a7;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.quick-actions{display:flex;flex-direction:column;gap:10px}
+.action-card{background:rgba(26,64,32,.6);border:1px solid #2d5a27;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s;active:scale(.98)}
+.action-card:active{transform:scale(.98);background:rgba(45,90,39,.5)}
+.action-icon{font-size:32px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(102,187,106,.15);border-radius:14px;flex-shrink:0}
+.action-info{flex:1}
+.action-title{font-size:15px;font-weight:700;color:#e8f5e9}
+.action-desc{font-size:12px;color:#81c784;margin-top:2px}
+.action-arrow{color:#4caf50;font-size:18px}
+
+.progress-section{margin-top:16px}
+.progress-bar-wrap{background:rgba(45,90,39,.2);border-radius:10px;height:8px;overflow:hidden;margin-top:8px}
+.progress-bar{height:100%;background:linear-gradient(90deg,#2e7d32,#66bb6a);border-radius:10px;transition:width .5s ease}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:#81c784;margin-top:6px}
+
+.fun-fact{background:rgba(45,90,39,.3);border:1px solid #2d5a27;border-left:3px solid #66bb6a;border-radius:12px;padding:14px;margin-top:16px}
+.fun-fact-header{font-size:12px;color:#66bb6a;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.fun-fact-text{font-size:13px;color:#c8e6c9;line-height:1.5}
+
+/* ===== EXPLORE SCREEN ===== */
+.explore-screen{background:linear-gradient(180deg,#0d2b10,#1a4020)}
+.explore-header{padding:20px 16px 12px;position:sticky;top:0;background:rgba(13,43,16,.9);backdrop-filter:blur(10px);z-index:10}
+.explore-title{font-size:20px;font-weight:800;color:#e8f5e9}
+.explore-subtitle{font-size:13px;color:#81c784;margin-top:2px}
+
+.forest-scene{margin:0 16px 16px;border-radius:20px;overflow:hidden;position:relative;border:1px solid #2d5a27}
+.scene-bg{background:linear-gradient(180deg,#0d3023 0%,#1a5228 30%,#2d6e3e 60%,#1a3d20 80%,#0d2010 100%);padding:20px 16px;position:relative}
+.scene-title{font-size:13px;font-weight:700;color:#81c784;text-align:center;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px}
+
+.zones-grid{display:flex;flex-direction:column;gap:10px}
+.zone-btn{background:rgba(0,0,0,.3);border:1.5px solid rgba(102,187,106,.3);border-radius:16px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .2s;text-align:left;width:100%}
+.zone-btn:active,.zone-btn.selected{border-color:#66bb6a;background:rgba(102,187,106,.1);transform:scale(.99)}
+.zone-icon{font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(102,187,106,.1);border-radius:12px;flex-shrink:0}
+.zone-info{flex:1}
+.zone-name{font-size:15px;font-weight:700;color:#e8f5e9}
+.zone-hint{font-size:12px;color:#81c784;margin-top:2px}
+.zone-count{font-size:11px;color:#4caf50;margin-top:4px}
+
+.species-panel{margin:0 16px 16px;display:none}
+.species-panel.visible{display:block}
+.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.panel-zone-title{font-size:17px;font-weight:800;color:#e8f5e9}
+.panel-close{background:rgba(45,90,39,.4);border:1px solid #2d5a27;border-radius:10px;padding:6px 12px;color:#a5d6a7;cursor:pointer;font-size:13px}
+.species-list{display:flex;flex-direction:column;gap:10px}
+.species-card{background:rgba(26,64,32,.6);border:1px solid #2d5a27;border-radius:16px;padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:all .2s}
+.species-card:active{transform:scale(.98)}
+.species-card.discovered{border-color:#4caf50}
+.species-emoji{font-size:34px;width:54px;height:54px;display:flex;align-items:center;justify-content:center;background:rgba(102,187,106,.1);border-radius:14px;flex-shrink:0}
+.species-info{flex:1}
+.species-name{font-size:15px;font-weight:700;color:#e8f5e9}
+.species-type{font-size:11px;color:#66bb6a;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.species-desc{font-size:12px;color:#a5d6a7;margin-top:4px;line-height:1.4}
+.discover-badge{background:linear-gradient(135deg,#2e7d32,#4caf50);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;margin-top:6px;display:inline-block}
+.already-badge{background:rgba(102,187,106,.2);color:#66bb6a;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;margin-top:6px;display:inline-block;border:1px solid #2d5a27}
+
+/* ===== COLLECTION SCREEN ===== */
+.collection-screen{background:#0d1f10}
+.collection-header{padding:20px 16px 12px;position:sticky;top:0;background:rgba(13,31,16,.95);backdrop-filter:blur(10px);z-index:10;border-bottom:1px solid #1a3a1e}
+.collection-title{font-size:20px;font-weight:800;color:#e8f5e9}
+.collection-progress{margin-top:10px}
+.col-progress-bar{background:rgba(45,90,39,.2);border-radius:10px;height:6px;overflow:hidden}
+.col-progress-fill{height:100%;background:linear-gradient(90deg,#2e7d32,#66bb6a);border-radius:10px;transition:width .5s}
+.col-progress-label{font-size:12px;color:#81c784;margin-top:4px}
+
+.category-tabs{display:flex;gap:8px;padding:12px 16px;overflow-x:auto;scrollbar-width:none}
+.category-tabs::-webkit-scrollbar{display:none}
+.cat-tab{background:rgba(45,90,39,.2);border:1px solid #2d5a27;border-radius:20px;padding:7px 16px;color:#81c784;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.cat-tab.active{background:rgba(102,187,106,.2);border-color:#66bb6a;color:#a5d6a7}
+
+.collection-grid{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.col-card{background:rgba(26,64,32,.5);border:1.5px solid #1a3a1e;border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center;transition:all .2s}
+.col-card.locked{opacity:.5;filter:grayscale(.8)}
+.col-card.unlocked{border-color:#2d5a27}
+.col-emoji{font-size:36px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:rgba(102,187,106,.1);border-radius:14px;flex-shrink:0}
+.col-card.locked .col-emoji{filter:blur(2px)}
+.col-details{flex:1}
+.col-name{font-size:15px;font-weight:700;color:#e8f5e9}
+.col-card.locked .col-name::after{content:' 🔒'}
+.col-category{font-size:11px;color:#4caf50;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.col-fact{font-size:12px;color:#a5d6a7;margin-top:4px;line-height:1.4}
+.col-card.locked .col-fact{color:transparent;background:rgba(255,255,255,.1);border-radius:4px;user-select:none}
+.col-new-badge{background:linear-gradient(135deg,#f57f17,#ff8f00);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;margin-top:6px;display:inline-block}
+
+/* ===== QUIZ SCREEN ===== */
+.quiz-screen{background:linear-gradient(180deg,#0d1f10,#162c1a)}
+.quiz-header{padding:20px 16px 12px;position:sticky;top:0;background:rgba(13,31,16,.9);backdrop-filter:blur(10px);z-index:10}
+.quiz-title{font-size:20px;font-weight:800;color:#e8f5e9}
+.quiz-stats-row{display:flex;gap:12px;margin-top:10px}
+.quiz-stat{background:rgba(45,90,39,.3);border:1px solid #2d5a27;border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:8px}
+.quiz-stat-icon{font-size:16px}
+.quiz-stat-val{font-size:15px;font-weight:800;color:#e8f5e9}
+.quiz-stat-lbl{font-size:11px;color:#81c784}
+
+.quiz-content{padding:16px}
+.question-card{background:rgba(26,64,32,.6);border:1.5px solid #2d5a27;border-radius:20px;padding:20px;margin-bottom:16px}
+.question-num{font-size:12px;color:#66bb6a;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.question-text{font-size:16px;font-weight:700;color:#e8f5e9;line-height:1.4}
+.question-emoji{font-size:36px;text-align:center;display:block;margin-bottom:12px}
+
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.option-btn{background:rgba(45,90,39,.3);border:1.5px solid #2d5a27;border-radius:14px;padding:14px 16px;color:#c8e6c9;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:10px}
+.option-btn:active{transform:scale(.99)}
+.option-btn.correct{background:rgba(76,175,80,.25);border-color:#4caf50;color:#e8f5e9;animation:correctPulse .4s ease}
+.option-btn.wrong{background:rgba(244,67,54,.2);border-color:#f44336;color:#e8f5e9;animation:wrongShake .4s ease}
+.option-btn.disabled{pointer-events:none;opacity:.6}
+.option-letter{width:28px;height:28px;background:rgba(102,187,106,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#66bb6a;flex-shrink:0}
+.option-btn.correct .option-letter{background:#4caf50;color:#fff}
+.option-btn.wrong .option-letter{background:#f44336;color:#fff}
+
+@keyframes correctPulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+.answer-feedback{background:rgba(26,64,32,.8);border:1px solid #2d5a27;border-radius:16px;padding:16px;margin-bottom:16px;display:none;animation:fadeIn .3s ease}
+.answer-feedback.show{display:block}
+.feedback-correct{border-color:#4caf50}
+.feedback-wrong{border-color:#f44336}
+.feedback-icon{font-size:28px;margin-bottom:8px;display:block}
+.feedback-title{font-size:16px;font-weight:800;color:#e8f5e9;margin-bottom:6px}
+.feedback-exp{font-size:13px;color:#a5d6a7;line-height:1.5}
+
+.next-btn{width:100%;background:linear-gradient(135deg,#2e7d32,#4caf50);border:none;border-radius:14px;padding:16px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;display:none}
+.next-btn.show{display:block}
+.next-btn:active{transform:scale(.98)}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.quiz-complete{text-align:center;padding:30px 20px;display:none}
+.quiz-complete.show{display:block}
+.complete-emoji{font-size:60px;animation:bounce 1s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.complete-title{font-size:24px;font-weight:800;color:#e8f5e9;margin-top:16px}
+.complete-score{font-size:48px;font-weight:900;color:#66bb6a;margin:12px 0}
+.complete-msg{font-size:14px;color:#a5d6a7;line-height:1.5;margin-bottom:24px}
+.restart-btn{background:linear-gradient(135deg,#2e7d32,#4caf50);border:none;border-radius:14px;padding:16px 32px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
+
+/* ===== FOOD WEB SCREEN ===== */
+.foodweb-screen{background:linear-gradient(180deg,#0d1f10,#0a1a0c)}
+.foodweb-header{padding:20px 16px 12px;position:sticky;top:0;background:rgba(10,26,12,.9);backdrop-filter:blur(10px);z-index:10}
+.foodweb-title{font-size:20px;font-weight:800;color:#e8f5e9}
+.foodweb-subtitle{font-size:13px;color:#81c784;margin-top:2px}
+
+.foodweb-content{padding:16px}
+.fw-instructions{background:rgba(45,90,39,.3);border:1px solid #2d5a27;border-radius:14px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#a5d6a7;line-height:1.5}
+.fw-instructions b{color:#66bb6a}
+
+.chain-builder{background:rgba(13,31,16,.8);border:1.5px solid #2d5a27;border-radius:20px;padding:16px;margin-bottom:16px}
+.chain-title{font-size:14px;font-weight:700;color:#66bb6a;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.chain-slots{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:70px}
+.chain-slot{width:60px;height:60px;border:2px dashed #2d5a27;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;transition:all .2s;flex-shrink:0}
+.chain-slot.filled{border-style:solid;border-color:#4caf50;background:rgba(76,175,80,.15);animation:slotFill .3s ease}
+.chain-slot.error{border-color:#f44336;animation:wrongShake .4s ease}
+@keyframes slotFill{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.chain-arrow{color:#4caf50;font-size:18px;font-weight:700;flex-shrink:0}
+.chain-label{font-size:10px;color:#4caf50;text-align:center;margin-top:4px}
+.chain-slot-wrap{display:flex;flex-direction:column;align-items:center}
+
+.species-pool{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.pool-item{background:rgba(45,90,39,.3);border:1.5px solid #2d5a27;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s;font-size:22px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.pool-item:active{transform:scale(.95)}
+.pool-item.selected{border-color:#66bb6a;background:rgba(102,187,106,.2)}
+.pool-item.used{opacity:.3;pointer-events:none}
+.pool-item-name{font-size:9px;color:#81c784;line-height:1.2;text-align:center}
+
+.fw-check-btn{width:100%;background:linear-gradient(135deg,#1b5e20,#2e7d32);border:1.5px solid #4caf50;border-radius:14px;padding:14px;color:#a5d6a7;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:10px}
+.fw-check-btn:active{transform:scale(.98)}
+.fw-check-btn.success{background:linear-gradient(135deg,#2e7d32,#66bb6a);color:#fff}
+.fw-reset-btn{width:100%;background:transparent;border:1.5px solid #2d5a27;border-radius:14px;padding:12px;color:#81c784;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.fw-feedback{border-radius:14px;padding:14px;margin-bottom:10px;display:none;animation:fadeIn .3s ease;font-size:13px;color:#e8f5e9;line-height:1.5}
+.fw-feedback.show{display:block}
+.fw-feedback.correct{background:rgba(76,175,80,.2);border:1px solid #4caf50}
+.fw-feedback.incorrect{background:rgba(244,67,54,.15);border:1px solid #f44336}
+
+.food-web-diagram{background:rgba(13,31,16,.8);border:1.5px solid #2d5a27;border-radius:20px;padding:16px;margin-bottom:16px}
+.web-title{font-size:14px;font-weight:700;color:#66bb6a;margin-bottom:14px}
+.web-levels{display:flex;flex-direction:column;gap:8px}
+.web-level{display:flex;align-items:center;gap:6px}
+.web-level-label{font-size:10px;color:#4caf50;font-weight:700;text-transform:uppercase;width:72px;flex-shrink:0;letter-spacing:.5px}
+.web-species{display:flex;flex-wrap:wrap;gap:6px;flex:1}
+.web-chip{background:rgba(45,90,39,.4);border:1px solid #2d5a27;border-radius:20px;padding:4px 10px;font-size:12px;color:#c8e6c9;display:flex;align-items:center;gap:4px}
+.web-arrow-row{display:flex;align-items:center;padding-left:78px;color:#2d5a27;font-size:20px}
+
+/* ===== TOAST ===== */
+.toast{position:absolute;bottom:85px;left:50%;transform:translateX(-50%) translateY(20px);background:#1b5e20;border:1px solid #4caf50;border-radius:12px;padding:10px 20px;color:#e8f5e9;font-size:13px;font-weight:600;z-index:200;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ===== SCROLL FADE ===== */
+.fade-edge{position:sticky;bottom:0;height:30px;background:linear-gradient(transparent,rgba(13,31,16,.8));pointer-events:none}
+</style>
+</head>
+<body>
+<div class="phone-wrap" id="phone">
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status-time" id="statusTime">9:41</div>
+    <div class="status-icons">
+      <div class="signal-bars"><span></span><span></span><span></span><span></span></div>
+      <span class="wifi-icon">▲</span>
+      <div class="battery">
+        <div class="battery-icon"><div class="battery-fill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screens -->
+  <div class="screens">
+
+    <!-- HOME -->
+    <div class="screen active" id="screen-home">
+      <div class="home-hero">
+        <div class="sky-layer"></div>
+        <div class="stars" id="stars"></div>
+        <div class="moon"></div>
+        <div class="tree-line" id="treeLineHome"></div>
+        <div class="hero-text">
+          <div class="hero-title">🌲 BorealQuest</div>
+          <div class="hero-subtitle">Explore the world's largest forest ecosystem</div>
+        </div>
+      </div>
+      <div class="home-content">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-number" id="homeDiscovered">0</div>
+            <div class="stat-label">Discovered</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="homeQuizScore">0%</div>
+            <div class="stat-label">Quiz Score</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="homeStreak">0🔥</div>
+            <div class="stat-label">Streak</div>
+          </div>
+        </div>
+        <div class="section-title">🗺️ Quick Explore</div>
+        <div class="quick-actions">
+          <div class="action-card" onclick="switchTab('explore')">
+            <div class="action-icon">🌿</div>
+            <div class="action-info">
+              <div class="action-title">Explore Forest Zones</div>
+              <div class="action-desc">Tap on zones to discover species</div>
+            </div>
+            <div class="action-arrow">›</div>
+          </div>
+          <div class="action-card" onclick="switchTab('collection')">
+            <div class="action-icon">📖</div>
+            <div class="action-info">
+              <div class="action-title">Species Collection</div>
+              <div class="action-desc">View your discovered species</div>
+            </div>
+            <div class="action-arrow">›</div>
+          </div>
+          <div class="action-card" onclick="switchTab('quiz')">
+            <div class="action-icon">🧠</div>
+            <div class="action-info">
+              <div class="action-title">Ecosystem Quiz</div>
+              <div class="action-desc">Test your boreal forest knowledge</div>
+            </div>
+            <div class="action-arrow">›</div>
+          </div>
+          <div class="action-card" onclick="switchTab('foodweb')">
+            <div class="action-icon">🕸️</div>
+            <div class="action-info">
+              <div class="action-title">Food Web Builder</div>
+              <div class="action-desc">Build food chains & energy flows</div>
+            </div>
+            <div class="action-arrow">›</div>
+          </div>
+        </div>
+        <div class="progress-section">
+          <div class="section-title">📊 Collection Progress</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="homeProgressBar" style="width:0%"></div>
+          </div>
+          <div class="progress-label">
+            <span id="homeProgressText">0 of 28 species discovered</span>
+            <span id="homeProgressPct">0%</span>
+          </div>
+        </div>
+        <div class="fun-fact" id="funFact">
+          <div class="fun-fact-header">🌿 Forest Fact</div>
+          <div class="fun-fact-text" id="funFactText">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLORE -->
+    <div class="screen" id="screen-explore">
+      <div class="explore-header">
+        <div class="explore-title">🗺️ Explore</div>
+        <div class="explore-subtitle">Tap a zone to discover species</div>
+      </div>
+      <div class="forest-scene">
+        <div class="scene-bg">
+          <div class="scene-title">🌲 Boreal Forest – Select a Zone</div>
+          <div class="zones-grid" id="zonesGrid"></div>
+        </div>
+      </div>
+      <div class="species-panel" id="speciesPanel">
+        <div class="panel-header">
+          <div class="panel-zone-title" id="panelZoneTitle">Zone</div>
+          <button class="panel-close" onclick="closePanel()">✕ Close</button>
+        </div>
+        <div class="species-list" id="speciesList"></div>
+      </div>
+    </div>
+
+    <!-- COLLECTION -->
+    <div class="screen" id="screen-collection">
+      <div class="collection-header">
+        <div class="collection-title">📖 Collection</div>
+        <div class="collection-progress">
+          <div class="col-progress-bar">
+            <div class="col-progress-fill" id="colProgressFill" style="width:0%"></div>
+          </div>
+          <div class="col-progress-label" id="colProgressLabel">0 / 28 species discovered</div>
+        </div>
+      </div>
+      <div class="category-tabs" id="categoryTabs">
+        <div class="cat-tab active" data-cat="all" onclick="filterCollection('all',this)">🌍 All</div>
+        <div class="cat-tab" data-cat="plants" onclick="filterCollection('plants',this)">🌿 Plants</div>
+        <div class="cat-tab" data-cat="mammals" onclick="filterCollection('mammals',this)">🦌 Mammals</div>
+        <div class="cat-tab" data-cat="birds" onclick="filterCollection('birds',this)">🦅 Birds</div>
+        <div class="cat-tab" data-cat="insects" onclick="filterCollection('insects',this)">🐛 Insects</div>
+      </div>
+      <div class="collection-grid" id="collectionGrid"></div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="screen" id="screen-quiz">
+      <div class="quiz-header">
+        <div class="quiz-title">🧠 Ecosystem Quiz</div>
+        <div class="quiz-stats-row">
+          <div class="quiz-stat">
+            <span class="quiz-stat-icon">✅</span>
+            <div>
+              <div class="quiz-stat-val" id="quizCorrect">0</div>
+              <div class="quiz-stat-lbl">Correct</div>
+            </div>
+          </div>
+          <div class="quiz-stat">
+            <span class="quiz-stat-icon">🔥</span>
+            <div>
+              <div class="quiz-stat-val" id="quizStreak">0</div>
+              <div class="quiz-stat-lbl">Streak</div>
+            </div>
+          </div>
+          <div class="quiz-stat">
+            <span class="quiz-stat-icon">📝</span>
+            <div>
+              <div class="quiz-stat-val" id="quizTotal">0</div>
+              <div class="quiz-stat-lbl">Total</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-content" id="quizContent">
+        <div class="question-card" id="questionCard">
+          <div class="question-num" id="questionNum">Question 1 of 20</div>
+          <span class="question-emoji" id="questionEmoji">🌲</span>
+          <div class="question-text" id="questionText">Loading question...</div>
+        </div>
+        <div class="options-list" id="optionsList"></div>
+        <div class="answer-feedback" id="answerFeedback">
+          <span class="feedback-icon" id="feedbackIcon">✅</span>
+          <div class="feedback-title" id="feedbackTitle">Correct!</div>
+          <div class="feedback-exp" id="feedbackExp"></div>
+        </div>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+      </div>
+      <div class="quiz-complete" id="quizComplete">
+        <div class="complete-emoji">🏆</div>
+        <div class="complete-title">Quiz Complete!</div>
+        <div class="complete-score" id="completeScore">0/20</div>
+        <div class="complete-msg" id="completeMsg"></div>
+        <button class="restart-btn" onclick="restartQuiz()">🔄 Play Again</button>
+      </div>
+    </div>
+
+    <!-- FOOD WEB -->
+    <div class="screen" id="screen-foodweb">
+      <div class="foodweb-header">
+        <div class="foodweb-title">🕸️ Food Web</div>
+        <div class="foodweb-subtitle">Build food chains & explore energy flow</div>
+      </div>
+      <div class="foodweb-content">
+        <div class="fw-instructions">
+          <b>How to play:</b> Tap a species from the pool, then tap a chain slot to place it. Build a complete food chain from producer to apex predator!
+        </div>
+        <div class="chain-builder" id="chainBuilder">
+          <div class="chain-title">🔗 Build a Food Chain</div>
+          <div class="chain-slots" id="chainSlots"></div>
+        </div>
+        <div class="fw-feedback" id="fwFeedback"></div>
+        <div class="species-pool" id="speciesPool"></div>
+        <button class="fw-check-btn" id="fwCheckBtn" onclick="checkChain()">✓ Check Food Chain</button>
+        <button class="fw-reset-btn" onclick="resetChain()">↺ Reset</button>
+
+        <div class="food-web-diagram">
+          <div class="web-title">🌐 Boreal Forest Food Web</div>
+          <div class="web-levels">
+            <div class="web-level">
+              <div class="web-level-label">Apex</div>
+              <div class="web-species">
+                <div class="web-chip">🐺 Gray Wolf</div>
+                <div class="web-chip">🐻 Black Bear</div>
+                <div class="web-chip">🦁 Lynx</div>
+              </div>
+            </div>
+            <div class="web-arrow-row">↑</div>
+            <div class="web-level">
+              <div class="web-level-label">Secondary</div>
+              <div class="web-species">
+                <div class="web-chip">🦊 Red Fox</div>
+                <div class="web-chip">🦉 Great Gray Owl</div>
+                <div class="web-chip">🫎 Moose</div>
+              </div>
+            </div>
+            <div class="web-arrow-row">↑</div>
+            <div class="web-level">
+              <div class="web-level-label">Primary</div>
+              <div class="web-species">
+                <div class="web-chip">🐇 Snowshoe Hare</div>
+                <div class="web-chip">🦫 Beaver</div>
+                <div class="web-chip">🐦 Spruce Grouse</div>
+              </div>
+            </div>
+            <div class="web-arrow-row">↑</div>
+            <div class="web-level">
+              <div class="web-level-label">Producer</div>
+              <div class="web-species">
+                <div class="web-chip">🌲 Black Spruce</div>
+                <div class="web-chip">🍄 Lichen</div>
+                <div class="web-chip">🫐 Blueberry</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end screens -->
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">
+      <span class="nav-icon">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn" id="nav-explore" onclick="switchTab('explore')">
+      <span class="nav-icon">🗺️</span>
+      <span>Explore</span>
+    </button>
+    <button class="nav-btn" id="nav-collection" onclick="switchTab('collection')">
+      <span class="nav-icon">📖</span>
+      <span>Collection</span>
+    </button>
+    <button class="nav-btn" id="nav-quiz" onclick="switchTab('quiz')">
+      <span class="nav-icon">🧠</span>
+      <span>Quiz</span>
+    </button>
+    <button class="nav-btn" id="nav-foodweb" onclick="switchTab('foodweb')">
+      <span class="nav-icon">🕸️</span>
+      <span>Food Web</span>
+    </button>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+// ===== DATA =====
+const SPECIES = [
+  // Plants
+  {id:'black-spruce',emoji:'🌲',name:'Black Spruce',category:'plants',zone:'canopy',
+   desc:'Dominant tree of the boreal forest, thrives in cold, wet, boggy conditions.',
+   fact:'Can survive temperatures down to -60°C and often grows in dense stands called "black spruce muskeg".',
+   role:'producer'},
+  {id:'white-spruce',emoji:'🌳',name:'White Spruce',category:'plants',zone:'canopy',
+   desc:'Tall conifer found on well-drained upland sites throughout the boreal zone.',
+   fact:'White spruce cones are a critical food source for red squirrels, which cache thousands each winter.',
+   role:'producer'},
+  {id:'jack-pine',emoji:'🌴',name:'Jack Pine',category:'plants',zone:'canopy',
+   desc:'Fire-adapted conifer with serotinous cones that only open in intense heat.',
+   fact:'Jack pine cones can remain closed on the tree for up to 25 years, waiting for a forest fire to release seeds.',
+   role:'producer'},
+  {id:'balsam-fir',emoji:'🎄',name:'Balsam Fir',category:'plants',zone:'canopy',
+   desc:'Aromatic conifer with flat needles, important winter shelter for many animals.',
+   fact:'The resin blisters on balsam fir bark are used by Indigenous peoples for medicinal and waterproofing purposes.',
+   role:'producer'},
+  {id:'paper-birch',emoji:'🪵',name:'Paper Birch',category:'plants',zone:'understory',
+   desc:'Deciduous tree with distinctive white bark, pioneer species after disturbances.',
+   fact:'Its bark is nearly waterproof and was used by Indigenous peoples to build canoes and create containers.',
+   role:'producer'},
+  {id:'tamarack',emoji:'🌿',name:'Tamarack',category:'plants',zone:'wetlands',
+   desc:'The only deciduous conifer in North America—it drops its needles every autumn.',
+   fact:'Tamarack needles turn brilliant gold in autumn before dropping, creating spectacular wetland displays.',
+   role:'producer'},
+  {id:'sphagnum-moss',emoji:'🟢',name:'Sphagnum Moss',category:'plants',zone:'floor',
+   desc:'Peat-forming moss that creates the boggy conditions characteristic of boreal wetlands.',
+   fact:'One kilogram of dried sphagnum moss can absorb up to 20 kilograms of water.',
+   role:'producer'},
+  {id:'lichen',emoji:'🍄',name:'Reindeer Lichen',category:'plants',zone:'floor',
+   desc:'Slow-growing symbiotic organism — part fungus, part algae — critical winter food for caribou.',
+   fact:'Reindeer lichen grows only 3–5mm per year and can live for hundreds of years.',
+   role:'producer'},
+  {id:'blueberry',emoji:'🫐',name:'Bog Blueberry',category:'plants',zone:'understory',
+   desc:'Low-growing shrub found across boreal bogs and barrens, prized by bears and birds.',
+   fact:'Bears can eat up to 20,000 blueberries per day while preparing for hibernation.',
+   role:'producer'},
+  {id:'labrador-tea',emoji:'☕',name:'Labrador Tea',category:'plants',zone:'understory',
+   desc:'Aromatic shrub with white flowers, used by Indigenous peoples as a herbal tea.',
+   fact:'Labrador tea leaves contain ledol, a compound that can cause drowsiness if consumed in large quantities.',
+   role:'producer'},
+  // Mammals
+  {id:'moose',emoji:'🫎',name:'Moose',category:'mammals',zone:'wetlands',
+   desc:'Largest member of the deer family; feeds on aquatic plants, willows, and birch.',
+   fact:'A bull moose can eat up to 32 kg of vegetation per day and can run up to 56 km/h.',
+   role:'primary'},
+  {id:'caribou',emoji:'🦌',name:'Caribou',category:'mammals',zone:'floor',
+   desc:'Migratory deer with wide hooves for snow travel; relies heavily on lichen in winter.',
+   fact:'Both male and female caribou have antlers — the only deer species where females regularly grow them.',
+   role:'primary'},
+  {id:'wolf',emoji:'🐺',name:'Gray Wolf',category:'mammals',zone:'floor',
+   desc:'Apex predator of the boreal forest, hunts in family packs of 5–10 individuals.',
+   fact:'Gray wolves can travel up to 80 km in a single day while searching for prey.',
+   role:'apex'},
+  {id:'black-bear',emoji:'🐻',name:'Black Bear',category:'mammals',zone:'understory',
+   desc:'Omnivorous forest bear; key seed disperser, berry consumer, and honey raider.',
+   fact:'Black bears are not true hibernators — their body temperature only drops slightly during winter denning.',
+   role:'apex'},
+  {id:'lynx',emoji:'🐈',name:'Canada Lynx',category:'mammals',zone:'understory',
+   desc:'Specialized predator whose population closely tracks the snowshoe hare cycle.',
+   fact:'Canada lynx populations boom and crash roughly every 10 years, synchronized with hare population cycles.',
+   role:'secondary'},
+  {id:'hare',emoji:'🐇',name:'Snowshoe Hare',category:'mammals',zone:'understory',
+   desc:'Key prey species; turns white in winter and undergoes dramatic 10-year population cycles.',
+   fact:'Snowshoe hares turn white in winter — each hair is actually hollow to trap warmth.',
+   role:'primary'},
+  {id:'beaver',emoji:'🦫',name:'Beaver',category:'mammals',zone:'wetlands',
+   desc:'Ecosystem engineer; dams create wetlands vital for hundreds of species.',
+   fact:'A beaver colony can build a dam over 100 metres long that lasts for centuries.',
+   role:'primary'},
+  {id:'red-fox',emoji:'🦊',name:'Red Fox',category:'mammals',zone:'floor',
+   desc:'Adaptable omnivore; eats hares, voles, berries, and birds\' eggs.',
+   fact:'Red foxes can hear mice under 1 metre of snow and pounce precisely to catch them.',
+   role:'secondary'},
+  // Birds
+  {id:'gray-owl',emoji:'🦉',name:'Great Gray Owl',category:'birds',zone:'canopy',
+   desc:'Boreal forest icon; hunts voles and lemmings under deep snow with extraordinary hearing.',
+   fact:'The Great Gray Owl\'s facial disc is up to 38cm across — the largest of any owl species.',
+   role:'secondary'},
+  {id:'chickadee',emoji:'🐦',name:'Boreal Chickadee',category:'birds',zone:'canopy',
+   desc:'Year-round resident with remarkable cold-weather adaptations; caches thousands of seeds.',
+   fact:'Boreal chickadees can remember the location of thousands of seed caches — their hippocampus actually grows in autumn.',
+   role:'primary'},
+  {id:'loon',emoji:'🦆',name:'Common Loon',category:'birds',zone:'wetlands',
+   desc:'Symbol of Canada\'s wilderness; dives up to 60m for fish in boreal lakes.',
+   fact:'Loons have solid bones (unlike most birds) to help them dive — they can stay submerged for up to 5 minutes.',
+   role:'secondary'},
+  {id:'spruce-grouse',emoji:'🦃',name:'Spruce Grouse',category:'birds',zone:'understory',
+   desc:'Specialist feeder on spruce and fir needles; incredibly well camouflaged.',
+   fact:'Spruce grouse are so tame they are sometimes called "fool hens" — they barely react to approaching humans.',
+   role:'primary'},
+  // Insects
+  {id:'spruce-budworm',emoji:'🐛',name:'Spruce Budworm',category:'insects',zone:'canopy',
+   desc:'Most destructive forest insect in North America; defoliates millions of hectares in outbreaks.',
+   fact:'A single spruce budworm outbreak can defoliate over 55 million hectares across the boreal forest.',
+   role:'primary'},
+  {id:'pollinator',emoji:'🐝',name:'Boreal Bee',category:'insects',zone:'floor',
+   desc:'Native bees pollinate boreal berries and flowering plants essential to the ecosystem.',
+   fact:'Bumblebees are adapted to the boreal — they can "shiver" their flight muscles to warm up in cold temperatures.',
+   role:'primary'},
+  {id:'bark-beetle',emoji:'🪲',name:'Bark Beetle',category:'insects',zone:'canopy',
+   desc:'Naturally occurring decomposer that helps recycle dead trees back into the forest.',
+   fact:'Bark beetle galleries under the bark look like intricate artwork — each species makes a distinctive pattern.',
+   role:'decomposer'},
+  {id:'dragonfly',emoji:'🦟',name:'Boreal Dragonfly',category:'insects',zone:'wetlands',
+   desc:'Top aquatic predator in boreal lakes; larvae live in water for up to 5 years.',
+   fact:'Dragonflies have nearly 360-degree vision and can catch prey mid-air with over 95% success rate.',
+   role:'secondary'},
+  {id:'wood-ant',emoji:'🐜',name:'Wood Ant',category:'insects',zone:'floor',
+   desc:'Forest engineer that aerates soil and farms aphids; critical decomposer.',
+   fact:'A single wood ant nest can contain up to 500,000 workers and multiple queens.',
+   role:'decomposer'},
+  {id:'mayfly',emoji:'🪰',name:'Boreal Mayfly',category:'insects',zone:'wetlands',
+   desc:'Water quality indicator; larvae live in streams for up to 3 years before emerging.',
+   fact:'Adult mayflies live only 24 hours — just long enough to mate and lay eggs.',
+   role:'primary'},
+];
+
+const ZONES = [
+  {id:'canopy',name:'Canopy Layer',emoji:'🌲',hint:'Treetops: spruce, pine, owls',
+   color:'#1b5e20',species:['black-spruce','white-spruce','jack-pine','balsam-fir','gray-owl','chickadee','spruce-budworm','bark-beetle']},
+  {id:'understory',name:'Understory Layer',emoji:'🌿',hint:'Shrubs, hares, grouse, bears',
+   color:'#2e7d32',species:['paper-birch','blueberry','labrador-tea','hare','black-bear','lynx','spruce-grouse']},
+  {id:'floor',name:'Forest Floor',emoji:'🍂',hint:'Mosses, insects, small mammals',
+   color:'#4e342e',species:['sphagnum-moss','lichen','caribou','wolf','red-fox','pollinator','wood-ant']},
+  {id:'wetlands',name:'Wetlands & Bogs',emoji:'💧',hint:'Beaver ponds, lakes, tamarack',
+   color:'#1565c0',species:['tamarack','moose','beaver','loon','dragonfly','mayfly']},
+];
+
+const QUIZ_QUESTIONS = [
+  {q:'Which tree has serotinous cones that only open after a forest fire?',emoji:'🔥',
+   opts:['White Spruce','Jack Pine','Balsam Fir','Paper Birch'],ans:1,
+   exp:'Jack pine cones are sealed with resin and require fire\'s heat to open and release seeds — a perfect fire-adaptation!'},
+  {q:'What is the primary prey of the Canada Lynx in the boreal forest?',emoji:'🐈',
+   opts:['Moose','Gray Wolf','Snowshoe Hare','Beaver'],ans:2,
+   exp:'Canada lynx populations are so tightly linked to snowshoe hare cycles that lynx numbers crash when hare populations decline.'},
+  {q:'Reindeer lichen is the primary winter food source for which animal?',emoji:'🍄',
+   opts:['Moose','Caribou','Beaver','Black Bear'],ans:1,
+   exp:'Caribou dig through snow to reach reindeer lichen, which can make up 90% of their winter diet.'},
+  {q:'Which animal is called an "ecosystem engineer" because it creates wetland habitats?',emoji:'🦫',
+   opts:['Moose','Red Fox','Beaver','Canada Lynx'],ans:2,
+   exp:'Beaver dams flood areas and create wetlands that support hundreds of species that wouldn\'t otherwise exist there.'},
+  {q:'What percentage of Earth\'s land surface does the boreal forest cover?',emoji:'🌍',
+   opts:['About 5%','About 11%','About 17%','About 30%'],ans:2,
+   exp:'The boreal forest (taiga) covers about 17% of Earth\'s land area, making it the world\'s largest terrestrial biome.'},
+  {q:'Which bird\'s population grows in its hippocampus during autumn to help it remember seed caches?',emoji:'🐦',
+   opts:['Great Gray Owl','Common Loon','Boreal Chickadee','Spruce Grouse'],ans:2,
+   exp:'The boreal chickadee\'s hippocampus (memory center) actually increases in size during autumn to help store thousands of food cache locations!'},
+  {q:'What unique trait does the tamarack have among North American conifers?',emoji:'🍂',
+   opts:['It is poisonous','It is the only deciduous conifer','It grows underwater','It only grows in Arctic regions'],ans:1,
+   exp:'Tamarack is the only conifer in North America that loses all its needles in autumn — a deciduous conifer!'},
+  {q:'Which insect is considered the most destructive forest pest in North America?',emoji:'🐛',
+   opts:['Bark Beetle','Wood Ant','Spruce Budworm','Boreal Bee'],ans:2,
+   exp:'Spruce budworm outbreaks can defoliate over 55 million hectares of boreal forest in a single outbreak cycle.'},
+  {q:'Gray wolves typically live and hunt in groups called:',emoji:'🐺',
+   opts:['Packs','Herds','Colonies','Flocks'],ans:0,
+   exp:'Gray wolves live in family groups called packs, typically of 5–10 individuals led by an alpha pair.'},
+  {q:'What role does sphagnum moss play in the boreal ecosystem?',emoji:'🟢',
+   opts:['It is a top predator','It forms peat bogs and stores carbon','It pollinates all boreal flowers','It decomposes rock into soil'],ans:1,
+   exp:'Sphagnum moss forms peat bogs that store enormous amounts of carbon — boreal peatlands store twice the carbon of all world forests combined!'},
+  {q:'In the food web, which term describes organisms like spruce trees that make their own food?',emoji:'🌲',
+   opts:['Consumers','Decomposers','Producers','Predators'],ans:2,
+   exp:'Producers (also called autotrophs) make their own food through photosynthesis, forming the base of all food webs.'},
+  {q:'How does the Great Gray Owl hunt prey hidden under deep snow?',emoji:'🦉',
+   opts:['By sight through thin snow','By using extraordinary hearing','By smell alone','By watching for tracks'],ans:1,
+   exp:'The Great Gray Owl\'s huge facial disc acts like a radar dish, channeling sound to its asymmetrically placed ears for precise 3D sound location.'},
+  {q:'Which boreal plant is a symbiotic organism that is part fungus, part algae?',emoji:'🍄',
+   opts:['Sphagnum Moss','Balsam Fir','Reindeer Lichen','Labrador Tea'],ans:2,
+   exp:'Lichens are a symbiosis between fungi and algae (or cyanobacteria) — the fungus provides structure and the algae provides food through photosynthesis.'},
+  {q:'What phenomenon drives the roughly 10-year population cycles of snowshoe hares and lynx?',emoji:'📈',
+   opts:['Disease outbreaks','Predator-prey population dynamics','Climate cycles','Seed production cycles'],ans:1,
+   exp:'As hares increase, lynx thrive and their numbers grow. Eventually lynx overeat hares, hare numbers crash, then lynx starve — a classic predator-prey cycle.'},
+  {q:'Paper birch bark has which special property?',emoji:'🪵',
+   opts:['It is edible','It glows in the dark','It is nearly waterproof','It is magnetic'],ans:2,
+   exp:'Paper birch bark contains betulin, a waxy compound that makes it extremely water-resistant — perfect for building canoes and containers!'},
+  {q:'Common loons have solid bones compared to most birds. Why?',emoji:'🦆',
+   opts:['To protect eggs better','To help them dive underwater','To withstand cold temperatures','To carry more fat reserves'],ans:1,
+   exp:'Unlike hollow bird bones evolved for flight efficiency, solid loon bones reduce buoyancy and help loons dive up to 60 metres underwater.'},
+  {q:'Which animal\'s population changes in color with the seasons, turning white in winter?',emoji:'❄️',
+   opts:['Red Fox','Canada Lynx','Snowshoe Hare','Moose'],ans:2,
+   exp:'Snowshoe hares turn white in winter for camouflage in snow — triggered by shortening day length, not temperature!'},
+  {q:'Fire plays what important role in boreal forest ecosystems?',emoji:'🔥',
+   opts:['It destroys all life permanently','It triggers seed release and clears competition, enabling regeneration','It increases soil acidity','It has no benefit'],ans:1,
+   exp:'Fire is a natural and essential disturbance in boreal forests — it releases nutrients, opens canopy for sunlight, and triggers jack pine cones to open.'},
+  {q:'What makes bumblebees especially suited to the boreal forest\'s cold climate?',emoji:'🐝',
+   opts:['They migrate south in winter','They can "shiver" their flight muscles to generate heat','They are covered in anti-freeze','They only fly in summer'],ans:1,
+   exp:'Bumblebees can vibrate their thorax muscles to generate body heat — allowing them to fly at temperatures near 0°C when honeybees cannot.'},
+  {q:'A beaver dam can help the ecosystem by:',emoji:'🦫',
+   opts:['Preventing all animals from accessing water','Flooding areas to create rich wetland habitats','Killing all fish in the area','Removing trees from the forest'],ans:1,
+   exp:'Beaver-created wetlands dramatically increase biodiversity, providing habitat for birds, amphibians, fish, insects, and mammals that couldn\'t survive without the pond.'},
+];
+
+const FUN_FACTS = [
+  'The boreal forest stores more carbon than all the world\'s tropical forests combined.',
+  'Boreal forests produce 40% of the world\'s fresh water through rainfall regulation.',
+  'The word "boreal" comes from Boreas, the Greek god of the north wind.',
+  'Over 3 billion migratory birds use the boreal forest as their breeding ground each summer.',
+  'A single boreal lake can support over 100 species of aquatic invertebrates.',
+  'The boreal forest belts the entire Northern Hemisphere, spanning 8 countries.',
+  'Peat deposits in boreal bogs can be 10,000+ years old, dating back to the last ice age.',
+  'Gray wolves can communicate across 10+ km using howls that carry in cold, dense boreal air.',
+];
+
+const FOOD_CHAIN_CHALLENGES = [
+  {
+    title:'Classic Boreal Chain',
+    slots:[
+      {label:'Producer',emoji:null,role:'producer'},
+      {label:'Primary Consumer',emoji:null,role:'primary'},
+      {label:'Secondary Consumer',emoji:null,role:'secondary'},
+      {label:'Apex Predator',emoji:null,role:'apex'},
+    ],
+    validCombos:[
+      ['black-spruce','hare','lynx','wolf'],
+      ['lichen','caribou','lynx','wolf'],
+      ['blueberry','hare','lynx','wolf'],
+      ['blueberry','hare','red-fox','wolf'],
+      ['labrador-tea','hare','lynx','wolf'],
+    ],
+    pool:['black-spruce','lichen','blueberry','labrador-tea','hare','caribou','moose','lynx','gray-owl','red-fox','wolf','black-bear'],
+    poolEmoji:{'black-spruce':'🌲','lichen':'🍄','blueberry':'🫐','labrador-tea':'☕','hare':'🐇','caribou':'🦌','moose':'🫎','lynx':'🐈','gray-owl':'🦉','red-fox':'🦊','wolf':'🐺','black-bear':'🐻'},
+    poolNames:{'black-spruce':'Black Spruce','lichen':'Lichen','blueberry':'Blueberry','labrador-tea':'Labrador Tea','hare':'Hare','caribou':'Caribou','moose':'Moose','lynx':'Lynx','gray-owl':'Gray Owl','red-fox':'Red Fox','wolf':'Wolf','black-bear':'Bear'},
+    roles:{'black-spruce':'producer','lichen':'producer','blueberry':'producer','labrador-tea':'producer','hare':'primary','caribou':'primary','moose':'primary','lynx':'secondary','gray-owl':'secondary','red-fox':'secondary','wolf':'apex','black-bear':'apex'},
+  }
+];
+
+// ===== STATE =====
+let state = {
+  discovered: new Set(),
+  quizCorrect: 0,
+  quizTotal: 0,
+  quizStreak: 0,
+  bestStreak: 0,
+  currentTab: 'home',
+  quizIndex: 0,
+  quizOrder: [],
+  quizAnswered: false,
+  chainSlots: [null, null, null, null],
+  selectedPoolItem: null,
+};
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('borealquest_v2') || '{}');
+    if (saved.discovered) state.discovered = new Set(saved.discovered);
+    if (saved.quizCorrect) state.quizCorrect = saved.quizCorrect;
+    if (saved.quizTotal) state.quizTotal = saved.quizTotal;
+    if (saved.quizStreak) state.quizStreak = saved.quizStreak;
+    if (saved.bestStreak) state.bestStreak = saved.bestStreak;
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('borealquest_v2', JSON.stringify({
+      discovered: [...state.discovered],
+      quizCorrect: state.quizCorrect,
+      quizTotal: state.quizTotal,
+      quizStreak: state.quizStreak,
+      bestStreak: state.bestStreak,
+    }));
+  } catch(e) {}
+}
+
+// ===== INIT =====
+function init() {
+  loadState();
+  updateClock();
+  setInterval(updateClock, 30000);
+  buildStars();
+  buildTreeLine();
+  buildZones();
+  buildCollection();
+  buildFoodWeb();
+  renderQuiz();
+  updateHomeStats();
+  rotateFunFact();
+  setInterval(rotateFunFact, 8000);
+}
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById('statusTime').textContent =
+    now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+}
+
+function buildStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 70 + '%';
+    s.style.animationDelay = Math.random() * 3 + 's';
+    s.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    container.appendChild(s);
+  }
+}
+
+function buildTreeLine() {
+  const container = document.getElementById('treeLineHome');
+  const trees = ['🌲','🌲','🌲','🎄','🌲','🌲','🎄','🌲','🌲','🌲','🎄','🌲'];
+  trees.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'tree-svg';
+    el.textContent = t;
+    container.appendChild(el);
+  });
+}
+
+function rotateFunFact() {
+  const el = document.getElementById('funFactText');
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.textContent = FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
+    el.style.opacity = '1';
+  }, 300);
+  el.style.transition = 'opacity .3s';
+}
+
+function updateHomeStats() {
+  const total = SPECIES.length;
+  const disc = state.discovered.size;
+  const pct = total > 0 ? Math.round(disc / total * 100) : 0;
+  document.getElementById('homeDiscovered').textContent = disc;
+  const qPct = state.quizTotal > 0 ? Math.round(state.quizCorrect / state.quizTotal * 100) : 0;
+  document.getElementById('homeQuizScore').textContent = qPct + '%';
+  document.getElementById('homeStreak').textContent = state.bestStreak + '🔥';
+  document.getElementById('homeProgressBar').style.width = pct + '%';
+  document.getElementById('homeProgressText').textContent = disc + ' of ' + total + ' species discovered';
+  document.getElementById('homeProgressPct').textContent = pct + '%';
+}
+
+// ===== TAB SWITCHING =====
+function switchTab(tab) {
+  if (state.currentTab === tab) return;
+  const old = document.getElementById('screen-' + state.currentTab);
+  const next = document.getElementById('screen-' + tab);
+  old.classList.remove('active');
+  next.classList.add('active');
+  document.getElementById('nav-' + state.currentTab).classList.remove('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+  state.currentTab = tab;
+  if (tab === 'home') updateHomeStats();
+  if (tab === 'collection') refreshCollection();
+  if (tab === 'quiz') updateQuizStats();
+}
+
+// ===== EXPLORE =====
+function buildZones() {
+  const grid = document.getElementById('zonesGrid');
+  ZONES.forEach(zone => {
+    const btn = document.createElement('button');
+    btn.className = 'zone-btn';
+    btn.id = 'zone-' + zone.id;
+    const discovered = zone.species.filter(id => state.discovered.has(id)).length;
+    btn.innerHTML = `
+      <div class="zone-icon">${zone.emoji}</div>
+      <div class="zone-info">
+        <div class="zone-name">${zone.name}</div>
+        <div class="zone-hint">${zone.hint}</div>
+        <div class="zone-count">${discovered}/${zone.species.length} discovered</div>
+      </div>
+    `;
+    btn.onclick = () => showZone(zone);
+    grid.appendChild(btn);
+  });
+}
+
+function showZone(zone) {
+  document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('zone-' + zone.id).classList.add('selected');
+  document.getElementById('panelZoneTitle').textContent = zone.emoji + ' ' + zone.name;
+  const list = document.getElementById('speciesList');
+  list.innerHTML = '';
+  zone.species.forEach(id => {
+    const sp = SPECIES.find(s => s.id === id);
+    if (!sp) return;
+    const isDiscovered = state.discovered.has(id);
+    const card = document.createElement('div');
+    card.className = 'species-card' + (isDiscovered ? ' discovered' : '');
+    card.innerHTML = `
+      <div class="species-emoji">${sp.emoji}</div>
+      <div class="species-info">
+        <div class="species-name">${sp.name}</div>
+        <div class="species-type">${sp.category} · ${sp.role}</div>
+        <div class="species-desc">${sp.desc}</div>
+        ${isDiscovered ?
+          '<span class="already-badge">✓ Discovered</span>' :
+          '<span class="discover-badge">+ Tap to Discover</span>'}
+      </div>
+    `;
+    card.onclick = () => discoverSpecies(id, card);
+    list.appendChild(card);
+  });
+  const panel = document.getElementById('speciesPanel');
+  panel.classList.add('visible');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+  refreshZoneCounts();
+}
+
+function discoverSpecies(id, card) {
+  if (!state.discovered.has(id)) {
+    state.discovered.add(id);
+    saveState();
+    card.classList.add('discovered');
+    const badge = card.querySelector('.discover-badge');
+    if (badge) {
+      badge.className = 'already-badge';
+      badge.textContent = '✓ Discovered';
+    }
+    const sp = SPECIES.find(s => s.id === id);
+    showToast('🌿 Discovered: ' + sp.name + '!');
+    refreshZoneCounts();
+    updateHomeStats();
+  }
+}
+
+function refreshZoneCounts() {
+  ZONES.forEach(zone => {
+    const btn = document.getElementById('zone-' + zone.id);
+    if (btn) {
+      const discovered = zone.species.filter(id => state.discovered.has(id)).length;
+      const countEl = btn.querySelector('.zone-count');
+      if (countEl) countEl.textContent = discovered + '/' + zone.species.length + ' discovered';
+    }
+  });
+}
+
+function closePanel() {
+  document.getElementById('speciesPanel').classList.remove('visible');
+  document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+}
+
+// ===== COLLECTION =====
+let currentCat = 'all';
+
+function buildCollection() {
+  refreshCollection();
+}
+
+function refreshCollection() {
+  const total = SPECIES.length;
+  const disc = state.discovered.size;
+  const pct = total > 0 ? Math.round(disc / total * 100) : 0;
+  document.getElementById('colProgressFill').style.width = pct + '%';
+  document.getElementById('colProgressLabel').textContent = disc + ' / ' + total + ' species discovered';
+  renderCollectionCards(currentCat);
+}
+
+function filterCollection(cat, el) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderCollectionCards(cat);
+}
+
+function renderCollectionCards(cat) {
+  const grid = document.getElementById('collectionGrid');
+  grid.innerHTML = '';
+  const filtered = cat === 'all' ? SPECIES : SPECIES.filter(s => s.category === cat);
+  filtered.forEach(sp => {
+    const unlocked = state.discovered.has(sp.id);
+    const card = document.createElement('div');
+    card.className = 'col-card ' + (unlocked ? 'unlocked' : 'locked');
+    card.innerHTML = `
+      <div class="col-emoji">${sp.emoji}</div>
+      <div class="col-details">
+        <div class="col-name">${sp.name}</div>
+        <div class="col-category">${sp.category} · ${sp.role}</div>
+        <div class="col-fact">${unlocked ? sp.fact : '???'}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ===== QUIZ =====
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function renderQuiz() {
+  state.quizOrder = shuffleArray([...Array(QUIZ_QUESTIONS.length).keys()]);
+  state.quizIndex = 0;
+  state.quizAnswered = false;
+  showQuestion();
+  updateQuizStats();
+}
+
+function showQuestion() {
+  const idx = state.quizOrder[state.quizIndex];
+  const q = QUIZ_QUESTIONS[idx];
+  document.getElementById('questionNum').textContent =
+    'Question ' + (state.quizIndex + 1) + ' of ' + QUIZ_QUESTIONS.length;
+  document.getElementById('questionEmoji').textContent = q.emoji;
+  document.getElementById('questionText').textContent = q.q;
+  const opts = document.getElementById('optionsList');
+  opts.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<div class="option-letter">${letters[i]}</div> ${opt}`;
+    btn.onclick = () => answerQuestion(i, btn, q);
+    opts.appendChild(btn);
+  });
+  document.getElementById('answerFeedback').classList.remove('show','feedback-correct','feedback-wrong');
+  document.getElementById('nextBtn').classList.remove('show');
+  document.getElementById('quizComplete').classList.remove('show');
+  document.getElementById('quizContent').style.display = '';
+  state.quizAnswered = false;
+}
+
+function answerQuestion(chosen, btn, q) {
+  if (state.quizAnswered) return;
+  state.quizAnswered = true;
+  state.quizTotal++;
+  const correct = chosen === q.ans;
+  if (correct) {
+    state.quizCorrect++;
+    state.quizStreak++;
+    if (state.quizStreak > state.bestStreak) state.bestStreak = state.quizStreak;
+  } else {
+    state.quizStreak = 0;
+  }
+  saveState();
+  const allBtns = document.querySelectorAll('.option-btn');
+  allBtns.forEach((b, i) => {
+    b.classList.add('disabled');
+    if (i === q.ans) b.classList.add('correct');
+    else if (b === btn && !correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('answerFeedback');
+  fb.className = 'answer-feedback show ' + (correct ? 'feedback-correct' : 'feedback-wrong');
+  document.getElementById('feedbackIcon').textContent = correct ? '✅' : '❌';
+  document.getElementById('feedbackTitle').textContent = correct ? '🎉 Correct!' : '❌ Not quite!';
+  document.getElementById('feedbackExp').textContent = q.exp;
+  document.getElementById('nextBtn').classList.add('show');
+  updateQuizStats();
+}
+
+function nextQuestion() {
+  state.quizIndex++;
+  if (state.quizIndex >= QUIZ_QUESTIONS.length) {
+    showQuizComplete();
+  } else {
+    showQuestion();
+  }
+}
+
+function showQuizComplete() {
+  document.getElementById('quizContent').style.display = 'none';
+  const complete = document.getElementById('quizComplete');
+  complete.classList.add('show');
+  const pct = Math.round(state.quizCorrect / QUIZ_QUESTIONS.length * 100);
+  document.getElementById('completeScore').textContent = state.quizCorrect + '/' + QUIZ_QUESTIONS.length;
+  let msg = '';
+  if (pct >= 90) msg = '🌲 Forest Master! You know the boreal forest inside out!';
+  else if (pct >= 70) msg = '🦉 Great job! You\'re becoming a real boreal expert.';
+  else if (pct >= 50) msg = '🐇 Good effort! Keep exploring to learn more.';
+  else msg = '🌱 Keep exploring the forest — every discovery teaches you something new!';
+  document.getElementById('completeMsg').textContent = msg;
+}
+
+function restartQuiz() {
+  document.getElementById('quizComplete').classList.remove('show');
+  document.getElementById('quizContent').style.display = '';
+  renderQuiz();
+}
+
+function updateQuizStats() {
+  document.getElementById('quizCorrect').textContent = state.quizCorrect;
+  document.getElementById('quizStreak').textContent = state.quizStreak;
+  document.getElementById('quizTotal').textContent = state.quizTotal;
+}
+
+// ===== FOOD WEB =====
+function buildFoodWeb() {
+  const challenge = FOOD_CHAIN_CHALLENGES[0];
+  state.chainSlots = [null, null, null, null];
+  state.selectedPoolItem = null;
+
+  const slotsEl = document.getElementById('chainSlots');
+  slotsEl.innerHTML = '';
+  challenge.slots.forEach((slot, i) => {
+    if (i > 0) {
+      const arrow = document.createElement('div');
+      arrow.className = 'chain-arrow';
+      arrow.textContent = '→';
+      slotsEl.appendChild(arrow);
+    }
+    const wrap = document.createElement('div');
+    wrap.className = 'chain-slot-wrap';
+    const slotDiv = document.createElement('div');
+    slotDiv.className = 'chain-slot';
+    slotDiv.id = 'slot-' + i;
+    slotDiv.dataset.index = i;
+    slotDiv.onclick = () => fillSlot(i);
+    const label = document.createElement('div');
+    label.className = 'chain-label';
+    label.textContent = slot.label;
+    wrap.appendChild(slotDiv);
+    wrap.appendChild(label);
+    slotsEl.appendChild(wrap);
+  });
+
+  const pool = document.getElementById('speciesPool');
+  pool.innerHTML = '';
+  challenge.pool.forEach(id => {
+    const item = document.createElement('div');
+    item.className = 'pool-item';
+    item.id = 'pool-' + id;
+    item.dataset.id = id;
+    item.innerHTML = `${challenge.poolEmoji[id]}<div class="pool-item-name">${challenge.poolNames[id]}</div>`;
+    item.onclick = () => selectPoolItem(id);
+    pool.appendChild(item);
+  });
+}
+
+function selectPoolItem(id) {
+  if (state.selectedPoolItem === id) {
+    state.selectedPoolItem = null;
+    document.querySelectorAll('.pool-item').forEach(el => el.classList.remove('selected'));
+    return;
+  }
+  state.selectedPoolItem = id;
+  document.querySelectorAll('.pool-item').forEach(el => el.classList.remove('selected'));
+  const item = document.getElementById('pool-' + id);
+  if (item) item.classList.add('selected');
+  showToast('Selected ' + FOOD_CHAIN_CHALLENGES[0].poolNames[id] + ' — now tap a slot!');
+}
+
+function fillSlot(index) {
+  const challenge = FOOD_CHAIN_CHALLENGES[0];
+  if (!state.selectedPoolItem) {
+    showToast('Tap a species first, then tap a slot!');
+    return;
+  }
+  const id = state.selectedPoolItem;
+
+  // Check if this species is already in another slot
+  if (state.chainSlots.includes(id)) {
+    const existingSlot = state.chainSlots.indexOf(id);
+    const oldSlotEl = document.getElementById('slot-' + existingSlot);
+    if (oldSlotEl) {
+      oldSlotEl.textContent = '';
+      oldSlotEl.classList.remove('filled');
+    }
+    state.chainSlots[existingSlot] = null;
+  }
+
+  // Free the old occupant of this slot
+  const prev = state.chainSlots[index];
+  if (prev) {
+    const prevPool = document.getElementById('pool-' + prev);
+    if (prevPool) prevPool.classList.remove('used');
+  }
+
+  state.chainSlots[index] = id;
+  const slotEl = document.getElementById('slot-' + index);
+  slotEl.textContent = challenge.poolEmoji[id];
+  slotEl.classList.add('filled');
+  slotEl.classList.remove('error');
+
+  const poolItem = document.getElementById('pool-' + id);
+  if (poolItem) poolItem.classList.add('used');
+
+  state.selectedPoolItem = null;
+  document.querySelectorAll('.pool-item').forEach(el => el.classList.remove('selected'));
+
+  document.getElementById('fwFeedback').classList.remove('show');
+}
+
+function checkChain() {
+  const challenge = FOOD_CHAIN_CHALLENGES[0];
+  const filled = state.chainSlots.filter(s => s !== null).length;
+  if (filled < 4) {
+    showToast('Fill all 4 slots first!');
+    return;
+  }
+
+  const chain = state.chainSlots;
+  const fb = document.getElementById('fwFeedback');
+
+  // Check roles in correct order
+  const expectedRoles = ['producer', 'primary', 'secondary', 'apex'];
+  let roleCorrect = true;
+  const slotEls = document.querySelectorAll('.chain-slot');
+  chain.forEach((id, i) => {
+    const actualRole = challenge.roles[id];
+    if (actualRole !== expectedRoles[i]) {
+      roleCorrect = false;
+      slotEls[i].classList.add('error');
+      setTimeout(() => slotEls[i].classList.remove('error'), 600);
+    }
+  });
+
+  if (roleCorrect) {
+    fb.className = 'fw-feedback show correct';
+    const names = chain.map(id => challenge.poolNames[id]);
+    fb.innerHTML = `✅ <b>Correct food chain!</b><br>${names.join(' → ')}<br><br>
+    Energy flows from the producer through primary, secondary consumers, to the apex predator. 
+    Each level only captures about 10% of the energy from the level below!`;
+    document.getElementById('fwCheckBtn').classList.add('success');
+    document.getElementById('fwCheckBtn').textContent = '🎉 Correct!';
+    showToast('🎉 Perfect food chain!');
+  } else {
+    fb.className = 'fw-feedback show incorrect';
+    fb.innerHTML = `❌ <b>Check the order!</b><br>Make sure roles are in the right sequence: <b>Producer → Primary Consumer → Secondary Consumer → Apex Predator</b>`;
+    showToast('Check the order of your chain!');
+  }
+}
+
+function resetChain() {
+  const challenge = FOOD_CHAIN_CHALLENGES[0];
+  state.chainSlots = [null, null, null, null];
+  state.selectedPoolItem = null;
+  for (let i = 0; i < 4; i++) {
+    const slotEl = document.getElementById('slot-' + i);
+    if (slotEl) {
+      slotEl.textContent = '';
+      slotEl.classList.remove('filled', 'error');
+    }
+  }
+  document.querySelectorAll('.pool-item').forEach(el => {
+    el.classList.remove('used', 'selected');
+  });
+  document.getElementById('fwFeedback').classList.remove('show');
+  document.getElementById('fwCheckBtn').classList.remove('success');
+  document.getElementById('fwCheckBtn').textContent = '✓ Check Food Chain';
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== START =====
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
