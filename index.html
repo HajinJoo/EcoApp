@@ -48,6 +48,10 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 .nav-btn.active .nav-icon{transform:scale(1.2)}
 .nav-btn span:last-child{font-size:10px;font-weight:600;letter-spacing:.3px;text-transform:uppercase}
 
+/* ===== BACK BUTTON ===== */
+.back-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(45,90,39,.35);border:1px solid #2d5a27;border-radius:10px;padding:5px 12px 5px 9px;color:#a5d6a7;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:8px;line-height:1.4;min-height:44px}
+.back-btn:active{background:rgba(45,90,39,.6);transform:scale(.97)}
+
 /* ===== HOME SCREEN ===== */
 .home-screen{background:linear-gradient(180deg,#0d2b10 0%,#1a4020 40%,#1e5025 60%,#0d2b10 100%)}
 .home-hero{position:relative;height:280px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
@@ -648,6 +652,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
     <!-- EXPLORE -->
     <div class="screen" id="screen-explore">
       <div class="explore-header">
+        <button class="back-btn" onclick="goBack()">‹ Back</button>
         <div class="explore-title">🗺️ Explore</div>
         <div class="explore-subtitle">Tap a zone to discover species</div>
       </div>
@@ -669,6 +674,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
     <!-- COLLECTION -->
     <div class="screen" id="screen-collection">
       <div class="collection-header">
+        <button class="back-btn" onclick="goBack()">‹ Back</button>
         <div class="collection-title">📖 Collection</div>
         <div class="collection-progress">
           <div class="col-progress-bar">
@@ -691,6 +697,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
     <div class="screen" id="screen-quiz">
       <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
       <div class="quiz-header">
+        <button class="back-btn" onclick="goBack()">‹ Back</button>
         <div class="quiz-title">🧠 Ecosystem Quiz</div>
         <div class="quiz-stats-row">
           <div class="quiz-stat">
@@ -750,6 +757,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
       <!-- ── Hub (default view) ── -->
       <div id="gamesHub">
         <div class="games-hub-header">
+          <button class="back-btn" onclick="goBack()">‹ Back</button>
           <div class="games-hub-title">🎮 Games</div>
           <div class="games-hub-subtitle">Pick your eco-adventure!</div>
         </div>
@@ -987,6 +995,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
     <!-- LEARN / ECOSYSTEM INFO -->
     <div class="screen learn-screen" id="screen-learn">
       <div class="learn-header">
+        <button class="back-btn" onclick="goBack()">‹ Back</button>
         <div class="learn-title">📚 Learn</div>
         <div class="learn-subtitle">Discover the Boreal Forest ecosystem</div>
       </div>
@@ -1577,6 +1586,7 @@ let state = {
   quizSessionCorrect: 0,
   quizSessionXp: 0,
   dashHighScore: 0,
+  tabHistory: [],
 };
 
 function loadState() {
@@ -1878,7 +1888,7 @@ function launchConfetti() {
   }
   draw();
 }
-function switchTab(tab) {
+function switchTab(tab, noHistory) {
   if (state.currentTab === tab) return;
   // Pause Forest Dash if leaving the games tab
   if (state.currentTab === 'foodweb') pauseAndCloseGame();
@@ -1888,11 +1898,18 @@ function switchTab(tab) {
   next.classList.add('active');
   document.getElementById('nav-' + state.currentTab).classList.remove('active');
   document.getElementById('nav-' + tab).classList.add('active');
+  if (!noHistory) state.tabHistory.push(state.currentTab);
   state.currentTab = tab;
   if (tab === 'home') updateHomeStats();
   if (tab === 'collection') refreshCollection();
   if (tab === 'quiz') updateQuizStats();
   if (tab === 'foodweb') updateDashHUD();
+}
+
+function goBack() {
+  if (state.currentTab === 'home') return;
+  const prev = state.tabHistory.pop() || 'home';
+  switchTab(prev, true);
 }
 
 // ===== EXPLORE =====
