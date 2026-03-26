@@ -265,6 +265,101 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 
 /* ===== SCROLL FADE ===== */
 .fade-edge{position:sticky;bottom:0;height:30px;background:linear-gradient(transparent,rgba(13,31,16,.8));pointer-events:none}
+
+/* ===== AURORA BOREALIS ===== */
+.aurora{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.aurora-band{position:absolute;left:-20%;width:140%;height:60px;border-radius:50%;filter:blur(18px);opacity:.55;animation:auroraFlow 7s ease-in-out infinite alternate}
+.aurora-band:nth-child(1){top:10%;background:linear-gradient(90deg,transparent,#00e676,#1de9b6,transparent);animation-delay:0s}
+.aurora-band:nth-child(2){top:22%;background:linear-gradient(90deg,transparent,#7c4dff,#40c4ff,transparent);height:40px;animation-delay:-2s;animation-duration:9s}
+.aurora-band:nth-child(3){top:38%;background:linear-gradient(90deg,transparent,#00e676,#76ff03,transparent);height:30px;animation-delay:-4s;animation-duration:6s}
+@keyframes auroraFlow{0%{transform:translateX(-15%) scaleY(1) skewX(-5deg);opacity:.4}50%{transform:translateX(5%) scaleY(1.4) skewX(3deg);opacity:.7}100%{transform:translateX(10%) scaleY(.9) skewX(-2deg);opacity:.5}}
+
+/* ===== RANK / XP WIDGET ===== */
+.rank-widget{background:linear-gradient(135deg,rgba(27,94,32,.8),rgba(46,125,50,.5));border:1.5px solid #388e3c;border-radius:18px;padding:14px 16px;margin-bottom:14px;position:relative;overflow:hidden}
+.rank-widget::before{content:'';position:absolute;top:-30px;right:-20px;width:100px;height:100px;background:radial-gradient(circle,rgba(102,187,106,.2),transparent 70%);pointer-events:none}
+.rank-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rank-badge{display:flex;align-items:center;gap:8px}
+.rank-icon{font-size:26px}
+.rank-name{font-size:17px;font-weight:800;color:#e8f5e9}
+.rank-level{font-size:11px;color:#a5d6a7;font-weight:600}
+.rank-xp-label{font-size:12px;color:#66bb6a;font-weight:700}
+.rank-xp-bar{background:rgba(0,0,0,.3);border-radius:8px;height:8px;overflow:hidden}
+.rank-xp-fill{height:100%;background:linear-gradient(90deg,#66bb6a,#b2ff59);border-radius:8px;transition:width .6s cubic-bezier(.34,1.56,.64,1)}
+.rank-xp-desc{font-size:11px;color:#81c784;margin-top:5px;display:flex;justify-content:space-between}
+
+/* ===== ACHIEVEMENTS ===== */
+.achievements-section{margin-bottom:16px}
+.achievements-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.achievements-row::-webkit-scrollbar{display:none}
+.ach-badge{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:58px;padding:10px 6px;border-radius:14px;border:1.5px solid #1a3a1e;background:rgba(13,31,16,.7);transition:all .3s;cursor:default;flex-shrink:0}
+.ach-badge.unlocked{border-color:#f9a825;background:linear-gradient(135deg,rgba(249,168,37,.15),rgba(255,193,7,.1));animation:achGlow 2s ease-in-out infinite alternate}
+.ach-badge.unlocked .ach-icon{filter:none}
+@keyframes achGlow{from{box-shadow:0 0 6px rgba(249,168,37,.4)}to{box-shadow:0 0 14px rgba(249,168,37,.7)}}
+.ach-icon{font-size:24px;filter:grayscale(1) brightness(.4)}
+.ach-label{font-size:9px;color:#81c784;text-align:center;line-height:1.2;font-weight:600}
+.ach-badge.unlocked .ach-label{color:#ffd54f}
+.ach-badge.locked .ach-icon{opacity:.4}
+
+/* ===== RARITY BADGES ===== */
+.rarity-common{}
+.rarity-rare{border-color:#42a5f5!important}
+.rarity-rare .col-emoji,.rarity-rare .species-emoji{background:rgba(66,165,245,.15)!important}
+.rarity-legendary{border-color:#ffd54f!important}
+.rarity-legendary .col-emoji,.rarity-legendary .species-emoji{background:rgba(255,213,79,.15)!important;animation:legendGlow 2s ease-in-out infinite alternate}
+@keyframes legendGlow{from{box-shadow:0 0 6px rgba(255,213,79,.3)}to{box-shadow:0 0 16px rgba(255,213,79,.6)}}
+.rarity-pill{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle}
+.rarity-pill.rare{background:rgba(66,165,245,.25);color:#90caf9;border:1px solid #42a5f5}
+.rarity-pill.legendary{background:rgba(255,213,79,.2);color:#ffd54f;border:1px solid #ffd54f}
+
+/* ===== DISCOVERY BURST ===== */
+.disc-burst{position:absolute;pointer-events:none;z-index:300;font-size:28px;transition:none}
+@keyframes burstFly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(.3);opacity:0}}
+.disc-burst-particle{position:absolute;animation:burstFly .7s ease-out forwards}
+.xp-popup{position:absolute;z-index:301;font-size:16px;font-weight:800;color:#b2ff59;text-shadow:0 2px 6px rgba(0,0,0,.6);animation:xpRise 1.2s ease forwards;pointer-events:none}
+@keyframes xpRise{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-60px);opacity:0}}
+
+/* ===== QUIZ TIMER ===== */
+.quiz-timer-wrap{padding:0 16px 10px;display:flex;align-items:center;gap:10px}
+.quiz-timer-bar{flex:1;height:6px;background:rgba(45,90,39,.3);border-radius:6px;overflow:hidden}
+.quiz-timer-fill{height:100%;background:linear-gradient(90deg,#f44336,#ff9800,#66bb6a);background-size:200% 100%;border-radius:6px;transition:width linear,background-position .5s}
+.quiz-timer-label{font-size:13px;font-weight:800;color:#e8f5e9;min-width:28px;text-align:right}
+.quiz-timer-fill.urgent{background:linear-gradient(90deg,#f44336,#ef5350);animation:timerPulse .4s ease-in-out infinite alternate}
+@keyframes timerPulse{from{opacity:1}to{opacity:.6}}
+
+/* ===== CONFETTI ===== */
+.confetti-canvas{position:absolute;inset:0;pointer-events:none;z-index:250}
+
+/* ===== MILESTONE TOAST (enhanced) ===== */
+.toast-milestone{background:linear-gradient(135deg,#1b5e20,#2e7d32);border:1.5px solid #66bb6a;font-size:14px;padding:12px 22px;text-align:center;white-space:normal;max-width:280px;line-height:1.4}
+
+/* ===== LEVEL-UP FLASH ===== */
+@keyframes levelUpFlash{0%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.3)}}
+.levelup-pop{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:400;pointer-events:none}
+.levelup-inner{background:linear-gradient(135deg,#1b5e20,#2e7d32);border:2px solid #b2ff59;border-radius:24px;padding:20px 30px;text-align:center;animation:levelUpFlash 1.5s ease forwards}
+.levelup-inner .lu-icon{font-size:44px}
+.levelup-inner .lu-title{font-size:13px;color:#a5d6a7;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.levelup-inner .lu-rank{font-size:20px;font-weight:800;color:#b2ff59;margin-top:2px}
+
+/* ===== ENHANCED HOME HERO ===== */
+.home-hero{position:relative;height:300px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+
+/* ===== QUIZ COMPLETE ENHANCED ===== */
+.stars-rating{display:flex;justify-content:center;gap:6px;font-size:32px;margin:10px 0}
+
+/* ===== COLLECTION RARITY FILTER ===== */
+.col-card.rarity-rare{border-color:#42a5f5}
+.col-card.rarity-legendary{border-color:#ffd54f}
+
+/* ===== ZONE VISUAL VARIETY ===== */
+.zone-btn.zone-canopy{border-color:rgba(102,187,106,.4);background:linear-gradient(135deg,rgba(27,94,32,.5),rgba(0,0,0,.3))}
+.zone-btn.zone-understory{border-color:rgba(129,199,132,.4);background:linear-gradient(135deg,rgba(46,125,50,.5),rgba(0,0,0,.3))}
+.zone-btn.zone-floor{border-color:rgba(161,136,127,.4);background:linear-gradient(135deg,rgba(78,52,46,.5),rgba(0,0,0,.3))}
+.zone-btn.zone-wetlands{border-color:rgba(100,181,246,.4);background:linear-gradient(135deg,rgba(21,101,192,.3),rgba(0,0,0,.3))}
+
+/* ===== COLLECTION HEADER BADGE ===== */
+.col-header-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.col-hbadge{font-size:11px;padding:3px 10px;border-radius:10px;border:1px solid #2d5a27;color:#a5d6a7;background:rgba(45,90,39,.2)}
+.col-hbadge.active{border-color:#66bb6a;background:rgba(102,187,106,.2);color:#e8f5e9}
 </style>
 </head>
 <body>
@@ -288,6 +383,11 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
     <div class="screen active" id="screen-home">
       <div class="home-hero">
         <div class="sky-layer"></div>
+        <div class="aurora">
+          <div class="aurora-band"></div>
+          <div class="aurora-band"></div>
+          <div class="aurora-band"></div>
+        </div>
         <div class="stars" id="stars"></div>
         <div class="moon"></div>
         <div class="tree-line" id="treeLineHome"></div>
@@ -297,6 +397,27 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
         </div>
       </div>
       <div class="home-content">
+        <!-- Ranger Rank / XP Widget -->
+        <div class="rank-widget" id="rankWidget">
+          <div class="rank-top">
+            <div class="rank-badge">
+              <span class="rank-icon" id="rankIcon">🌱</span>
+              <div>
+                <div class="rank-name" id="rankName">Seedling</div>
+                <div class="rank-level" id="rankLevel">Rank 1</div>
+              </div>
+            </div>
+            <div class="rank-xp-label" id="rankXpLabel">0 XP</div>
+          </div>
+          <div class="rank-xp-bar"><div class="rank-xp-fill" id="rankXpFill" style="width:0%"></div></div>
+          <div class="rank-xp-desc"><span id="rankXpDesc">Earn XP by exploring & answering questions!</span><span id="rankXpNext"></span></div>
+        </div>
+        <!-- Achievements -->
+        <div class="achievements-section">
+          <div class="section-title">🏅 Achievements</div>
+          <div class="achievements-row" id="achievementsRow"></div>
+        </div>
+        <!-- Quick stats row -->
         <div class="stats-row">
           <div class="stat-card">
             <div class="stat-number" id="homeDiscovered">0</div>
@@ -308,7 +429,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
           </div>
           <div class="stat-card">
             <div class="stat-number" id="homeStreak">0🔥</div>
-            <div class="stat-label">Streak</div>
+            <div class="stat-label">Best Streak</div>
           </div>
         </div>
         <div class="section-title">🗺️ Quick Explore</div>
@@ -407,6 +528,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 
     <!-- QUIZ -->
     <div class="screen" id="screen-quiz">
+      <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
       <div class="quiz-header">
         <div class="quiz-title">🧠 Ecosystem Quiz</div>
         <div class="quiz-stats-row">
@@ -425,13 +547,17 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
             </div>
           </div>
           <div class="quiz-stat">
-            <span class="quiz-stat-icon">📝</span>
+            <span class="quiz-stat-icon">⭐</span>
             <div>
-              <div class="quiz-stat-val" id="quizTotal">0</div>
-              <div class="quiz-stat-lbl">Total</div>
+              <div class="quiz-stat-val" id="quizXp">0</div>
+              <div class="quiz-stat-lbl">XP earned</div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="quiz-timer-wrap" id="quizTimerWrap">
+        <div class="quiz-timer-bar"><div class="quiz-timer-fill" id="quizTimerFill" style="width:100%"></div></div>
+        <div class="quiz-timer-label" id="quizTimerLabel">20</div>
       </div>
       <div class="quiz-content" id="quizContent">
         <div class="question-card" id="questionCard">
@@ -451,6 +577,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
         <div class="complete-emoji">🏆</div>
         <div class="complete-title">Quiz Complete!</div>
         <div class="complete-score" id="completeScore">0/20</div>
+        <div class="stars-rating" id="starsRating">⭐⭐⭐</div>
         <div class="complete-msg" id="completeMsg"></div>
         <button class="restart-btn" onclick="restartQuiz()">🔄 Play Again</button>
       </div>
@@ -552,118 +679,118 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 // ===== DATA =====
 const SPECIES = [
   // Plants
-  {id:'black-spruce',emoji:'🌲',name:'Black Spruce',category:'plants',zone:'canopy',
+  {id:'black-spruce',emoji:'🌲',name:'Black Spruce',category:'plants',zone:'canopy',rarity:'common',
    desc:'Dominant tree of the boreal forest, thrives in cold, wet, boggy conditions.',
    fact:'Can survive temperatures down to -60°C and often grows in dense stands called "black spruce muskeg".',
    role:'producer'},
-  {id:'white-spruce',emoji:'🌳',name:'White Spruce',category:'plants',zone:'canopy',
+  {id:'white-spruce',emoji:'🌳',name:'White Spruce',category:'plants',zone:'canopy',rarity:'common',
    desc:'Tall conifer found on well-drained upland sites throughout the boreal zone.',
    fact:'White spruce cones are a critical food source for red squirrels, which cache thousands each winter.',
    role:'producer'},
-  {id:'jack-pine',emoji:'🌴',name:'Jack Pine',category:'plants',zone:'canopy',
+  {id:'jack-pine',emoji:'🌴',name:'Jack Pine',category:'plants',zone:'canopy',rarity:'rare',
    desc:'Fire-adapted conifer with serotinous cones that only open in intense heat.',
    fact:'Jack pine cones can remain closed on the tree for up to 25 years, waiting for a forest fire to release seeds.',
    role:'producer'},
-  {id:'balsam-fir',emoji:'🎄',name:'Balsam Fir',category:'plants',zone:'canopy',
+  {id:'balsam-fir',emoji:'🎄',name:'Balsam Fir',category:'plants',zone:'canopy',rarity:'common',
    desc:'Aromatic conifer with flat needles, important winter shelter for many animals.',
    fact:'The resin blisters on balsam fir bark are used by Indigenous peoples for medicinal and waterproofing purposes.',
    role:'producer'},
-  {id:'paper-birch',emoji:'🪵',name:'Paper Birch',category:'plants',zone:'understory',
+  {id:'paper-birch',emoji:'🪵',name:'Paper Birch',category:'plants',zone:'understory',rarity:'common',
    desc:'Deciduous tree with distinctive white bark, pioneer species after disturbances.',
    fact:'Its bark is nearly waterproof and was used by Indigenous peoples to build canoes and create containers.',
    role:'producer'},
-  {id:'tamarack',emoji:'🌿',name:'Tamarack',category:'plants',zone:'wetlands',
+  {id:'tamarack',emoji:'🌿',name:'Tamarack',category:'plants',zone:'wetlands',rarity:'rare',
    desc:'The only deciduous conifer in North America—it drops its needles every autumn.',
    fact:'Tamarack needles turn brilliant gold in autumn before dropping, creating spectacular wetland displays.',
    role:'producer'},
-  {id:'sphagnum-moss',emoji:'🟢',name:'Sphagnum Moss',category:'plants',zone:'floor',
+  {id:'sphagnum-moss',emoji:'🟢',name:'Sphagnum Moss',category:'plants',zone:'floor',rarity:'common',
    desc:'Peat-forming moss that creates the boggy conditions characteristic of boreal wetlands.',
    fact:'One kilogram of dried sphagnum moss can absorb up to 20 kilograms of water.',
    role:'producer'},
-  {id:'lichen',emoji:'🍄',name:'Reindeer Lichen',category:'plants',zone:'floor',
+  {id:'lichen',emoji:'🍄',name:'Reindeer Lichen',category:'plants',zone:'floor',rarity:'rare',
    desc:'Slow-growing symbiotic organism — part fungus, part algae — critical winter food for caribou.',
    fact:'Reindeer lichen grows only 3–5mm per year and can live for hundreds of years.',
    role:'producer'},
-  {id:'blueberry',emoji:'🫐',name:'Bog Blueberry',category:'plants',zone:'understory',
+  {id:'blueberry',emoji:'🫐',name:'Bog Blueberry',category:'plants',zone:'understory',rarity:'common',
    desc:'Low-growing shrub found across boreal bogs and barrens, prized by bears and birds.',
    fact:'Bears can eat up to 20,000 blueberries per day while preparing for hibernation.',
    role:'producer'},
-  {id:'labrador-tea',emoji:'☕',name:'Labrador Tea',category:'plants',zone:'understory',
+  {id:'labrador-tea',emoji:'☕',name:'Labrador Tea',category:'plants',zone:'understory',rarity:'common',
    desc:'Aromatic shrub with white flowers, used by Indigenous peoples as a herbal tea.',
    fact:'Labrador tea leaves contain ledol, a compound that can cause drowsiness if consumed in large quantities.',
    role:'producer'},
   // Mammals
-  {id:'moose',emoji:'🫎',name:'Moose',category:'mammals',zone:'wetlands',
+  {id:'moose',emoji:'🫎',name:'Moose',category:'mammals',zone:'wetlands',rarity:'common',
    desc:'Largest member of the deer family; feeds on aquatic plants, willows, and birch.',
    fact:'A bull moose can eat up to 32 kg of vegetation per day and can run up to 56 km/h.',
    role:'primary'},
-  {id:'caribou',emoji:'🦌',name:'Caribou',category:'mammals',zone:'floor',
+  {id:'caribou',emoji:'🦌',name:'Caribou',category:'mammals',zone:'floor',rarity:'rare',
    desc:'Migratory deer with wide hooves for snow travel; relies heavily on lichen in winter.',
    fact:'Both male and female caribou have antlers — the only deer species where females regularly grow them.',
    role:'primary'},
-  {id:'wolf',emoji:'🐺',name:'Gray Wolf',category:'mammals',zone:'floor',
+  {id:'wolf',emoji:'🐺',name:'Gray Wolf',category:'mammals',zone:'floor',rarity:'legendary',
    desc:'Apex predator of the boreal forest, hunts in family packs of 5–10 individuals.',
    fact:'Gray wolves can travel up to 80 km in a single day while searching for prey.',
    role:'apex'},
-  {id:'black-bear',emoji:'🐻',name:'Black Bear',category:'mammals',zone:'understory',
+  {id:'black-bear',emoji:'🐻',name:'Black Bear',category:'mammals',zone:'understory',rarity:'rare',
    desc:'Omnivorous forest bear; key seed disperser, berry consumer, and honey raider.',
    fact:'Black bears are not true hibernators — their body temperature only drops slightly during winter denning.',
    role:'apex'},
-  {id:'lynx',emoji:'🐈',name:'Canada Lynx',category:'mammals',zone:'understory',
+  {id:'lynx',emoji:'🐈',name:'Canada Lynx',category:'mammals',zone:'understory',rarity:'legendary',
    desc:'Specialized predator whose population closely tracks the snowshoe hare cycle.',
    fact:'Canada lynx populations boom and crash roughly every 10 years, synchronized with hare population cycles.',
    role:'secondary'},
-  {id:'hare',emoji:'🐇',name:'Snowshoe Hare',category:'mammals',zone:'understory',
+  {id:'hare',emoji:'🐇',name:'Snowshoe Hare',category:'mammals',zone:'understory',rarity:'common',
    desc:'Key prey species; turns white in winter and undergoes dramatic 10-year population cycles.',
    fact:'Snowshoe hares turn white in winter — each hair is actually hollow to trap warmth.',
    role:'primary'},
-  {id:'beaver',emoji:'🦫',name:'Beaver',category:'mammals',zone:'wetlands',
+  {id:'beaver',emoji:'🦫',name:'Beaver',category:'mammals',zone:'wetlands',rarity:'common',
    desc:'Ecosystem engineer; dams create wetlands vital for hundreds of species.',
    fact:'A beaver colony can build a dam over 100 metres long that lasts for centuries.',
    role:'primary'},
-  {id:'red-fox',emoji:'🦊',name:'Red Fox',category:'mammals',zone:'floor',
+  {id:'red-fox',emoji:'🦊',name:'Red Fox',category:'mammals',zone:'floor',rarity:'common',
    desc:'Adaptable omnivore; eats hares, voles, berries, and birds\' eggs.',
    fact:'Red foxes can hear mice under 1 metre of snow and pounce precisely to catch them.',
    role:'secondary'},
   // Birds
-  {id:'gray-owl',emoji:'🦉',name:'Great Gray Owl',category:'birds',zone:'canopy',
+  {id:'gray-owl',emoji:'🦉',name:'Great Gray Owl',category:'birds',zone:'canopy',rarity:'legendary',
    desc:'Boreal forest icon; hunts voles and lemmings under deep snow with extraordinary hearing.',
    fact:'The Great Gray Owl\'s facial disc is up to 38cm across — the largest of any owl species.',
    role:'secondary'},
-  {id:'chickadee',emoji:'🐦',name:'Boreal Chickadee',category:'birds',zone:'canopy',
+  {id:'chickadee',emoji:'🐦',name:'Boreal Chickadee',category:'birds',zone:'canopy',rarity:'common',
    desc:'Year-round resident with remarkable cold-weather adaptations; caches thousands of seeds.',
    fact:'Boreal chickadees can remember the location of thousands of seed caches — their hippocampus actually grows in autumn.',
    role:'primary'},
-  {id:'loon',emoji:'🦆',name:'Common Loon',category:'birds',zone:'wetlands',
+  {id:'loon',emoji:'🦆',name:'Common Loon',category:'birds',zone:'wetlands',rarity:'rare',
    desc:'Symbol of Canada\'s wilderness; dives up to 60m for fish in boreal lakes.',
    fact:'Loons have solid bones (unlike most birds) to help them dive — they can stay submerged for up to 5 minutes.',
    role:'secondary'},
-  {id:'spruce-grouse',emoji:'🦃',name:'Spruce Grouse',category:'birds',zone:'understory',
+  {id:'spruce-grouse',emoji:'🦃',name:'Spruce Grouse',category:'birds',zone:'understory',rarity:'common',
    desc:'Specialist feeder on spruce and fir needles; incredibly well camouflaged.',
    fact:'Spruce grouse are so tame they are sometimes called "fool hens" — they barely react to approaching humans.',
    role:'primary'},
   // Insects
-  {id:'spruce-budworm',emoji:'🐛',name:'Spruce Budworm',category:'insects',zone:'canopy',
+  {id:'spruce-budworm',emoji:'🐛',name:'Spruce Budworm',category:'insects',zone:'canopy',rarity:'rare',
    desc:'Most destructive forest insect in North America; defoliates millions of hectares in outbreaks.',
    fact:'A single spruce budworm outbreak can defoliate over 55 million hectares across the boreal forest.',
    role:'primary'},
-  {id:'pollinator',emoji:'🐝',name:'Boreal Bee',category:'insects',zone:'floor',
+  {id:'pollinator',emoji:'🐝',name:'Boreal Bee',category:'insects',zone:'floor',rarity:'common',
    desc:'Native bees pollinate boreal berries and flowering plants essential to the ecosystem.',
    fact:'Bumblebees are adapted to the boreal — they can "shiver" their flight muscles to warm up in cold temperatures.',
    role:'primary'},
-  {id:'bark-beetle',emoji:'🪲',name:'Bark Beetle',category:'insects',zone:'canopy',
+  {id:'bark-beetle',emoji:'🪲',name:'Bark Beetle',category:'insects',zone:'canopy',rarity:'common',
    desc:'Naturally occurring decomposer that helps recycle dead trees back into the forest.',
    fact:'Bark beetle galleries under the bark look like intricate artwork — each species makes a distinctive pattern.',
    role:'decomposer'},
-  {id:'dragonfly',emoji:'🦟',name:'Boreal Dragonfly',category:'insects',zone:'wetlands',
+  {id:'dragonfly',emoji:'🦟',name:'Boreal Dragonfly',category:'insects',zone:'wetlands',rarity:'rare',
    desc:'Top aquatic predator in boreal lakes; larvae live in water for up to 5 years.',
    fact:'Dragonflies have nearly 360-degree vision and can catch prey mid-air with over 95% success rate.',
    role:'secondary'},
-  {id:'wood-ant',emoji:'🐜',name:'Wood Ant',category:'insects',zone:'floor',
+  {id:'wood-ant',emoji:'🐜',name:'Wood Ant',category:'insects',zone:'floor',rarity:'common',
    desc:'Forest engineer that aerates soil and farms aphids; critical decomposer.',
    fact:'A single wood ant nest can contain up to 500,000 workers and multiple queens.',
    role:'decomposer'},
-  {id:'mayfly',emoji:'🪰',name:'Boreal Mayfly',category:'insects',zone:'wetlands',
+  {id:'mayfly',emoji:'🪰',name:'Boreal Mayfly',category:'insects',zone:'wetlands',rarity:'legendary',
    desc:'Water quality indicator; larvae live in streams for up to 3 years before emerging.',
    fact:'Adult mayflies live only 24 hours — just long enough to mate and lay eggs.',
    role:'primary'},
@@ -777,6 +904,33 @@ const FOOD_CHAIN_CHALLENGES = [
   }
 ];
 
+// ===== XP & RANKS =====
+const RANKS = [
+  {name:'Seedling',icon:'🌱',min:0,max:100},
+  {name:'Sapling',icon:'🌿',min:100,max:250},
+  {name:'Forest Ranger',icon:'🌲',min:250,max:500},
+  {name:'Naturalist',icon:'🦉',min:500,max:900},
+  {name:'Boreal Explorer',icon:'🗺️',min:900,max:1400},
+  {name:'Boreal Master',icon:'🏆',min:1400,max:Infinity},
+];
+const XP_DISCOVERY = 50;
+const XP_DISCOVERY_RARE = 80;
+const XP_DISCOVERY_LEGENDARY = 130;
+const XP_CORRECT = 30;
+const XP_STREAK_BONUS = 20;
+const XP_CHAIN = 100;
+const QUIZ_TIME_LIMIT = 20;
+
+// ===== ACHIEVEMENTS =====
+const ACHIEVEMENTS = [
+  {id:'first-discovery',icon:'🌱',label:'First Steps',desc:'Discover your first species',check:s=>s.discovered.size>=1},
+  {id:'all-birds',icon:'🦅',label:'Bird Watcher',desc:'Discover all 4 bird species',check:s=>['gray-owl','chickadee','loon','spruce-grouse'].every(id=>s.discovered.has(id))},
+  {id:'all-plants',icon:'🌿',label:'Plant Whisperer',desc:'Discover all 10 plant species',check:s=>SPECIES.filter(sp=>sp.category==='plants').every(sp=>s.discovered.has(sp.id))},
+  {id:'all-mammals',icon:'🦌',label:'Wild Kingdom',desc:'Discover all 8 mammal species',check:s=>SPECIES.filter(sp=>sp.category==='mammals').every(sp=>s.discovered.has(sp.id))},
+  {id:'perfect-quiz',icon:'🏆',label:'Perfect Score',desc:'Score 20/20 on the quiz',check:s=>s.perfectQuiz===true},
+  {id:'full-collection',icon:'🌍',label:'Forest Master',desc:'Discover all 28 species',check:s=>s.discovered.size>=28},
+];
+
 // ===== STATE =====
 let state = {
   discovered: new Set(),
@@ -790,27 +944,38 @@ let state = {
   quizAnswered: false,
   chainSlots: [null, null, null, null],
   selectedPoolItem: null,
+  xp: 0,
+  achievements: new Set(),
+  perfectQuiz: false,
+  quizSessionCorrect: 0,
+  quizSessionXp: 0,
 };
 
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem('borealquest_v2') || '{}');
+    const saved = JSON.parse(localStorage.getItem('borealquest_v3') || '{}');
     if (saved.discovered) state.discovered = new Set(saved.discovered);
     if (saved.quizCorrect) state.quizCorrect = saved.quizCorrect;
     if (saved.quizTotal) state.quizTotal = saved.quizTotal;
     if (saved.quizStreak) state.quizStreak = saved.quizStreak;
     if (saved.bestStreak) state.bestStreak = saved.bestStreak;
+    if (saved.xp) state.xp = saved.xp;
+    if (saved.achievements) state.achievements = new Set(saved.achievements);
+    if (saved.perfectQuiz) state.perfectQuiz = saved.perfectQuiz;
   } catch(e) {}
 }
 
 function saveState() {
   try {
-    localStorage.setItem('borealquest_v2', JSON.stringify({
+    localStorage.setItem('borealquest_v3', JSON.stringify({
       discovered: [...state.discovered],
       quizCorrect: state.quizCorrect,
       quizTotal: state.quizTotal,
       quizStreak: state.quizStreak,
       bestStreak: state.bestStreak,
+      xp: state.xp,
+      achievements: [...state.achievements],
+      perfectQuiz: state.perfectQuiz,
     }));
   } catch(e) {}
 }
@@ -818,6 +983,11 @@ function saveState() {
 // ===== INIT =====
 function init() {
   loadState();
+  // set milestone watermark from saved progress so we don't replay old milestones
+  const disc = state.discovered.size;
+  const total = SPECIES.length;
+  const pct = total > 0 ? Math.round(disc / total * 100) : 0;
+  _lastMilestone = [100, 75, 50, 25, 0].find(m => pct >= m) || 0;
   updateClock();
   setInterval(updateClock, 30000);
   buildStars();
@@ -825,8 +995,10 @@ function init() {
   buildZones();
   buildCollection();
   buildFoodWeb();
+  buildAchievements();
   renderQuiz();
   updateHomeStats();
+  updateRankDisplay();
   rotateFunFact();
   setInterval(rotateFunFact, 8000);
 }
@@ -882,9 +1054,200 @@ function updateHomeStats() {
   document.getElementById('homeProgressBar').style.width = pct + '%';
   document.getElementById('homeProgressText').textContent = disc + ' of ' + total + ' species discovered';
   document.getElementById('homeProgressPct').textContent = pct + '%';
+  updateRankDisplay();
 }
 
-// ===== TAB SWITCHING =====
+// ===== RANK & XP =====
+function getRankInfo(xp) {
+  for (let i = RANKS.length - 1; i >= 0; i--) {
+    if (xp >= RANKS[i].min) return {rank: RANKS[i], index: i};
+  }
+  return {rank: RANKS[0], index: 0};
+}
+
+function gainXP(amount, label) {
+  const prevXp = state.xp;
+  const prevRank = getRankInfo(prevXp);
+  state.xp += amount;
+  const newRank = getRankInfo(state.xp);
+  saveState();
+  updateRankDisplay();
+  if (newRank.index > prevRank.index) {
+    showLevelUp(newRank.rank);
+  }
+  // show +XP popup near center
+  spawnXpPopup('+' + amount + ' XP' + (label ? ' · ' + label : ''));
+}
+
+function updateRankDisplay() {
+  const {rank, index} = getRankInfo(state.xp);
+  const nextRank = RANKS[index + 1];
+  document.getElementById('rankIcon').textContent = rank.icon;
+  document.getElementById('rankName').textContent = rank.name;
+  document.getElementById('rankLevel').textContent = 'Rank ' + (index + 1);
+  document.getElementById('rankXpLabel').textContent = state.xp + ' XP';
+  const min = rank.min, max = nextRank ? nextRank.min : rank.min + 1;
+  const pct = nextRank ? Math.min(100, Math.round((state.xp - min) / (max - min) * 100)) : 100;
+  document.getElementById('rankXpFill').style.width = pct + '%';
+  if (nextRank) {
+    document.getElementById('rankXpDesc').textContent = (max - state.xp) + ' XP to ' + nextRank.name;
+    document.getElementById('rankXpNext').textContent = nextRank.icon;
+  } else {
+    document.getElementById('rankXpDesc').textContent = 'Maximum rank achieved! 🏆';
+    document.getElementById('rankXpNext').textContent = '';
+  }
+}
+
+function showLevelUp(rank) {
+  const phone = document.getElementById('phone');
+  const pop = document.createElement('div');
+  pop.className = 'levelup-pop';
+  pop.innerHTML = `<div class="levelup-inner">
+    <div class="lu-icon">${rank.icon}</div>
+    <div class="lu-title">Rank Up!</div>
+    <div class="lu-rank">${rank.name}</div>
+  </div>`;
+  phone.appendChild(pop);
+  setTimeout(() => pop.remove(), 1800);
+}
+
+function spawnXpPopup(text) {
+  const phone = document.getElementById('phone');
+  const el = document.createElement('div');
+  el.className = 'xp-popup';
+  el.textContent = text;
+  el.style.left = (100 + Math.random() * 150) + 'px';
+  el.style.top = (300 + Math.random() * 100) + 'px';
+  phone.appendChild(el);
+  setTimeout(() => el.remove(), 1300);
+}
+
+// ===== ACHIEVEMENTS =====
+function buildAchievements() {
+  const row = document.getElementById('achievementsRow');
+  row.innerHTML = '';
+  ACHIEVEMENTS.forEach(a => {
+    const div = document.createElement('div');
+    const unlocked = state.achievements.has(a.id);
+    div.className = 'ach-badge ' + (unlocked ? 'unlocked' : 'locked');
+    div.id = 'ach-' + a.id;
+    div.title = a.desc;
+    div.innerHTML = `<div class="ach-icon">${a.icon}</div><div class="ach-label">${a.label}</div>`;
+    row.appendChild(div);
+  });
+}
+
+function checkAchievements() {
+  ACHIEVEMENTS.forEach(a => {
+    if (!state.achievements.has(a.id) && a.check(state)) {
+      state.achievements.add(a.id);
+      saveState();
+      const el = document.getElementById('ach-' + a.id);
+      if (el) el.className = 'ach-badge unlocked';
+      showToastMilestone('🏅 Achievement: ' + a.label + '! ' + a.icon);
+    }
+  });
+}
+
+// ===== DISCOVERY BURST =====
+function showDiscoveryBurst(cardEl, sp) {
+  const phone = document.getElementById('phone');
+  const rect = cardEl.getBoundingClientRect();
+  const phoneRect = phone.getBoundingClientRect();
+  const cx = rect.left - phoneRect.left + rect.width / 2;
+  const cy = rect.top - phoneRect.top + rect.height / 2;
+  const particles = ['🌿','✨','⭐','💚','🍃','🌟'];
+  for (let i = 0; i < 8; i++) {
+    const p = document.createElement('div');
+    p.className = 'disc-burst-particle';
+    p.style.cssText = `left:${cx}px;top:${cy}px;position:absolute;font-size:${14+Math.random()*10}px;z-index:300;pointer-events:none`;
+    const angle = (i / 8) * Math.PI * 2;
+    const dist = 50 + Math.random() * 50;
+    p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+    p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+    p.textContent = particles[i % particles.length];
+    p.style.animation = 'burstFly .8s ease-out forwards';
+    phone.appendChild(p);
+    setTimeout(() => p.remove(), 900);
+  }
+  // Big emoji flash
+  const flash = document.createElement('div');
+  flash.style.cssText = `position:absolute;left:${cx-24}px;top:${cy-30}px;font-size:48px;z-index:305;pointer-events:none;animation:xpRise 1s ease forwards`;
+  flash.textContent = sp.emoji;
+  phone.appendChild(flash);
+  setTimeout(() => flash.remove(), 1100);
+}
+
+// ===== MILESTONE CHECK =====
+let _lastMilestone = 0;
+function checkMilestone() {
+  const disc = state.discovered.size;
+  const total = SPECIES.length;
+  const pct = Math.round(disc / total * 100);
+  const milestones = [25, 50, 75, 100];
+  // Fire only the single highest newly-crossed milestone
+  const crossed = milestones.filter(m => pct >= m && _lastMilestone < m);
+  if (crossed.length === 0) return;
+  const m = crossed[crossed.length - 1];
+  _lastMilestone = m;
+  const msgs = {
+    25:'🌿 Quarter way there! The forest is opening up to you!',
+    50:'🌲 Halfway! You\'re becoming a true forest ranger!',
+    75:'🦉 Almost there — only a few secrets left!',
+    100:'🏆 All 28 species discovered! You\'re a Boreal Master!'
+  };
+  setTimeout(() => showToastMilestone(msgs[m]), 800);
+  gainXP(m, 'Milestone');
+}
+
+function showToastMilestone(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast toast-milestone show';
+  setTimeout(() => { t.classList.remove('show'); setTimeout(()=>t.className='toast',300); }, 3500);
+}
+
+// ===== CONFETTI =====
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.offsetWidth;
+  const h = canvas.offsetHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+  const pieces = Array.from({length:80}, () => ({
+    x: Math.random() * w,
+    y: Math.random() * -h,
+    r: 4 + Math.random() * 6,
+    d: 1 + Math.random() * 3,
+    color: ['#66bb6a','#b2ff59','#ffd54f','#40c4ff','#ff8a65','#ce93d8'][Math.floor(Math.random()*6)],
+    tilt: Math.random() * 10 - 5,
+    tiltAngle: 0,
+    tiltSpeed: 0.1 + Math.random() * 0.1,
+  }));
+  let frame = 0;
+  const maxFrames = 200;
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    pieces.forEach(p => {
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.ellipse(p.x, p.y, p.r, p.r * 0.4, p.tilt, 0, Math.PI * 2);
+      ctx.fill();
+      p.y += p.d + frame * 0.01;
+      p.x += Math.sin(frame * 0.02 + p.tiltAngle) * 1.5;
+      p.tiltAngle += p.tiltSpeed;
+      if (p.y > h) { p.y = -10; p.x = Math.random() * w; }
+    });
+    frame++;
+    if (frame < maxFrames) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, w, h);
+  }
+  draw();
+}
 function switchTab(tab) {
   if (state.currentTab === tab) return;
   const old = document.getElementById('screen-' + state.currentTab);
@@ -904,7 +1267,7 @@ function buildZones() {
   const grid = document.getElementById('zonesGrid');
   ZONES.forEach(zone => {
     const btn = document.createElement('button');
-    btn.className = 'zone-btn';
+    btn.className = 'zone-btn zone-' + zone.id;
     btn.id = 'zone-' + zone.id;
     const discovered = zone.species.filter(id => state.discovered.has(id)).length;
     btn.innerHTML = `
@@ -931,11 +1294,15 @@ function showZone(zone) {
     if (!sp) return;
     const isDiscovered = state.discovered.has(id);
     const card = document.createElement('div');
-    card.className = 'species-card' + (isDiscovered ? ' discovered' : '');
+    const rarityClass = sp.rarity !== 'common' ? ' rarity-' + sp.rarity : '';
+    card.className = 'species-card' + (isDiscovered ? ' discovered' : '') + rarityClass;
+    const rarityPill = sp.rarity !== 'common'
+      ? `<span class="rarity-pill ${sp.rarity}">${sp.rarity === 'legendary' ? '⭐ Legendary' : '💎 Rare'}</span>`
+      : '';
     card.innerHTML = `
       <div class="species-emoji">${sp.emoji}</div>
       <div class="species-info">
-        <div class="species-name">${sp.name}</div>
+        <div class="species-name">${sp.name}${rarityPill}</div>
         <div class="species-type">${sp.category} · ${sp.role}</div>
         <div class="species-desc">${sp.desc}</div>
         ${isDiscovered ?
@@ -955,6 +1322,9 @@ function showZone(zone) {
 function discoverSpecies(id, card) {
   if (!state.discovered.has(id)) {
     state.discovered.add(id);
+    const sp = SPECIES.find(s => s.id === id);
+    const xpAmt = sp.rarity === 'legendary' ? XP_DISCOVERY_LEGENDARY : sp.rarity === 'rare' ? XP_DISCOVERY_RARE : XP_DISCOVERY;
+    gainXP(xpAmt, sp.rarity !== 'common' ? sp.rarity + '!' : '');
     saveState();
     card.classList.add('discovered');
     const badge = card.querySelector('.discover-badge');
@@ -962,10 +1332,13 @@ function discoverSpecies(id, card) {
       badge.className = 'already-badge';
       badge.textContent = '✓ Discovered';
     }
-    const sp = SPECIES.find(s => s.id === id);
-    showToast('🌿 Discovered: ' + sp.name + '!');
+    showDiscoveryBurst(card, sp);
+    const rarityTag = sp.rarity === 'legendary' ? ' ⭐ LEGENDARY!' : sp.rarity === 'rare' ? ' 💎 Rare!' : '';
+    showToast('🌿 Discovered: ' + sp.name + rarityTag);
     refreshZoneCounts();
     updateHomeStats();
+    checkMilestone();
+    checkAchievements();
   }
 }
 
@@ -1015,17 +1388,71 @@ function renderCollectionCards(cat) {
   filtered.forEach(sp => {
     const unlocked = state.discovered.has(sp.id);
     const card = document.createElement('div');
-    card.className = 'col-card ' + (unlocked ? 'unlocked' : 'locked');
+    const rarityClass = sp.rarity !== 'common' ? ' rarity-' + sp.rarity : '';
+    card.className = 'col-card ' + (unlocked ? 'unlocked' : 'locked') + rarityClass;
+    const rarityPill = sp.rarity !== 'common'
+      ? `<span class="rarity-pill ${sp.rarity}">${sp.rarity === 'legendary' ? '⭐' : '💎'} ${sp.rarity}</span>`
+      : '';
     card.innerHTML = `
       <div class="col-emoji">${sp.emoji}</div>
       <div class="col-details">
-        <div class="col-name">${sp.name}</div>
+        <div class="col-name">${sp.name} ${rarityPill}</div>
         <div class="col-category">${sp.category} · ${sp.role}</div>
         <div class="col-fact">${unlocked ? sp.fact : '???'}</div>
       </div>
     `;
     grid.appendChild(card);
   });
+}
+
+// ===== QUIZ TIMER =====
+let quizTimerInterval = null;
+let quizTimeLeft = QUIZ_TIME_LIMIT;
+
+function startQuizTimer(q) {
+  stopQuizTimer();
+  quizTimeLeft = QUIZ_TIME_LIMIT;
+  const fill = document.getElementById('quizTimerFill');
+  const label = document.getElementById('quizTimerLabel');
+  fill.style.transition = 'none';
+  fill.style.width = '100%';
+  fill.classList.remove('urgent');
+  quizTimerInterval = setInterval(() => {
+    quizTimeLeft--;
+    label.textContent = quizTimeLeft;
+    const pct = Math.max(0, quizTimeLeft / QUIZ_TIME_LIMIT * 100);
+    fill.style.transition = 'width 1s linear';
+    fill.style.width = pct + '%';
+    if (quizTimeLeft <= 5) fill.classList.add('urgent');
+    if (quizTimeLeft <= 0) {
+      stopQuizTimer();
+      if (!state.quizAnswered) {
+        // time's up — auto-wrong
+        state.quizAnswered = true;
+        state.quizTotal++;
+        state.quizStreak = 0;
+        saveState();
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach((b, i) => {
+          b.classList.add('disabled');
+          if (i === q.ans) b.classList.add('correct');
+        });
+        const fb = document.getElementById('answerFeedback');
+        fb.className = 'answer-feedback show feedback-wrong';
+        document.getElementById('feedbackIcon').textContent = '⏰';
+        document.getElementById('feedbackTitle').textContent = '⏰ Time\'s up!';
+        document.getElementById('feedbackExp').textContent = q.exp;
+        document.getElementById('nextBtn').classList.add('show');
+        updateQuizStats();
+      }
+    }
+  }, 1000);
+}
+
+function stopQuizTimer() {
+  if (quizTimerInterval) { clearInterval(quizTimerInterval); quizTimerInterval = null; }
+  const fill = document.getElementById('quizTimerFill');
+  if (fill) fill.classList.remove('urgent');
 }
 
 // ===== QUIZ =====
@@ -1042,6 +1469,8 @@ function renderQuiz() {
   state.quizOrder = shuffleArray([...Array(QUIZ_QUESTIONS.length).keys()]);
   state.quizIndex = 0;
   state.quizAnswered = false;
+  state.quizSessionCorrect = 0;
+  state.quizSessionXp = 0;
   showQuestion();
   updateQuizStats();
 }
@@ -1068,17 +1497,24 @@ function showQuestion() {
   document.getElementById('quizComplete').classList.remove('show');
   document.getElementById('quizContent').style.display = '';
   state.quizAnswered = false;
+  startQuizTimer(q);
 }
 
 function answerQuestion(chosen, btn, q) {
   if (state.quizAnswered) return;
   state.quizAnswered = true;
+  stopQuizTimer();
   state.quizTotal++;
   const correct = chosen === q.ans;
   if (correct) {
     state.quizCorrect++;
+    state.quizSessionCorrect++;
     state.quizStreak++;
     if (state.quizStreak > state.bestStreak) state.bestStreak = state.quizStreak;
+    const xpGain = XP_CORRECT + (state.quizStreak >= 3 ? XP_STREAK_BONUS : 0);
+    state.quizSessionXp += xpGain;
+    gainXP(xpGain, state.quizStreak >= 3 ? '🔥 Streak!' : '');
+    checkAchievements();
   } else {
     state.quizStreak = 0;
   }
@@ -1092,7 +1528,9 @@ function answerQuestion(chosen, btn, q) {
   const fb = document.getElementById('answerFeedback');
   fb.className = 'answer-feedback show ' + (correct ? 'feedback-correct' : 'feedback-wrong');
   document.getElementById('feedbackIcon').textContent = correct ? '✅' : '❌';
-  document.getElementById('feedbackTitle').textContent = correct ? '🎉 Correct!' : '❌ Not quite!';
+  document.getElementById('feedbackTitle').textContent = correct
+    ? (state.quizStreak >= 3 ? '🔥 ' + state.quizStreak + '-Streak! Correct!' : '🎉 Correct!')
+    : '❌ Not quite!';
   document.getElementById('feedbackExp').textContent = q.exp;
   document.getElementById('nextBtn').classList.add('show');
   updateQuizStats();
@@ -1101,6 +1539,7 @@ function answerQuestion(chosen, btn, q) {
 function nextQuestion() {
   state.quizIndex++;
   if (state.quizIndex >= QUIZ_QUESTIONS.length) {
+    stopQuizTimer();
     showQuizComplete();
   } else {
     showQuestion();
@@ -1111,14 +1550,28 @@ function showQuizComplete() {
   document.getElementById('quizContent').style.display = 'none';
   const complete = document.getElementById('quizComplete');
   complete.classList.add('show');
-  const pct = Math.round(state.quizCorrect / QUIZ_QUESTIONS.length * 100);
-  document.getElementById('completeScore').textContent = state.quizCorrect + '/' + QUIZ_QUESTIONS.length;
+  const correct = state.quizSessionCorrect;
+  const total = QUIZ_QUESTIONS.length;
+  const pct = Math.round(correct / total * 100);
+  document.getElementById('completeScore').textContent = correct + '/' + total;
+  // star rating
+  const stars = pct >= 90 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : '⭐';
+  document.getElementById('starsRating').textContent = stars;
   let msg = '';
-  if (pct >= 90) msg = '🌲 Forest Master! You know the boreal forest inside out!';
-  else if (pct >= 70) msg = '🦉 Great job! You\'re becoming a real boreal expert.';
-  else if (pct >= 50) msg = '🐇 Good effort! Keep exploring to learn more.';
-  else msg = '🌱 Keep exploring the forest — every discovery teaches you something new!';
+  if (pct >= 90) {
+    msg = '🌲 Forest Master! You know the boreal forest inside out! (' + state.quizSessionXp + ' XP earned)';
+    state.perfectQuiz = (correct === total);
+  } else if (pct >= 70) {
+    msg = '🦉 Great job! You\'re becoming a real boreal expert. (' + state.quizSessionXp + ' XP earned)';
+  } else if (pct >= 50) {
+    msg = '🐇 Good effort! Keep exploring to learn more. (' + state.quizSessionXp + ' XP earned)';
+  } else {
+    msg = '🌱 Every question is a new discovery — try again! (' + state.quizSessionXp + ' XP earned)';
+  }
   document.getElementById('completeMsg').textContent = msg;
+  saveState();
+  checkAchievements();
+  if (pct >= 60) launchConfetti();
 }
 
 function restartQuiz() {
@@ -1130,7 +1583,7 @@ function restartQuiz() {
 function updateQuizStats() {
   document.getElementById('quizCorrect').textContent = state.quizCorrect;
   document.getElementById('quizStreak').textContent = state.quizStreak;
-  document.getElementById('quizTotal').textContent = state.quizTotal;
+  document.getElementById('quizXp').textContent = state.quizSessionXp;
 }
 
 // ===== FOOD WEB =====
@@ -1198,8 +1651,8 @@ function fillSlot(index) {
   const id = state.selectedPoolItem;
 
   // Check if this species is already in another slot
-  if (state.chainSlots.includes(id)) {
-    const existingSlot = state.chainSlots.indexOf(id);
+  const existingSlot = state.chainSlots.indexOf(id);
+  if (existingSlot >= 0) {
     const oldSlotEl = document.getElementById('slot-' + existingSlot);
     if (oldSlotEl) {
       oldSlotEl.textContent = '';
@@ -1262,7 +1715,8 @@ function checkChain() {
     Each level only captures about 10% of the energy from the level below!`;
     document.getElementById('fwCheckBtn').classList.add('success');
     document.getElementById('fwCheckBtn').textContent = '🎉 Correct!';
-    showToast('🎉 Perfect food chain!');
+    showToast('🎉 Perfect food chain! +' + XP_CHAIN + ' XP');
+    gainXP(XP_CHAIN, 'Food Chain!');
   } else {
     fb.className = 'fw-feedback show incorrect';
     fb.innerHTML = `❌ <b>Check the order!</b><br>Make sure roles are in the right sequence: <b>Producer → Primary Consumer → Secondary Consumer → Apex Predator</b>`;
