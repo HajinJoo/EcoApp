@@ -360,6 +360,105 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 .col-header-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
 .col-hbadge{font-size:11px;padding:3px 10px;border-radius:10px;border:1px solid #2d5a27;color:#a5d6a7;background:rgba(45,90,39,.2)}
 .col-hbadge.active{border-color:#66bb6a;background:rgba(102,187,106,.2);color:#e8f5e9}
+
+/* ===== GAMES HUB ===== */
+.games-hub-header{padding:20px 16px 12px;position:sticky;top:0;background:rgba(10,26,12,.9);backdrop-filter:blur(10px);z-index:10}
+.games-hub-title{font-size:20px;font-weight:800;color:#e8f5e9}
+.games-hub-subtitle{font-size:13px;color:#81c784;margin-top:2px}
+.games-hub-content{padding:12px 16px 24px}
+.game-featured-card{background:linear-gradient(135deg,#1a3a6e,#1b5e20,#2e7d32);border:2px solid #4caf50;border-radius:22px;padding:20px;margin-bottom:16px;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(76,175,80,.2)}
+.game-featured-card:active{transform:scale(.98)}
+.game-featured-card::before{content:'';position:absolute;top:-50px;right:-30px;width:130px;height:130px;background:radial-gradient(circle,rgba(102,187,106,.25),transparent 70%);pointer-events:none}
+.game-featured-badge{background:linear-gradient(135deg,#f57f17,#ff8f00);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;display:inline-block;margin-bottom:10px}
+.game-featured-icon{font-size:50px;display:block;margin-bottom:6px;animation:featuredBounce 2s ease-in-out infinite alternate}
+@keyframes featuredBounce{from{transform:translateY(0) scale(1)}to{transform:translateY(-6px) scale(1.06)}}
+.game-featured-name{font-size:22px;font-weight:900;color:#e8f5e9;margin-bottom:4px}
+.game-featured-desc{font-size:13px;color:#a5d6a7;line-height:1.4;margin-bottom:12px}
+.game-featured-footer{display:flex;align-items:center;justify-content:space-between}
+.game-featured-play{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.3);border-radius:12px;padding:9px 18px;color:#e8f5e9;font-size:14px;font-weight:800}
+.game-featured-hs{font-size:12px;color:#81c784;font-weight:600}
+.minigames-label{font-size:13px;font-weight:800;color:#81c784;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.minigames-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini-card{background:rgba(26,64,32,.65);border:1.5px solid #2d5a27;border-radius:18px;padding:16px 12px;cursor:pointer;transition:transform .15s,background .15s;text-align:center;overflow:hidden;position:relative}
+.mini-card:active{transform:scale(.95);background:rgba(45,90,39,.5)}
+.mini-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(102,187,106,.1),transparent 65%);pointer-events:none}
+.mini-card-icon{font-size:36px;display:block;margin-bottom:6px}
+.mini-card-name{font-size:14px;font-weight:800;color:#e8f5e9;margin-bottom:3px}
+.mini-card-desc{font-size:11px;color:#81c784;line-height:1.3}
+.mini-card-cta{font-size:11px;font-weight:800;color:#66bb6a;margin-top:8px;text-transform:uppercase;letter-spacing:.4px}
+/* ===== GAME SUB-SCREENS ===== */
+.game-subscreen{background:#0a1a0c;min-height:100%}
+.game-top-bar{display:flex;align-items:center;gap:12px;padding:14px 16px 12px;position:sticky;top:0;background:rgba(10,26,12,.95);backdrop-filter:blur(10px);z-index:30;border-bottom:1px solid #1a3a1e}
+.game-back-btn{background:rgba(45,90,39,.4);border:1px solid #2d5a27;border-radius:10px;padding:7px 14px;color:#a5d6a7;cursor:pointer;font-size:13px;font-weight:700;flex-shrink:0}
+.game-screen-title{font-size:17px;font-weight:800;color:#e8f5e9;flex:1}
+/* ===== FOREST DASH ===== */
+.dash-wrap{padding:12px 12px 20px}
+.dash-hud{display:flex;justify-content:space-between;align-items:center;background:rgba(13,31,16,.85);border:1px solid #2d5a27;border-radius:14px;padding:10px 14px;margin-bottom:10px}
+.dash-score-col{text-align:center}
+.dash-score{font-size:22px;font-weight:900;color:#b2ff59;line-height:1}
+.dash-score-lbl{font-size:9px;color:#81c784;text-transform:uppercase;letter-spacing:.3px;margin-top:1px}
+.dash-lives{display:flex;gap:3px;font-size:18px}
+.dash-hi{font-size:12px;color:#66bb6a;font-weight:700;text-align:right}
+.dash-hi-lbl{font-size:9px;color:#81c784;text-align:right}
+.dash-canvas-container{position:relative;border-radius:16px;overflow:hidden;border:2px solid #2d5a27;margin-bottom:10px;background:#0a1628;cursor:pointer}
+#dashCanvas{display:block;width:100%;height:200px;touch-action:manipulation}
+.dash-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,22,40,.75);backdrop-filter:blur(3px)}
+.dash-overlay.hidden{display:none}
+.dash-overlay-icon{font-size:54px;animation:featuredBounce 1.5s ease-in-out infinite alternate}
+.dash-overlay-title{font-size:22px;font-weight:900;color:#e8f5e9;margin-top:8px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.dash-overlay-sub{font-size:13px;color:#a5d6a7;margin-top:5px;text-align:center;padding:0 20px}
+.dash-play-btn{margin-top:14px;background:linear-gradient(135deg,#2e7d32,#4caf50);border:none;border-radius:14px;padding:13px 28px;color:#fff;font-size:15px;font-weight:800;cursor:pointer;transition:transform .1s;box-shadow:0 4px 12px rgba(76,175,80,.35)}
+.dash-play-btn:active{transform:scale(.96)}
+.dash-hint{font-size:11px;color:#66bb6a;text-align:center;margin-bottom:8px}
+.dash-level-msg{font-size:13px;font-weight:800;color:#ff8a65;text-align:center;min-height:18px;transition:opacity .3s}
+/* ===== MEMORY MATCH ===== */
+.memory-wrap{padding:12px 12px 20px}
+.memory-hud{display:flex;align-items:center;justify-content:space-between;background:rgba(13,31,16,.85);border:1px solid #2d5a27;border-radius:14px;padding:10px 14px;margin-bottom:12px}
+.memory-stat-val{font-size:18px;font-weight:900;color:#b2ff59;text-align:center;line-height:1}
+.memory-stat-lbl{font-size:9px;color:#81c784;text-transform:uppercase;letter-spacing:.3px;text-align:center;margin-top:1px}
+.memory-new-btn{background:rgba(45,90,39,.4);border:1px solid #2d5a27;border-radius:10px;padding:7px 14px;color:#a5d6a7;cursor:pointer;font-size:12px;font-weight:700}
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px}
+.mem-card{aspect-ratio:1;border-radius:12px;background:rgba(26,64,32,.8);border:2px solid #1a3a1e;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s,background .15s,border-color .15s;font-size:30px;user-select:none;position:relative;overflow:hidden}
+.mem-card:active{transform:scale(.93)}
+.mem-card .mem-front{transition:opacity .12s}
+.mem-card.face-down .mem-front{opacity:0;pointer-events:none}
+.mem-card.face-down{background:rgba(26,64,32,.9);border-color:#1a3a1e}
+.mem-card.face-down::after{content:'🌲';font-size:20px;opacity:.35;position:absolute}
+.mem-card.matched{background:rgba(76,175,80,.2);border-color:#4caf50;animation:matchPop .35s ease}
+.mem-card.wrong-flash{animation:wrongFlash .4s ease}
+@keyframes matchPop{0%{transform:scale(1)}50%{transform:scale(1.14)}100%{transform:scale(1)}}
+@keyframes wrongFlash{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.memory-complete-card{background:rgba(26,64,32,.92);border:1.5px solid #4caf50;border-radius:18px;padding:20px;text-align:center;animation:fadeIn .4s ease;margin-top:8px}
+.game-restart-btn{background:linear-gradient(135deg,#2e7d32,#4caf50);border:none;border-radius:14px;padding:13px 28px;color:#fff;font-size:15px;font-weight:800;cursor:pointer;margin-top:14px;transition:transform .1s}
+.game-restart-btn:active{transform:scale(.96)}
+/* ===== SORT IT! ===== */
+.sorter-wrap{padding:12px 12px 20px}
+.sorter-hud{display:flex;align-items:center;justify-content:space-between;background:rgba(13,31,16,.85);border:1px solid #2d5a27;border-radius:14px;padding:10px 14px;margin-bottom:12px}
+.sorter-big-score{font-size:22px;font-weight:900;color:#b2ff59;line-height:1}
+.sorter-hud-col{text-align:center}
+.sorter-lives-row{display:flex;gap:3px;font-size:18px}
+.sorter-combo-val{font-size:18px;font-weight:900;color:#ffd54f}
+.sorter-hud-lbl{font-size:9px;color:#81c784;text-transform:uppercase;letter-spacing:.3px;margin-top:1px}
+.sorter-stage{background:linear-gradient(180deg,#0a1628 0%,#0d2b10 100%);border:2px solid #2d5a27;border-radius:18px;padding:18px 16px;margin-bottom:12px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}
+.sorter-q-label{font-size:11px;color:#66bb6a;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.sorter-emoji{font-size:62px;line-height:1;animation:sorterPop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes sorterPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.sorter-item-name{font-size:17px;font-weight:800;color:#e8f5e9;margin-top:8px}
+.sorter-item-hint{font-size:12px;color:#81c784;margin-top:4px}
+.sorter-result-text{font-size:13px;font-weight:800;text-align:center;min-height:20px;margin-bottom:8px;transition:all .2s}
+.sorter-result-text.correct{color:#66bb6a}
+.sorter-result-text.wrong{color:#f44336}
+.sorter-zones{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.sorter-zone{border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:transform .12s,background .12s;border:2px solid;user-select:none}
+.sorter-zone:active{transform:scale(.94)}
+.sorter-zone-pred{background:rgba(244,67,54,.12);border-color:rgba(244,67,54,.35)}
+.sorter-zone-pred:active{background:rgba(244,67,54,.28)}
+.sorter-zone-prey{background:rgba(33,150,243,.12);border-color:rgba(33,150,243,.35)}
+.sorter-zone-prey:active{background:rgba(33,150,243,.28)}
+.sorter-zone-icon{font-size:28px;display:block;margin-bottom:4px}
+.sorter-zone-name{font-size:13px;font-weight:800;color:#e8f5e9}
+.sorter-zone-sub{font-size:10px;color:#81c784;margin-top:3px}
+.sorter-complete-card{background:rgba(26,64,32,.92);border:1.5px solid #4caf50;border-radius:18px;padding:20px;text-align:center;animation:fadeIn .4s ease;margin-top:4px}
 </style>
 </head>
 <body>
@@ -459,10 +558,10 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
             <div class="action-arrow">›</div>
           </div>
           <div class="action-card" onclick="switchTab('foodweb')">
-            <div class="action-icon">🕸️</div>
+            <div class="action-icon">🎮</div>
             <div class="action-info">
-              <div class="action-title">Food Web Builder</div>
-              <div class="action-desc">Build food chains & energy flows</div>
+              <div class="action-title">Mini-Games</div>
+              <div class="action-desc">Forest Dash, Memory Match & more!</div>
             </div>
             <div class="action-arrow">›</div>
           </div>
@@ -583,69 +682,245 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
       </div>
     </div>
 
-    <!-- FOOD WEB -->
+    <!-- GAMES HUB -->
     <div class="screen" id="screen-foodweb">
-      <div class="foodweb-header">
-        <div class="foodweb-title">🕸️ Food Web</div>
-        <div class="foodweb-subtitle">Build food chains & explore energy flow</div>
-      </div>
-      <div class="foodweb-content">
-        <div class="fw-instructions">
-          <b>How to play:</b> Tap a species from the pool, then tap a chain slot to place it. Build a complete food chain from producer to apex predator!
-        </div>
-        <div class="chain-builder" id="chainBuilder">
-          <div class="chain-title">🔗 Build a Food Chain</div>
-          <div class="chain-slots" id="chainSlots"></div>
-        </div>
-        <div class="fw-feedback" id="fwFeedback"></div>
-        <div class="species-pool" id="speciesPool"></div>
-        <button class="fw-check-btn" id="fwCheckBtn" onclick="checkChain()">✓ Check Food Chain</button>
-        <button class="fw-reset-btn" onclick="resetChain()">↺ Reset</button>
 
-        <div class="food-web-diagram">
-          <div class="web-title">🌐 Boreal Forest Food Web</div>
-          <div class="web-levels">
-            <div class="web-level">
-              <div class="web-level-label">Apex</div>
-              <div class="web-species">
-                <div class="web-chip">🐺 Gray Wolf</div>
-                <div class="web-chip">🐻 Black Bear</div>
-                <div class="web-chip">🦁 Lynx</div>
-              </div>
+      <!-- ── Hub (default view) ── -->
+      <div id="gamesHub">
+        <div class="games-hub-header">
+          <div class="games-hub-title">🎮 Games</div>
+          <div class="games-hub-subtitle">Pick your eco-adventure!</div>
+        </div>
+        <div class="games-hub-content">
+          <!-- Featured: Forest Dash -->
+          <div class="game-featured-card" onclick="openGame('dash')">
+            <div class="game-featured-badge">⭐ Featured Game</div>
+            <span class="game-featured-icon">🐇</span>
+            <div class="game-featured-name">Forest Dash</div>
+            <div class="game-featured-desc">Race through the boreal forest as a snowshoe hare! Jump over tree stumps, dodge rocks, and collect blueberries. How far can you run?</div>
+            <div class="game-featured-footer">
+              <div class="game-featured-play">▶ Play Now</div>
+              <div class="game-featured-hs">🏆 Best: <span id="dashHSDisplay">0</span></div>
             </div>
-            <div class="web-arrow-row">↑</div>
-            <div class="web-level">
-              <div class="web-level-label">Secondary</div>
-              <div class="web-species">
-                <div class="web-chip">🦊 Red Fox</div>
-                <div class="web-chip">🦉 Great Gray Owl</div>
-                <div class="web-chip">🫎 Moose</div>
-              </div>
+          </div>
+          <!-- Mini-games -->
+          <div class="minigames-label">🎯 Mini-Games</div>
+          <div class="minigames-grid">
+            <div class="mini-card" onclick="openGame('memory')">
+              <span class="mini-card-icon">🃏</span>
+              <div class="mini-card-name">Memory Match</div>
+              <div class="mini-card-desc">Flip cards to match boreal species pairs</div>
+              <div class="mini-card-cta">▶ Play</div>
             </div>
-            <div class="web-arrow-row">↑</div>
-            <div class="web-level">
-              <div class="web-level-label">Primary</div>
-              <div class="web-species">
-                <div class="web-chip">🐇 Snowshoe Hare</div>
-                <div class="web-chip">🦫 Beaver</div>
-                <div class="web-chip">🐦 Spruce Grouse</div>
-              </div>
+            <div class="mini-card" onclick="openGame('sorter')">
+              <span class="mini-card-icon">⚡</span>
+              <div class="mini-card-name">Sort It!</div>
+              <div class="mini-card-desc">Sort predators &amp; prey as fast as you can!</div>
+              <div class="mini-card-cta">▶ Play</div>
             </div>
-            <div class="web-arrow-row">↑</div>
-            <div class="web-level">
-              <div class="web-level-label">Producer</div>
-              <div class="web-species">
-                <div class="web-chip">🌲 Black Spruce</div>
-                <div class="web-chip">🍄 Lichen</div>
-                <div class="web-chip">🫐 Blueberry</div>
+            <div class="mini-card" onclick="openGame('chain')">
+              <span class="mini-card-icon">🕸️</span>
+              <div class="mini-card-name">Food Chain</div>
+              <div class="mini-card-desc">Build a complete boreal food chain step by step</div>
+              <div class="mini-card-cta">▶ Play</div>
+            </div>
+            <div class="mini-card" onclick="switchTab('quiz')">
+              <span class="mini-card-icon">🧠</span>
+              <div class="mini-card-name">Eco Quiz</div>
+              <div class="mini-card-desc">20 questions on the boreal forest — beat the timer!</div>
+              <div class="mini-card-cta">▶ Go to Quiz</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Forest Dash ── -->
+      <div id="gameDash" class="game-subscreen" style="display:none">
+        <div class="game-top-bar">
+          <button class="game-back-btn" onclick="closeGame()">← Back</button>
+          <div class="game-screen-title">🐇 Forest Dash</div>
+        </div>
+        <div class="dash-wrap">
+          <div class="dash-hud">
+            <div class="dash-score-col">
+              <div class="dash-score" id="dashScore">0</div>
+              <div class="dash-score-lbl">Score</div>
+            </div>
+            <div class="dash-lives" id="dashLives">🐇🐇🐇</div>
+            <div>
+              <div class="dash-hi" id="dashHi">0</div>
+              <div class="dash-hi-lbl">Best</div>
+            </div>
+          </div>
+          <div class="dash-canvas-container" id="dashCanvasWrap">
+            <canvas id="dashCanvas"></canvas>
+            <!-- Start overlay -->
+            <div class="dash-overlay" id="dashOverlayStart">
+              <span class="dash-overlay-icon">🐇</span>
+              <div class="dash-overlay-title">Forest Dash</div>
+              <div class="dash-overlay-sub">Jump over stumps &amp; collect 🫐 berries! Double-tap for a double jump!</div>
+              <button class="dash-play-btn" onclick="startDash()">▶ Start Running!</button>
+            </div>
+            <!-- Game Over overlay -->
+            <div class="dash-overlay hidden" id="dashOverlayOver">
+              <span style="font-size:48px">💥</span>
+              <div class="dash-overlay-title" id="dashOverTitle">Game Over!</div>
+              <div class="dash-overlay-sub" id="dashOverSub">Score: 0</div>
+              <button class="dash-play-btn" onclick="restartDash()">🔄 Try Again</button>
+            </div>
+          </div>
+          <div class="dash-hint">Tap the game area to jump · Double-tap = Double jump · <b>Space</b> also works</div>
+          <div class="dash-level-msg" id="dashLevelMsg"></div>
+        </div>
+      </div>
+
+      <!-- ── Memory Match ── -->
+      <div id="gameMemory" class="game-subscreen" style="display:none">
+        <div class="game-top-bar">
+          <button class="game-back-btn" onclick="closeGame()">← Back</button>
+          <div class="game-screen-title">🃏 Memory Match</div>
+        </div>
+        <div class="memory-wrap">
+          <div class="memory-hud">
+            <div>
+              <div class="memory-stat-val" id="memMoves">0</div>
+              <div class="memory-stat-lbl">Moves</div>
+            </div>
+            <div>
+              <div class="memory-stat-val" id="memMatches">0/8</div>
+              <div class="memory-stat-lbl">Matched</div>
+            </div>
+            <div>
+              <div class="memory-stat-val" id="memTimer">0s</div>
+              <div class="memory-stat-lbl">Time</div>
+            </div>
+            <button class="memory-new-btn" onclick="initMemoryGame()">↺ New</button>
+          </div>
+          <div class="memory-grid" id="memoryGrid"></div>
+          <div id="memoryComplete" style="display:none">
+            <div class="memory-complete-card">
+              <div style="font-size:44px">🎉</div>
+              <div style="font-size:20px;font-weight:800;color:#e8f5e9;margin-top:8px">All Matched!</div>
+              <div style="font-size:14px;color:#a5d6a7;margin-top:6px" id="memCompleteMsg"></div>
+              <button class="game-restart-btn" onclick="initMemoryGame()">🔄 Play Again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Food Chain Builder ── -->
+      <div id="gameChain" class="game-subscreen" style="display:none">
+        <div class="game-top-bar">
+          <button class="game-back-btn" onclick="closeGame()">← Back</button>
+          <div class="game-screen-title">🕸️ Food Chain Builder</div>
+        </div>
+        <div class="foodweb-content">
+          <div class="fw-instructions">
+            <b>How to play:</b> Tap a species from the pool, then tap a chain slot to place it. Build a complete food chain from producer to apex predator!
+          </div>
+          <div class="chain-builder" id="chainBuilder">
+            <div class="chain-title">🔗 Build a Food Chain</div>
+            <div class="chain-slots" id="chainSlots"></div>
+          </div>
+          <div class="fw-feedback" id="fwFeedback"></div>
+          <div class="species-pool" id="speciesPool"></div>
+          <button class="fw-check-btn" id="fwCheckBtn" onclick="checkChain()">✓ Check Food Chain</button>
+          <button class="fw-reset-btn" onclick="resetChain()">↺ Reset</button>
+          <div class="food-web-diagram">
+            <div class="web-title">🌐 Boreal Forest Food Web</div>
+            <div class="web-levels">
+              <div class="web-level">
+                <div class="web-level-label">Apex</div>
+                <div class="web-species">
+                  <div class="web-chip">🐺 Gray Wolf</div>
+                  <div class="web-chip">🐻 Black Bear</div>
+                  <div class="web-chip">🦁 Lynx</div>
+                </div>
+              </div>
+              <div class="web-arrow-row">↑</div>
+              <div class="web-level">
+                <div class="web-level-label">Secondary</div>
+                <div class="web-species">
+                  <div class="web-chip">🦊 Red Fox</div>
+                  <div class="web-chip">🦉 Great Gray Owl</div>
+                  <div class="web-chip">🫎 Moose</div>
+                </div>
+              </div>
+              <div class="web-arrow-row">↑</div>
+              <div class="web-level">
+                <div class="web-level-label">Primary</div>
+                <div class="web-species">
+                  <div class="web-chip">🐇 Snowshoe Hare</div>
+                  <div class="web-chip">🦫 Beaver</div>
+                  <div class="web-chip">🐦 Spruce Grouse</div>
+                </div>
+              </div>
+              <div class="web-arrow-row">↑</div>
+              <div class="web-level">
+                <div class="web-level-label">Producer</div>
+                <div class="web-species">
+                  <div class="web-chip">🌲 Black Spruce</div>
+                  <div class="web-chip">🍄 Lichen</div>
+                  <div class="web-chip">🫐 Blueberry</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </div><!-- end screens -->
+      <!-- ── Sort It! ── -->
+      <div id="gameSorter" class="game-subscreen" style="display:none">
+        <div class="game-top-bar">
+          <button class="game-back-btn" onclick="closeGame()">← Back</button>
+          <div class="game-screen-title">⚡ Sort It!</div>
+        </div>
+        <div class="sorter-wrap">
+          <div class="sorter-hud">
+            <div class="sorter-hud-col">
+              <div class="sorter-big-score" id="sorterScore">0</div>
+              <div class="sorter-hud-lbl">Score</div>
+            </div>
+            <div class="sorter-hud-col">
+              <div class="sorter-lives-row" id="sorterLives">❤️❤️❤️</div>
+              <div class="sorter-hud-lbl">Lives</div>
+            </div>
+            <div class="sorter-hud-col">
+              <div class="sorter-combo-val" id="sorterCombo">×1</div>
+              <div class="sorter-hud-lbl">Combo</div>
+            </div>
+          </div>
+          <div class="sorter-stage" id="sorterStage">
+            <div class="sorter-q-label" id="sorterQLabel">TAP A BUTTON TO START</div>
+            <div class="sorter-emoji" id="sorterEmoji">🌲</div>
+            <div class="sorter-item-name" id="sorterItemName">Ready?</div>
+            <div class="sorter-item-hint" id="sorterItemHint">Sort 12 boreal species — predator or prey?</div>
+          </div>
+          <div class="sorter-result-text" id="sorterResult"></div>
+          <div class="sorter-zones">
+            <div class="sorter-zone sorter-zone-pred" onclick="sortAnswer('predator')">
+              <span class="sorter-zone-icon">🐺</span>
+              <div class="sorter-zone-name">PREDATOR</div>
+              <div class="sorter-zone-sub">Hunts others</div>
+            </div>
+            <div class="sorter-zone sorter-zone-prey" onclick="sortAnswer('prey')">
+              <span class="sorter-zone-icon">🐇</span>
+              <div class="sorter-zone-name">PREY</div>
+              <div class="sorter-zone-sub">Plant-eater / hunted</div>
+            </div>
+          </div>
+          <div id="sorterComplete" style="display:none">
+            <div class="sorter-complete-card">
+              <div style="font-size:44px" id="sorterCompleteEmoji">🏆</div>
+              <div style="font-size:20px;font-weight:800;color:#e8f5e9;margin-top:8px">Round Complete!</div>
+              <div style="font-size:14px;color:#a5d6a7;margin-top:6px" id="sorterCompleteMsg"></div>
+              <button class="game-restart-btn" onclick="initSorterGame()">🔄 Play Again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end screen-foodweb -->
 
   <!-- Bottom Nav -->
   <div class="bottom-nav">
@@ -666,8 +941,8 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
       <span>Quiz</span>
     </button>
     <button class="nav-btn" id="nav-foodweb" onclick="switchTab('foodweb')">
-      <span class="nav-icon">🕸️</span>
-      <span>Food Web</span>
+      <span class="nav-icon">🎮</span>
+      <span>Games</span>
     </button>
   </div>
 
@@ -677,6 +952,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 
 <script>
 // ===== DATA =====
+const SAVE_KEY = 'borealquest_v3';
 const SPECIES = [
   // Plants
   {id:'black-spruce',emoji:'🌲',name:'Black Spruce',category:'plants',zone:'canopy',rarity:'common',
@@ -949,11 +1225,12 @@ let state = {
   perfectQuiz: false,
   quizSessionCorrect: 0,
   quizSessionXp: 0,
+  dashHighScore: 0,
 };
 
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem('borealquest_v3') || '{}');
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
     if (saved.discovered) state.discovered = new Set(saved.discovered);
     if (saved.quizCorrect) state.quizCorrect = saved.quizCorrect;
     if (saved.quizTotal) state.quizTotal = saved.quizTotal;
@@ -962,12 +1239,13 @@ function loadState() {
     if (saved.xp) state.xp = saved.xp;
     if (saved.achievements) state.achievements = new Set(saved.achievements);
     if (saved.perfectQuiz) state.perfectQuiz = saved.perfectQuiz;
+    if (saved.dashHighScore) state.dashHighScore = saved.dashHighScore;
   } catch(e) {}
 }
 
 function saveState() {
   try {
-    localStorage.setItem('borealquest_v3', JSON.stringify({
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
       discovered: [...state.discovered],
       quizCorrect: state.quizCorrect,
       quizTotal: state.quizTotal,
@@ -976,6 +1254,7 @@ function saveState() {
       xp: state.xp,
       achievements: [...state.achievements],
       perfectQuiz: state.perfectQuiz,
+      dashHighScore: state.dashHighScore,
     }));
   } catch(e) {}
 }
@@ -994,11 +1273,11 @@ function init() {
   buildTreeLine();
   buildZones();
   buildCollection();
-  buildFoodWeb();
   buildAchievements();
   renderQuiz();
   updateHomeStats();
   updateRankDisplay();
+  updateDashHUD();
   rotateFunFact();
   setInterval(rotateFunFact, 8000);
 }
@@ -1250,6 +1529,8 @@ function launchConfetti() {
 }
 function switchTab(tab) {
   if (state.currentTab === tab) return;
+  // Pause Forest Dash if leaving the games tab
+  if (state.currentTab === 'foodweb') pauseAndCloseGame();
   const old = document.getElementById('screen-' + state.currentTab);
   const next = document.getElementById('screen-' + tab);
   old.classList.remove('active');
@@ -1260,6 +1541,7 @@ function switchTab(tab) {
   if (tab === 'home') updateHomeStats();
   if (tab === 'collection') refreshCollection();
   if (tab === 'quiz') updateQuizStats();
+  if (tab === 'foodweb') updateDashHUD();
 }
 
 // ===== EXPLORE =====
@@ -1584,6 +1866,524 @@ function updateQuizStats() {
   document.getElementById('quizCorrect').textContent = state.quizCorrect;
   document.getElementById('quizStreak').textContent = state.quizStreak;
   document.getElementById('quizXp').textContent = state.quizSessionXp;
+}
+
+// ===== GAMES HUB =====
+let _currentGame = null;
+
+function openGame(id) {
+  document.getElementById('gamesHub').style.display = 'none';
+  const map = {dash:'gameDash', memory:'gameMemory', chain:'gameChain', sorter:'gameSorter'};
+  const screenId = map[id];
+  if (screenId) document.getElementById(screenId).style.display = 'block';
+  _currentGame = id;
+  if (id === 'dash') initForestDash();
+  if (id === 'memory') initMemoryGame();
+  if (id === 'chain') { buildFoodWeb(); }
+  if (id === 'sorter') initSorterGame();
+}
+
+function closeGame() {
+  pauseAndCloseGame();
+  document.getElementById('gamesHub').style.display = '';
+  updateDashHUD();
+}
+
+function pauseAndCloseGame() {
+  if (_currentGame === 'dash') {
+    if (_dashRAF) { cancelAnimationFrame(_dashRAF); _dashRAF = null; }
+    document.removeEventListener('keydown', _dashKeyHandler);
+    if (_dashState) _dashState.running = false;
+  }
+  if (_currentGame === 'memory') clearInterval(_memTimerInterval);
+  document.querySelectorAll('.game-subscreen').forEach(el => el.style.display = 'none');
+  _currentGame = null;
+}
+
+// ===== FOREST DASH =====
+const DASH_LIVES = 3;
+let _dashState = null;
+let _dashRAF = null;
+
+function _dashKeyHandler(e) {
+  if (e.code === 'Space') { e.preventDefault(); _dashDoJump(); }
+}
+
+function updateDashHUD() {
+  const hs = state.dashHighScore || 0;
+  const hiEl = document.getElementById('dashHi');
+  if (hiEl) hiEl.textContent = hs;
+  const hsDisp = document.getElementById('dashHSDisplay');
+  if (hsDisp) hsDisp.textContent = hs;
+  if (_dashState) {
+    const sc = document.getElementById('dashScore');
+    if (sc) sc.textContent = _dashState.score;
+    const lv = document.getElementById('dashLives');
+    if (lv) lv.textContent = '🐇'.repeat(Math.max(0, _dashState.lives));
+  }
+}
+
+function initForestDash() {
+  const canvas = document.getElementById('dashCanvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.floor(canvas.clientWidth * dpr);
+  canvas.height = Math.floor(200 * dpr);
+  if (_dashRAF) { cancelAnimationFrame(_dashRAF); _dashRAF = null; }
+  document.getElementById('dashOverlayStart').classList.remove('hidden');
+  document.getElementById('dashOverlayOver').classList.add('hidden');
+  document.getElementById('dashLevelMsg').textContent = '';
+  updateDashHUD();
+  // tap-to-jump on canvas container
+  const wrap = document.getElementById('dashCanvasWrap');
+  wrap.onclick = null;
+  wrap.ontouchstart = null;
+  wrap.addEventListener('click', _dashDoJump);
+  wrap.addEventListener('touchstart', _dashTouchJump, {passive: false});
+}
+
+function _dashTouchJump(e) { e.preventDefault(); _dashDoJump(); }
+
+function startDash() {
+  const canvas = document.getElementById('dashCanvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.width / dpr;
+  const H = canvas.height / dpr;
+  const GND = H - 40;
+  _dashState = {
+    running: true, gameOver: false,
+    score: 0, frame: 0, speed: 3.5,
+    lives: DASH_LIVES, invincible: 0,
+    nextSpeedUp: 360, nextObstacle: 100, nextBerry: 140,
+    levelMsgTimer: 0,
+    hare: { x: 65, y: GND, vy: 0, onGround: true, jumpsLeft: 2 },
+    obstacles: [],
+    berries: [],
+    bgTrees: Array.from({length:10}, (_,i) => ({
+      x: i * 45 + Math.random() * 20, h: 25 + Math.random() * 35,
+    })),
+    scorePopups: [],
+    GND, W, H,
+  };
+  document.getElementById('dashOverlayStart').classList.add('hidden');
+  document.getElementById('dashOverlayOver').classList.add('hidden');
+  document.addEventListener('keydown', _dashKeyHandler);
+  updateDashHUD();
+  _dashLoop();
+}
+
+function _dashDoJump() {
+  if (!_dashState || _dashState.gameOver) return;
+  if (_dashState.hare.jumpsLeft > 0) {
+    _dashState.hare.vy = -11.5;
+    _dashState.hare.onGround = false;
+    _dashState.hare.jumpsLeft--;
+  }
+}
+
+function _dashLoop() {
+  if (!_dashState || !_dashState.running) return;
+  const canvas = document.getElementById('dashCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  _dashUpdate();
+  _dashRender(ctx);
+  if (_dashState.gameOver) { _showDashOver(); return; }
+  _dashRAF = requestAnimationFrame(_dashLoop);
+}
+
+function _dashUpdate() {
+  const s = _dashState;
+  s.frame++;
+  s.score = Math.floor(s.frame / 5);
+
+  // Speed ramp
+  if (s.frame >= s.nextSpeedUp) {
+    s.speed = Math.min(s.speed + 0.6, 14);
+    s.nextSpeedUp += Math.max(180, 380 - s.speed * 18);
+    const lvlEl = document.getElementById('dashLevelMsg');
+    if (lvlEl) lvlEl.textContent = '⚡ Faster!';
+    s.levelMsgTimer = 80;
+  }
+  if (s.levelMsgTimer > 0) {
+    s.levelMsgTimer--;
+    if (s.levelMsgTimer === 0) {
+      const lvlEl = document.getElementById('dashLevelMsg');
+      if (lvlEl) lvlEl.textContent = '';
+    }
+  }
+
+  // Hare physics
+  const GND = s.GND;
+  if (!s.hare.onGround) {
+    s.hare.vy += 0.65;
+    s.hare.y += s.hare.vy;
+    if (s.hare.y >= GND) {
+      s.hare.y = GND; s.hare.onGround = true;
+      s.hare.jumpsLeft = 2; s.hare.vy = 0;
+    }
+  }
+
+  // Background trees (very slow)
+  s.bgTrees.forEach(t => {
+    t.x -= 0.6;
+    if (t.x < -30) t.x = s.W + 20 + Math.random() * 40;
+  });
+
+  // Spawn obstacles
+  s.nextObstacle--;
+  if (s.nextObstacle <= 0) {
+    const types = [{w:26,h:30},{w:32,h:44},{w:22,h:20}];
+    const t = types[Math.floor(Math.random() * types.length)];
+    s.obstacles.push({x: s.W + 10, w: t.w, h: t.h, y: GND - t.h + 40});
+    s.nextObstacle = Math.max(55, 115 - s.speed * 7) + Math.random() * 50;
+  }
+  s.obstacles.forEach(o => o.x -= s.speed * 1.15);
+  s.obstacles = s.obstacles.filter(o => o.x > -50);
+
+  // Spawn berries
+  s.nextBerry--;
+  if (s.nextBerry <= 0) {
+    s.berries.push({x: s.W + 10, y: GND - 25 - Math.random() * 55});
+    s.nextBerry = 100 + Math.random() * 110;
+  }
+  s.berries.forEach(b => b.x -= s.speed * 0.9);
+  s.berries = s.berries.filter(b => b.x > -20);
+
+  // Score popups
+  s.scorePopups.forEach(p => { p.y -= 1.2; p.life--; });
+  s.scorePopups = s.scorePopups.filter(p => p.life > 0);
+
+  // Invincibility
+  if (s.invincible > 0) s.invincible--;
+
+  // Collision: hare bounding box (generous)
+  const hx = s.hare.x, hy = s.hare.y;
+  const hW = 32, hH = 32;
+  if (s.invincible === 0) {
+    for (const o of s.obstacles) {
+      if (hx + hW - 6 > o.x + 4 && hx + 6 < o.x + o.w - 4 &&
+          hy + hH - 6 > o.y + 4 && hy + 6 < o.y + o.h - 4) {
+        s.lives--;
+        s.invincible = 80;
+        if (s.lives <= 0) { s.gameOver = true; return; }
+        updateDashHUD();
+        break;
+      }
+    }
+  }
+
+  // Collect berries
+  const collected = [];
+  s.berries = s.berries.filter(b => {
+    if (Math.abs(hx + 16 - b.x) < 26 && Math.abs(hy + 16 - b.y) < 26) {
+      s.score += 10;
+      collected.push({x: b.x, y: b.y, text: '+10', life: 35});
+      return false;
+    }
+    return true;
+  });
+  s.scorePopups.push(...collected);
+
+  // Update HUD every 10 frames
+  if (s.frame % 10 === 0) updateDashHUD();
+}
+
+function _dashRender(ctx) {
+  const s = _dashState;
+  const W = s.W, H = s.H, GND = s.GND;
+
+  // Sky
+  const sky = ctx.createLinearGradient(0, 0, 0, GND);
+  sky.addColorStop(0, '#060e1c');
+  sky.addColorStop(1, '#0d2040');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, GND);
+
+  // Background trees (silhouettes)
+  ctx.fillStyle = 'rgba(10,30,15,0.55)';
+  s.bgTrees.forEach(t => {
+    const bx = t.x, bh = t.h;
+    ctx.beginPath();
+    ctx.moveTo(bx, GND);
+    ctx.lineTo(bx + 14, GND - bh);
+    ctx.lineTo(bx + 28, GND);
+    ctx.fill();
+  });
+
+  // Ground
+  const gnd = ctx.createLinearGradient(0, GND, 0, H);
+  gnd.addColorStop(0, '#2d5a27');
+  gnd.addColorStop(1, '#1a3d20');
+  ctx.fillStyle = gnd;
+  ctx.fillRect(0, GND, W, H - GND);
+  ctx.strokeStyle = '#4caf50';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, GND); ctx.lineTo(W, GND); ctx.stroke();
+
+  // Ground detail dots
+  ctx.fillStyle = '#3a7032';
+  for (let gx = (s.frame * 2 % 30); gx < W; gx += 30) {
+    ctx.beginPath(); ctx.arc(gx, GND + 8, 2, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // Berries
+  ctx.font = '18px serif';
+  s.berries.forEach(b => ctx.fillText('🫐', b.x - 9, b.y + 9));
+
+  // Obstacles (stumps)
+  s.obstacles.forEach(o => {
+    // Stump body
+    ctx.fillStyle = o.h > 40 ? '#5d4037' : '#795548';
+    _roundRect(ctx, o.x, o.y, o.w, o.h, 4);
+    ctx.fill();
+    ctx.strokeStyle = '#3e2723'; ctx.lineWidth = 1.5;
+    _roundRect(ctx, o.x, o.y, o.w, o.h, 4);
+    ctx.stroke();
+    // Top ring
+    ctx.fillStyle = '#6d4c41';
+    ctx.beginPath();
+    ctx.ellipse(o.x + o.w / 2, o.y + 5, o.w / 2 - 2, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Hare (with flash when invincible)
+  if (s.invincible === 0 || Math.floor(s.invincible / 5) % 2 === 0) {
+    const bob = s.hare.onGround ? Math.sin(s.frame * 0.25) * 1.5 : 0;
+    ctx.font = '32px serif';
+    ctx.fillText('🐇', s.hare.x, s.hare.y + 32 + bob);
+  }
+
+  // Score popups
+  s.scorePopups.forEach(p => {
+    const alpha = p.life / 35;
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = '#b2ff59';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.fillText(p.text, p.x, p.y);
+    ctx.globalAlpha = 1;
+  });
+}
+
+function _roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y, x + w, y + r, r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x, y + h, x, y + h - r, r);
+  ctx.lineTo(x, y + r);
+  ctx.arcTo(x, y, x + r, y, r);
+  ctx.closePath();
+}
+
+function _showDashOver() {
+  if (_dashRAF) { cancelAnimationFrame(_dashRAF); _dashRAF = null; }
+  document.removeEventListener('keydown', _dashKeyHandler);
+  const isNewHigh = _dashState.score > (state.dashHighScore || 0);
+  if (isNewHigh) state.dashHighScore = _dashState.score;
+  saveState();
+  const xpEarned = Math.max(0, Math.floor(_dashState.score / 8) * 5);
+  if (xpEarned > 0) gainXP(xpEarned, 'Forest Dash');
+  document.getElementById('dashOverTitle').textContent = isNewHigh ? '🏆 New High Score!' : '💥 Game Over!';
+  document.getElementById('dashOverSub').textContent =
+    'Score: ' + _dashState.score + ' · Best: ' + state.dashHighScore + (xpEarned > 0 ? ' · +' + xpEarned + ' XP' : '');
+  document.getElementById('dashOverlayOver').classList.remove('hidden');
+  updateDashHUD();
+}
+
+function restartDash() {
+  if (_dashRAF) { cancelAnimationFrame(_dashRAF); _dashRAF = null; }
+  document.getElementById('dashOverlayOver').classList.add('hidden');
+  startDash();
+}
+
+// ===== MEMORY MATCH =====
+const MEM_PAIRS = [
+  {emoji:'🐺',name:'Wolf'},{emoji:'🐻',name:'Bear'},
+  {emoji:'🐈',name:'Lynx'},{emoji:'🐇',name:'Hare'},
+  {emoji:'🦫',name:'Beaver'},{emoji:'🦊',name:'Fox'},
+  {emoji:'🦉',name:'Owl'},{emoji:'🦆',name:'Loon'},
+];
+let _memCards = [];
+let _memFlipped = [];
+let _memMatched = new Set();
+let _memMoves = 0;
+let _memStartTime = 0;
+let _memTimerInterval = null;
+let _memCanFlip = true;
+
+function initMemoryGame() {
+  clearInterval(_memTimerInterval);
+  const pairs = [];
+  MEM_PAIRS.forEach((sp, pi) => {
+    pairs.push({emoji: sp.emoji, pairId: pi, cardIdx: pi * 2});
+    pairs.push({emoji: sp.emoji, pairId: pi, cardIdx: pi * 2 + 1});
+  });
+  _memCards = shuffleArray(pairs);
+  _memFlipped = []; _memMatched = new Set();
+  _memMoves = 0; _memStartTime = 0; _memCanFlip = true;
+  document.getElementById('memMoves').textContent = '0';
+  document.getElementById('memMatches').textContent = '0/8';
+  document.getElementById('memTimer').textContent = '0s';
+  document.getElementById('memoryComplete').style.display = 'none';
+  _renderMemGrid();
+}
+
+function _renderMemGrid() {
+  const grid = document.getElementById('memoryGrid');
+  grid.innerHTML = '';
+  _memCards.forEach((card, idx) => {
+    const div = document.createElement('div');
+    div.className = 'mem-card face-down';
+    div.id = 'mc' + idx;
+    div.innerHTML = `<span class="mem-front">${card.emoji}</span>`;
+    div.addEventListener('click', () => _memFlip(idx));
+    grid.appendChild(div);
+  });
+}
+
+function _memFlip(idx) {
+  if (!_memCanFlip) return;
+  if (_memFlipped.includes(idx)) return;
+  if (_memMatched.has(_memCards[idx].pairId)) return;
+  if (!_memStartTime) {
+    _memStartTime = Date.now();
+    _memTimerInterval = setInterval(() => {
+      const t = Math.floor((Date.now() - _memStartTime) / 1000);
+      const el = document.getElementById('memTimer');
+      if (el) el.textContent = t + 's';
+    }, 500);
+  }
+  document.getElementById('mc' + idx).classList.remove('face-down');
+  _memFlipped.push(idx);
+  if (_memFlipped.length === 2) {
+    _memMoves++;
+    document.getElementById('memMoves').textContent = _memMoves;
+    _memCanFlip = false;
+    const [a, b] = _memFlipped;
+    if (_memCards[a].pairId === _memCards[b].pairId) {
+      _memMatched.add(_memCards[a].pairId);
+      document.getElementById('mc' + a).classList.add('matched');
+      document.getElementById('mc' + b).classList.add('matched');
+      document.getElementById('memMatches').textContent = _memMatched.size + '/8';
+      _memFlipped = []; _memCanFlip = true;
+      if (_memMatched.size === MEM_PAIRS.length) {
+        clearInterval(_memTimerInterval);
+        const elapsed = Math.floor((Date.now() - _memStartTime) / 1000);
+        const xp = Math.max(40, 180 - _memMoves * 4);
+        gainXP(xp, 'Memory Master!');
+        document.getElementById('memCompleteMsg').textContent =
+          _memMoves + ' moves · ' + elapsed + 's · +' + xp + ' XP 🎉';
+        document.getElementById('memoryComplete').style.display = 'block';
+        checkAchievements();
+        if (_memMoves <= 12) launchConfetti();
+      }
+    } else {
+      const cardA = document.getElementById('mc' + a);
+      const cardB = document.getElementById('mc' + b);
+      setTimeout(() => {
+        cardA.classList.add('wrong-flash'); cardB.classList.add('wrong-flash');
+        setTimeout(() => {
+          cardA.classList.add('face-down'); cardB.classList.add('face-down');
+          cardA.classList.remove('wrong-flash'); cardB.classList.remove('wrong-flash');
+          _memFlipped = []; _memCanFlip = true;
+        }, 350);
+      }, 550);
+    }
+  }
+}
+
+// ===== SORT IT! =====
+const SORTER_POOL = [
+  {name:'Gray Wolf',emoji:'🐺',type:'predator',hint:'Hunts in family packs'},
+  {name:'Canada Lynx',emoji:'🐈',type:'predator',hint:'Specialized hare hunter'},
+  {name:'Great Gray Owl',emoji:'🦉',type:'predator',hint:'Hunts voles under snow'},
+  {name:'Red Fox',emoji:'🦊',type:'predator',hint:'Omnivorous forest hunter'},
+  {name:'Black Bear',emoji:'🐻',type:'predator',hint:'Powerful apex omnivore'},
+  {name:'Snowshoe Hare',emoji:'🐇',type:'prey',hint:'Key prey of the boreal'},
+  {name:'Caribou',emoji:'🦌',type:'prey',hint:'Migratory herd grazer'},
+  {name:'Beaver',emoji:'🦫',type:'prey',hint:'Ecosystem-engineer herbivore'},
+  {name:'Spruce Grouse',emoji:'🦃',type:'prey',hint:'Ground-dwelling seed-eater'},
+  {name:'Moose',emoji:'🫎',type:'prey',hint:'Largest deer — browsers willows'},
+  {name:'Boreal Chickadee',emoji:'🐦',type:'prey',hint:'Seed-caching songbird'},
+  {name:'Common Loon',emoji:'🦆',type:'prey',hint:'Diving fish-eater — also prey'},
+];
+let _sorterQueue = [];
+let _sorterCurrent = null;
+let _sorterScore = 0;
+let _sorterLives = 3;
+let _sorterCombo = 1;
+let _sorterAnswered = false;
+let _sorterDone = false;
+
+function initSorterGame() {
+  _sorterQueue = shuffleArray([...SORTER_POOL]);
+  _sorterScore = 0; _sorterLives = 3; _sorterCombo = 1;
+  _sorterDone = false; _sorterAnswered = false;
+  document.getElementById('sorterScore').textContent = '0';
+  document.getElementById('sorterLives').textContent = '❤️❤️❤️';
+  document.getElementById('sorterCombo').textContent = '×1';
+  document.getElementById('sorterResult').textContent = '';
+  document.getElementById('sorterResult').className = 'sorter-result-text';
+  document.getElementById('sorterComplete').style.display = 'none';
+  _nextSorterItem();
+}
+
+function _nextSorterItem() {
+  _sorterAnswered = false;
+  if (_sorterQueue.length === 0) { _showSorterComplete(); return; }
+  _sorterCurrent = _sorterQueue.shift();
+  document.getElementById('sorterQLabel').textContent = 'PREDATOR OR PREY?';
+  document.getElementById('sorterEmoji').textContent = _sorterCurrent.emoji;
+  document.getElementById('sorterItemName').textContent = _sorterCurrent.name;
+  document.getElementById('sorterItemHint').textContent = _sorterCurrent.hint;
+  document.getElementById('sorterResult').textContent = '';
+  document.getElementById('sorterResult').className = 'sorter-result-text';
+}
+
+function sortAnswer(answer) {
+  if (_sorterDone || _sorterAnswered || !_sorterCurrent) return;
+  _sorterAnswered = true;
+  const correct = answer === _sorterCurrent.type;
+  const res = document.getElementById('sorterResult');
+  if (correct) {
+    _sorterCombo = Math.min(_sorterCombo + 1, 6);
+    const pts = 10 * _sorterCombo;
+    _sorterScore += pts;
+    res.className = 'sorter-result-text correct';
+    res.textContent = _sorterCombo > 2
+      ? '✅ Correct! +' + pts + ' (' + _sorterCombo + '× combo!)'
+      : '✅ Correct! +' + pts;
+  } else {
+    _sorterCombo = 1;
+    _sorterLives--;
+    res.className = 'sorter-result-text wrong';
+    res.textContent = '❌ It\'s a ' + _sorterCurrent.type + '!';
+    const hearts = '❤️'.repeat(Math.max(0, _sorterLives)) + '🖤'.repeat(Math.max(0, 3 - _sorterLives));
+    document.getElementById('sorterLives').textContent = hearts;
+    if (_sorterLives <= 0) { _sorterDone = true; setTimeout(_showSorterComplete, 900); return; }
+  }
+  document.getElementById('sorterScore').textContent = _sorterScore;
+  document.getElementById('sorterCombo').textContent = '×' + _sorterCombo;
+  setTimeout(_nextSorterItem, 900);
+}
+
+function _showSorterComplete() {
+  _sorterDone = true;
+  const xp = Math.max(0, Math.floor(_sorterScore / 2));
+  if (xp > 0) gainXP(xp, 'Sort Master!');
+  const emoji = _sorterScore >= 120 ? '🏆' : _sorterScore >= 70 ? '🔥' : _sorterScore >= 40 ? '👍' : '😅';
+  document.getElementById('sorterCompleteEmoji').textContent = emoji;
+  document.getElementById('sorterCompleteMsg').textContent =
+    'Score: ' + _sorterScore + ' · +' + xp + ' XP 🎉';
+  document.getElementById('sorterComplete').style.display = 'block';
+  if (_sorterScore >= 80) launchConfetti();
 }
 
 // ===== FOOD WEB =====
