@@ -42,7 +42,7 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 
 /* ===== BOTTOM NAV ===== */
 .bottom-nav{height:72px;background:rgba(10,26,12,.95);border-top:1px solid #2d4a2f;display:flex;justify-content:space-around;align-items:center;flex-shrink:0;padding-bottom:6px;z-index:50}
-.nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 16px;border:none;background:transparent;cursor:pointer;color:#5a8a5e;transition:all .2s;border-radius:12px;min-width:70px}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;border:none;background:transparent;cursor:pointer;color:#5a8a5e;transition:all .2s;border-radius:12px;min-width:54px;min-height:44px}
 .nav-btn.active{color:#66bb6a}
 .nav-btn .nav-icon{font-size:22px;transition:transform .2s}
 .nav-btn.active .nav-icon{transform:scale(1.2)}
@@ -459,6 +459,60 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 .sorter-zone-name{font-size:13px;font-weight:800;color:#e8f5e9}
 .sorter-zone-sub{font-size:10px;color:#81c784;margin-top:3px}
 .sorter-complete-card{background:rgba(26,64,32,.92);border:1.5px solid #4caf50;border-radius:18px;padding:20px;text-align:center;animation:fadeIn .4s ease;margin-top:4px}
+/* ===== LEARN / ECOSYSTEM INFO ===== */
+.learn-screen{background:linear-gradient(180deg,#071a2e,#0c2318)}
+.learn-header{padding:20px 16px 12px;position:sticky;top:0;background:rgba(7,26,46,.92);backdrop-filter:blur(10px);z-index:10;border-bottom:1px solid rgba(76,175,80,.15)}
+.learn-title{font-size:20px;font-weight:800;color:#e8f5e9}
+.learn-subtitle{font-size:13px;color:#81c784;margin-top:2px}
+.learn-content{padding:14px 14px 30px;overflow-y:auto}
+/* Section pill nav */
+.learn-nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px;scrollbar-width:none}
+.learn-nav::-webkit-scrollbar{display:none}
+.learn-pill{background:rgba(45,90,39,.4);border:1.5px solid #2d5a27;border-radius:20px;padding:6px 14px;color:#81c784;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .15s,color .15s,border-color .15s}
+.learn-pill.active{background:rgba(76,175,80,.22);border-color:#4caf50;color:#e8f5e9}
+/* Info section */
+.learn-section{display:none}
+.learn-section.active{display:block}
+/* Hero banner */
+.learn-hero{background:linear-gradient(135deg,#0d2b10,#1a4020,#0d2b10);border:1.5px solid rgba(76,175,80,.3);border-radius:20px;padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden}
+.learn-hero::after{content:'';position:absolute;top:-30px;right:-20px;width:100px;height:100px;background:radial-gradient(circle,rgba(76,175,80,.12),transparent 70%);pointer-events:none}
+.learn-hero-emoji{font-size:44px;display:block;margin-bottom:8px}
+.learn-hero-title{font-size:18px;font-weight:900;color:#e8f5e9;margin-bottom:6px}
+.learn-hero-body{font-size:13px;color:#a5d6a7;line-height:1.6}
+/* Stat pills row */
+.learn-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.learn-stat-pill{background:rgba(26,64,32,.8);border:1px solid #2d5a27;border-radius:14px;padding:12px 8px;text-align:center}
+.learn-stat-num{font-size:20px;font-weight:900;color:#b2ff59;line-height:1}
+.learn-stat-lbl{font-size:10px;color:#81c784;margin-top:3px;line-height:1.2}
+/* Info card */
+.learn-card{background:rgba(26,64,32,.65);border:1.5px solid #1a3a1e;border-radius:18px;padding:16px;margin-bottom:12px;overflow:hidden;position:relative}
+.learn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#2d5a27,#4caf50,#2d5a27)}
+.learn-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.learn-card-icon{font-size:26px;flex-shrink:0}
+.learn-card-title{font-size:15px;font-weight:800;color:#e8f5e9}
+.learn-card-body{font-size:13px;color:#a5d6a7;line-height:1.65}
+.learn-card-body b{color:#c8e6c9}
+/* Highlight box */
+.learn-highlight{background:linear-gradient(135deg,rgba(27,94,32,.5),rgba(13,31,16,.5));border-left:3px solid #4caf50;border-radius:0 12px 12px 0;padding:12px 14px;margin:10px 0;font-size:13px;color:#c8e6c9;line-height:1.55;font-style:italic}
+/* Species role chips */
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.role-chip{background:rgba(13,31,16,.8);border:1px solid #2d5a27;border-radius:14px;padding:10px 10px;display:flex;align-items:flex-start;gap:8px}
+.role-chip-emoji{font-size:22px;flex-shrink:0;margin-top:1px}
+.role-chip-info{}
+.role-chip-name{font-size:12px;font-weight:800;color:#e8f5e9;line-height:1}
+.role-chip-role{font-size:10px;color:#81c784;margin-top:2px;line-height:1.3}
+/* Threat badge */
+.threat-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(45,90,39,.4)}
+.threat-row:last-child{border-bottom:none}
+.threat-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.threat-title{font-size:13px;font-weight:800;color:#ffcc80;margin-bottom:3px}
+.threat-desc{font-size:12px;color:#a5d6a7;line-height:1.5}
+/* Fact cards */
+.fact-list{display:flex;flex-direction:column;gap:8px}
+.fact-card{background:linear-gradient(135deg,rgba(26,64,32,.6),rgba(13,31,16,.6));border:1px solid #2d5a27;border-radius:14px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px}
+.fact-num{font-size:11px;font-weight:900;color:#4caf50;background:rgba(76,175,80,.15);border-radius:8px;padding:3px 7px;flex-shrink:0;margin-top:1px;min-width:24px;text-align:center}
+.fact-text{font-size:13px;color:#c8e6c9;line-height:1.55}
+.fact-text b{color:#e8f5e9}
 </style>
 </head>
 <body>
@@ -562,6 +616,14 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
             <div class="action-info">
               <div class="action-title">Mini-Games</div>
               <div class="action-desc">Forest Dash, Memory Match & more!</div>
+            </div>
+            <div class="action-arrow">›</div>
+          </div>
+          <div class="action-card" onclick="switchTab('learn')">
+            <div class="action-icon">📚</div>
+            <div class="action-info">
+              <div class="action-title">About the Ecosystem</div>
+              <div class="action-desc">Climate, species roles, threats & facts</div>
             </div>
             <div class="action-arrow">›</div>
           </div>
@@ -922,6 +984,291 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 
     </div><!-- end screen-foodweb -->
 
+    <!-- LEARN / ECOSYSTEM INFO -->
+    <div class="screen learn-screen" id="screen-learn">
+      <div class="learn-header">
+        <div class="learn-title">📚 Learn</div>
+        <div class="learn-subtitle">Discover the Boreal Forest ecosystem</div>
+      </div>
+      <div class="learn-content">
+
+        <!-- Section pill nav -->
+        <div class="learn-nav" id="learnNav">
+          <div class="learn-pill active" onclick="showLearnSection('overview',this)">🌲 Overview</div>
+          <div class="learn-pill" onclick="showLearnSection('climate',this)">🌡️ Climate</div>
+          <div class="learn-pill" onclick="showLearnSection('roles',this)">🔗 Species Roles</div>
+          <div class="learn-pill" onclick="showLearnSection('threats',this)">⚠️ Threats</div>
+          <div class="learn-pill" onclick="showLearnSection('conservation',this)">♻️ Conservation</div>
+          <div class="learn-pill" onclick="showLearnSection('facts',this)">💡 Fast Facts</div>
+        </div>
+
+        <!-- ── OVERVIEW ── -->
+        <div class="learn-section active" id="learn-overview">
+          <div class="learn-hero">
+            <span class="learn-hero-emoji">🌲</span>
+            <div class="learn-hero-title">What Is the Boreal Forest?</div>
+            <div class="learn-hero-body">The <b>boreal forest</b> — also known as the <b>taiga</b> (from the Russian word for "marshy pine forest") — is the world's largest land ecosystem. It stretches in a nearly unbroken band across northern North America, Europe, and Asia, sitting just south of the Arctic tundra.</div>
+          </div>
+          <div class="learn-stats-row">
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">17%</div>
+              <div class="learn-stat-lbl">of Earth's land surface</div>
+            </div>
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">1.9B</div>
+              <div class="learn-stat-lbl">hectares worldwide</div>
+            </div>
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">#1</div>
+              <div class="learn-stat-lbl">largest land biome</div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">📍</span>
+              <div class="learn-card-title">Where is it?</div>
+            </div>
+            <div class="learn-card-body">
+              The boreal forest covers large portions of <b>Canada, Russia, Scandinavia, and Alaska</b>. Canada alone holds about <b>30%</b> of the world's boreal, making it one of the last intact large forest areas on Earth. It stretches roughly between <b>50°N and 65°N latitude</b>.
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🌿</span>
+              <div class="learn-card-title">Dominant Plants</div>
+            </div>
+            <div class="learn-card-body">
+              The forest is dominated by cold-hardy <b>coniferous trees</b> — mainly spruce, pine, fir, and larch. In wetter zones, <b>black spruce</b> grows above thick carpets of <b>sphagnum moss</b>. Deciduous trees like <b>trembling aspen and paper birch</b> thrive after disturbances such as fire or logging.
+              <div class="learn-highlight">"The boreal is sometimes called 'Canada's Amazon' because of its enormous importance for biodiversity and climate regulation."</div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🌍</span>
+              <div class="learn-card-title">The World's Carbon Vault</div>
+            </div>
+            <div class="learn-card-body">
+              The boreal forest stores an estimated <b>208 billion tonnes of carbon</b> — more than the combined carbon in all the world's tropical rainforests. Much of this carbon is locked in the <b>deep peat soils</b> beneath the trees, accumulated over thousands of years. Protecting the boreal is one of the most powerful tools for fighting climate change.
+            </div>
+          </div>
+        </div>
+
+        <!-- ── CLIMATE ── -->
+        <div class="learn-section" id="learn-climate">
+          <div class="learn-hero">
+            <span class="learn-hero-emoji">❄️</span>
+            <div class="learn-hero-title">Climate &amp; Seasons</div>
+            <div class="learn-hero-body">The boreal forest has a <b>subarctic climate</b> — long, bitterly cold winters and short, warm summers. Temperatures can swing from <b>−40°C in winter</b> to <b>+30°C in summer</b>. Annual precipitation is relatively low (400–900 mm), much of it falling as snow.</div>
+          </div>
+          <div class="learn-stats-row">
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">6–8</div>
+              <div class="learn-stat-lbl">months of snow cover</div>
+            </div>
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">−40°C</div>
+              <div class="learn-stat-lbl">winter low</div>
+            </div>
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">130</div>
+              <div class="learn-stat-lbl">frost-free days / year</div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🌨️</span>
+              <div class="learn-card-title">Winter — The Long Dark</div>
+            </div>
+            <div class="learn-card-body">
+              Winter lasts up to <b>8 months</b> with little sunlight. Most animals have evolved remarkable strategies: wolves and lynx grow thick insulating coats; the <b>snowshoe hare</b> turns white for camouflage; black bears enter <b>hibernation</b>; and the <b>boreal chickadee</b> stores seeds in thousands of hiding spots to eat through the cold season.
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🌸</span>
+              <div class="learn-card-title">Spring &amp; Summer — The Burst of Life</div>
+            </div>
+            <div class="learn-card-body">
+              When snow melts in spring, the forest explodes with life. Billions of <b>insects hatch</b> from wetlands, providing food for migratory birds. <b>Wildflowers</b> race to bloom before the canopy closes. Bears emerge and feast on early sedges; calves and fawns are born; salmon runs begin in coastal rivers.
+              <div class="learn-highlight">The boreal forest hosts about <b>5 billion migratory birds</b> every summer — roughly 1 in 3 of all North American bird species breed here.</div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🔥</span>
+              <div class="learn-card-title">Fire — Nature's Reset Button</div>
+            </div>
+            <div class="learn-card-body">
+              The boreal is a "<b>fire-adapted ecosystem</b>." Lightning strikes naturally ignite <b>millions of hectares</b> of forest each decade. Fires recycle nutrients, open the canopy for new growth, and create the <b>mosaic of forest ages</b> that different species depend on. Lodgepole pine cones actually need the heat of a fire to open and release their seeds.
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🌡️</span>
+              <div class="learn-card-title">Climate Change Impact</div>
+            </div>
+            <div class="learn-card-body">
+              The boreal is warming at <b>2× the global average</b>. Longer, hotter fire seasons are burning more forest than can regrow. <b>Permafrost thaw</b> releases stored methane — a potent greenhouse gas — and destabilizes tree roots. Species ranges are shifting north as the climate changes.
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SPECIES ROLES ── -->
+        <div class="learn-section" id="learn-roles">
+          <div class="learn-hero">
+            <span class="learn-hero-emoji">🔗</span>
+            <div class="learn-hero-title">Species &amp; Their Roles</div>
+            <div class="learn-hero-body">Every organism in the boreal forest plays a role in a complex web of life. Energy flows from the sun → producers → primary consumers → secondary consumers → apex predators, then back into the soil through decomposers.</div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🌲</span>
+              <div class="learn-card-title">Producers (Plants &amp; Fungi)</div>
+            </div>
+            <div class="learn-card-body">Producers capture energy from the sun through photosynthesis and form the base of all food chains.</div>
+            <div class="role-grid">
+              <div class="role-chip"><span class="role-chip-emoji">🌲</span><div class="role-chip-info"><div class="role-chip-name">Black Spruce</div><div class="role-chip-role">Keystone tree; supports most of the boreal food web</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🍄</span><div class="role-chip-info"><div class="role-chip-name">Lichen</div><div class="role-chip-role">Vital caribou winter food; pioneer species on bare rock</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🫐</span><div class="role-chip-info"><div class="role-chip-name">Blueberry</div><div class="role-chip-role">Berry-producing shrub; food for bears, birds, and foxes</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🟢</span><div class="role-chip-info"><div class="role-chip-name">Sphagnum Moss</div><div class="role-chip-role">Creates peat bogs; stores vast amounts of carbon</div></div></div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🐇</span>
+              <div class="learn-card-title">Primary Consumers (Herbivores)</div>
+            </div>
+            <div class="learn-card-body">Primary consumers eat plants and are the essential link between producers and predators.</div>
+            <div class="role-grid">
+              <div class="role-chip"><span class="role-chip-emoji">🐇</span><div class="role-chip-info"><div class="role-chip-name">Snowshoe Hare</div><div class="role-chip-role">Most important prey species; drives lynx & fox populations</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🦫</span><div class="role-chip-info"><div class="role-chip-name">Beaver</div><div class="role-chip-role">Ecosystem engineer; dams create wetland habitat</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🦌</span><div class="role-chip-info"><div class="role-chip-name">Caribou</div><div class="role-chip-role">Long-distance migrators; graze on lichen under snow</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🫎</span><div class="role-chip-info"><div class="role-chip-name">Moose</div><div class="role-chip-role">Largest boreal deer; browses willows and aquatic plants</div></div></div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🦉</span>
+              <div class="learn-card-title">Secondary Consumers (Predators)</div>
+            </div>
+            <div class="learn-card-body">These predators keep herbivore populations in check, preventing overgrazing and maintaining forest health.</div>
+            <div class="role-grid">
+              <div class="role-chip"><span class="role-chip-emoji">🐺</span><div class="role-chip-info"><div class="role-chip-name">Gray Wolf</div><div class="role-chip-role">Apex pack hunter; shapes deer and caribou behaviour</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🐈</span><div class="role-chip-info"><div class="role-chip-name">Canada Lynx</div><div class="role-chip-role">Hare specialist; population cycles with snowshoe hare</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🦉</span><div class="role-chip-info"><div class="role-chip-name">Great Gray Owl</div><div class="role-chip-role">Hunts voles beneath snow using acute hearing</div></div></div>
+              <div class="role-chip"><span class="role-chip-emoji">🦊</span><div class="role-chip-info"><div class="role-chip-name">Red Fox</div><div class="role-chip-role">Flexible omnivore; controls rodent populations</div></div></div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🍂</span>
+              <div class="learn-card-title">Decomposers — Nature's Recyclers</div>
+            </div>
+            <div class="learn-card-body">
+              Fungi, bacteria, and invertebrates break down dead organic matter, returning nutrients to the soil. In the cold boreal, decomposition is slow — one reason why <b>peat accumulates</b> over centuries instead of breaking down. This slow decay is actually what makes the boreal such a massive carbon store.
+            </div>
+          </div>
+          <div class="learn-highlight">⚖️ <b>Trophic Cascade:</b> When wolves were removed from boreal/temperate forests, deer populations exploded, over-browsed plants, and caused widespread habitat loss — showing how a single apex predator can shape the entire ecosystem.</div>
+        </div>
+
+        <!-- ── THREATS ── -->
+        <div class="learn-section" id="learn-threats">
+          <div class="learn-hero">
+            <span class="learn-hero-emoji">⚠️</span>
+            <div class="learn-hero-title">Threats to the Boreal Forest</div>
+            <div class="learn-hero-body">Despite its vast size, the boreal forest faces serious and growing threats from human activity and climate change. Over <b>1 million hectares</b> of boreal forest are disturbed annually in Canada alone.</div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-body">
+              <div class="threat-row"><span class="threat-icon">🪓</span><div><div class="threat-title">Industrial Logging</div><div class="threat-desc">Large-scale clear-cutting removes entire forest stands, destroying complex old-growth habitat that takes centuries to develop. Logging roads also fragment the forest, isolating wildlife populations and allowing invasive species to spread.</div></div></div>
+              <div class="threat-row"><span class="threat-icon">🛢️</span><div><div class="threat-title">Oil Sands &amp; Mining</div><div class="threat-desc">In Alberta, Canada, the oil sands (tar sands) have converted hundreds of thousands of hectares of boreal forest into industrial sites. Mining operations leave tailings ponds toxic to wildlife and release greenhouse gases.</div></div></div>
+              <div class="threat-row"><span class="threat-icon">🌡️</span><div><div class="threat-title">Climate Change</div><div class="threat-desc">Warming temperatures bring longer fire seasons, more intense droughts, and pest outbreaks like the mountain pine beetle — which has killed billions of trees across western Canada and the US. Permafrost thaw destabilizes the soil and releases stored carbon, creating a dangerous feedback loop.</div></div></div>
+              <div class="threat-row"><span class="threat-icon">🚧</span><div><div class="threat-title">Habitat Fragmentation</div><div class="threat-desc">Roads, pipelines, and seismic lines (cut through forest for oil exploration) divide vast wilderness into smaller patches. Wolves and caribou avoid these linear features, effectively shrinking the usable habitat for sensitive species.</div></div></div>
+              <div class="threat-row"><span class="threat-icon">💧</span><div><div class="threat-title">Hydroelectric Dams</div><div class="threat-desc">Large dams flood boreal lowlands, destroying important wetland and forest habitat. They alter river hydrology, affecting fish migration and the many species that depend on river ecosystems.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── CONSERVATION ── -->
+        <div class="learn-section" id="learn-conservation">
+          <div class="learn-hero">
+            <span class="learn-hero-emoji">♻️</span>
+            <div class="learn-hero-title">Conservation &amp; Hope</div>
+            <div class="learn-hero-body">The good news: much of the boreal forest is still intact. Governments, Indigenous communities, and conservation organizations are working together to protect this irreplaceable ecosystem.</div>
+          </div>
+          <div class="learn-stats-row">
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">12%</div>
+              <div class="learn-stat-lbl">of Canada's boreal protected</div>
+            </div>
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">600+</div>
+              <div class="learn-stat-lbl">Indigenous nations as stewards</div>
+            </div>
+            <div class="learn-stat-pill">
+              <div class="learn-stat-num">50%</div>
+              <div class="learn-stat-lbl">protection target by 2030</div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🏕️</span>
+              <div class="learn-card-title">Indigenous Stewardship</div>
+            </div>
+            <div class="learn-card-body">
+              Indigenous peoples have lived in and cared for the boreal forest for <b>over 10,000 years</b>. Their traditional ecological knowledge is now recognized as essential to effective conservation. Many First Nations, Métis, and Inuit communities are leading <b>land-use planning processes</b> that balance resource use with long-term ecosystem health.
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🌐</span>
+              <div class="learn-card-title">The Boreal Forest Conservation Framework</div>
+            </div>
+            <div class="learn-card-body">
+              In 2003, a landmark agreement between industry, Indigenous communities, and conservation groups committed to a vision where at least <b>half of Canada's boreal</b> would be protected in large interconnected areas, while the rest would be managed using the highest environmental standards.
+              <div class="learn-highlight">Science suggests protecting at least <b>50% of the boreal forest</b> is necessary to maintain the full suite of its biodiversity and carbon storage functions.</div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-header">
+              <span class="learn-card-icon">🤝</span>
+              <div class="learn-card-title">What You Can Do</div>
+            </div>
+            <div class="learn-card-body">
+              <b>• Choose certified products</b> — look for FSC (Forest Stewardship Council) certification on paper and wood.<br><br>
+              <b>• Reduce your carbon footprint</b> — climate change is the biggest long-term threat to the boreal.<br><br>
+              <b>• Support Indigenous-led conservation</b> — donate to or raise awareness of First Nations land-protection efforts.<br><br>
+              <b>• Spread the word</b> — most people have never heard of the boreal forest. Share what you've learned here!
+            </div>
+          </div>
+        </div>
+
+        <!-- ── FAST FACTS ── -->
+        <div class="learn-section" id="learn-facts">
+          <div class="learn-hero">
+            <span class="learn-hero-emoji">💡</span>
+            <div class="learn-hero-title">Fast Facts</div>
+            <div class="learn-hero-body">Surprising and amazing facts about the world's largest land ecosystem — the boreal forest.</div>
+          </div>
+          <div class="fact-list">
+            <div class="fact-card"><div class="fact-num">1</div><div class="fact-text">The boreal forest covers <b>~17% of Earth's land surface</b> — an area roughly the size of Africa.</div></div>
+            <div class="fact-card"><div class="fact-num">2</div><div class="fact-text">It stores more carbon than <b>all of Earth's tropical rainforests combined</b>, mostly in its deep peat soils.</div></div>
+            <div class="fact-card"><div class="fact-num">3</div><div class="fact-text">About <b>5 billion birds</b> from over 300 species migrate to the boreal forest to breed each spring and summer.</div></div>
+            <div class="fact-card"><div class="fact-num">4</div><div class="fact-text">A single mature boreal tree can have <b>mycelium networks</b> (fungal threads) stretching hundreds of kilometres underground, connecting to dozens of other trees.</div></div>
+            <div class="fact-card"><div class="fact-num">5</div><div class="fact-text">The <b>snowshoe hare and Canada lynx</b> populations go through dramatic 10-year boom-and-bust cycles — one of the most famous examples of predator-prey dynamics in ecology.</div></div>
+            <div class="fact-card"><div class="fact-num">6</div><div class="fact-text">Beavers are called <b>"ecosystem engineers"</b> because their dams create ponds and wetlands used by hundreds of other species — from ducks to moose to dragonflies.</div></div>
+            <div class="fact-card"><div class="fact-num">7</div><div class="fact-text">The boreal forest produces an estimated <b>$700 billion USD worth</b> of ecosystem services annually — including clean water, carbon storage, and flood control.</div></div>
+            <div class="fact-card"><div class="fact-num">8</div><div class="fact-text">Sphagnum moss can hold <b>up to 20× its own weight in water</b>, acting as a natural sponge and helping regulate water flow in boreal landscapes.</div></div>
+            <div class="fact-card"><div class="fact-num">9</div><div class="fact-text">The boreal forest is warming at <b>twice the global average rate</b> due to climate change — the Arctic amplification effect.</div></div>
+            <div class="fact-card"><div class="fact-num">10</div><div class="fact-text">Some boreal peat deposits are <b>over 10,000 years old</b>, dating back to just after the last ice age.</div></div>
+            <div class="fact-card"><div class="fact-num">11</div><div class="fact-text">Gray wolves can travel <b>over 200 km in a single day</b> when following prey across the boreal landscape.</div></div>
+            <div class="fact-card"><div class="fact-num">12</div><div class="fact-text">The boreal forest accounts for about <b>30% of the world's fresh surface water</b>, held in its millions of lakes, rivers, and wetlands.</div></div>
+          </div>
+        </div>
+
+      </div><!-- end learn-content -->
+    </div><!-- end screen-learn -->
+
   <!-- Bottom Nav -->
   <div class="bottom-nav">
     <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">
@@ -943,6 +1290,10 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
     <button class="nav-btn" id="nav-foodweb" onclick="switchTab('foodweb')">
       <span class="nav-icon">🎮</span>
       <span>Games</span>
+    </button>
+    <button class="nav-btn" id="nav-learn" onclick="switchTab('learn')">
+      <span class="nav-icon">📚</span>
+      <span>Learn</span>
     </button>
   </div>
 
@@ -2541,6 +2892,20 @@ function resetChain() {
   document.getElementById('fwFeedback').classList.remove('show');
   document.getElementById('fwCheckBtn').classList.remove('success');
   document.getElementById('fwCheckBtn').textContent = '✓ Check Food Chain';
+}
+
+// ===== LEARN / ECOSYSTEM INFO =====
+let _learnContent = null;
+function showLearnSection(id, pillEl) {
+  const nav = document.getElementById('learnNav');
+  if (nav) nav.querySelectorAll('.learn-pill').forEach(p => p.classList.remove('active'));
+  const container = document.getElementById('screen-learn');
+  if (container) container.querySelectorAll('.learn-section').forEach(s => s.classList.remove('active'));
+  const section = document.getElementById('learn-' + id);
+  if (section) section.classList.add('active');
+  if (pillEl) pillEl.classList.add('active');
+  if (!_learnContent) _learnContent = document.querySelector('.learn-content');
+  if (_learnContent) _learnContent.scrollTop = 0;
 }
 
 // ===== TOAST =====
