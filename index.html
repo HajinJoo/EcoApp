@@ -2438,9 +2438,9 @@ function startDash() {
   const GND = H - 40;
   _dashState = {
     running: true, gameOver: false,
-    score: 0, frame: 0, speed: 3.5,
+    score: 0, frame: 0, speed: 2.0,
     lives: DASH_LIVES, invincible: 0,
-    nextSpeedUp: 360, nextObstacle: 100, nextBerry: 140,
+    nextSpeedUp: 540, nextObstacle: 100, nextBerry: 140,
     levelMsgTimer: 0,
     hare: { x: 65, y: GND, vy: 0, onGround: true, jumpsLeft: 2 },
     obstacles: [],
@@ -2487,8 +2487,8 @@ function _dashUpdate() {
 
   // Speed ramp
   if (s.frame >= s.nextSpeedUp) {
-    s.speed = Math.min(s.speed + 0.6, 14);
-    s.nextSpeedUp += Math.max(180, 380 - s.speed * 18);
+    s.speed = Math.min(s.speed + 0.4, 10);
+    s.nextSpeedUp += Math.max(240, 480 - s.speed * 18);
     const lvlEl = document.getElementById('dashLevelMsg');
     if (lvlEl) lvlEl.textContent = '⚡ Faster!';
     s.levelMsgTimer = 80;
@@ -2635,11 +2635,15 @@ function _dashRender(ctx) {
     ctx.fill();
   });
 
-  // Hare (with flash when invincible)
+  // Hare (with flash when invincible) — mirrored so it faces right (direction of travel)
   if (s.invincible === 0 || Math.floor(s.invincible / 5) % 2 === 0) {
     const bob = s.hare.onGround ? Math.sin(s.frame * 0.25) * 1.5 : 0;
     ctx.font = '32px serif';
-    ctx.fillText('🐇', s.hare.x, s.hare.y + 32 + bob);
+    ctx.save();
+    ctx.translate(s.hare.x + 32, 0);
+    ctx.scale(-1, 1);
+    ctx.fillText('🐇', 0, s.hare.y + 32 + bob);
+    ctx.restore();
   }
 
   // Score popups
