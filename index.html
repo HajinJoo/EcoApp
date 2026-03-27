@@ -360,6 +360,8 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 .zone-btn.zone-understory{border-color:rgba(129,199,132,.4);background:linear-gradient(135deg,rgba(46,125,50,.5),rgba(0,0,0,.3))}
 .zone-btn.zone-floor{border-color:rgba(161,136,127,.4);background:linear-gradient(135deg,rgba(78,52,46,.5),rgba(0,0,0,.3))}
 .zone-btn.zone-wetlands{border-color:rgba(100,181,246,.4);background:linear-gradient(135deg,rgba(21,101,192,.3),rgba(0,0,0,.3))}
+.zone-btn.zone-locked{opacity:.55;cursor:not-allowed;border-color:rgba(158,158,158,.3);background:rgba(0,0,0,.4)}
+.zone-btn.zone-locked:active{transform:none}
 
 /* ===== COLLECTION HEADER BADGE ===== */
 .col-header-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
@@ -1488,13 +1490,13 @@ const SPECIES = [
 
 const ZONES = [
   {id:'canopy',name:'Canopy Layer',emoji:'🌲',hint:'Treetops: spruce, pine, owls',
-   color:'#1b5e20',species:['black-spruce','white-spruce','jack-pine','balsam-fir','gray-owl','chickadee','spruce-budworm','bark-beetle']},
+   color:'#1b5e20',xpReq:0,species:['black-spruce','white-spruce','jack-pine','balsam-fir','gray-owl','chickadee','spruce-budworm','bark-beetle']},
   {id:'understory',name:'Understory Layer',emoji:'🌿',hint:'Shrubs, hares, grouse, bears',
-   color:'#2e7d32',species:['paper-birch','blueberry','labrador-tea','hare','black-bear','lynx','spruce-grouse']},
+   color:'#2e7d32',xpReq:50,species:['paper-birch','blueberry','labrador-tea','hare','black-bear','lynx','spruce-grouse']},
   {id:'floor',name:'Forest Floor',emoji:'🍂',hint:'Mosses, insects, small mammals',
-   color:'#4e342e',species:['sphagnum-moss','lichen','caribou','wolf','red-fox','pollinator','wood-ant']},
+   color:'#4e342e',xpReq:150,species:['sphagnum-moss','lichen','caribou','wolf','red-fox','pollinator','wood-ant']},
   {id:'wetlands',name:'Wetlands & Bogs',emoji:'💧',hint:'Beaver ponds, lakes, tamarack',
-   color:'#1565c0',species:['tamarack','moose','beaver','loon','dragonfly','mayfly']},
+   color:'#1565c0',xpReq:300,species:['tamarack','moose','beaver','loon','dragonfly','mayfly']},
 ];
 
 const QUIZ_QUESTIONS = [
@@ -2031,15 +2033,16 @@ function buildZones() {
   const grid = document.getElementById('zonesGrid');
   ZONES.forEach(zone => {
     const btn = document.createElement('button');
-    btn.className = 'zone-btn zone-' + zone.id;
+    const locked = state.xp < zone.xpReq;
+    btn.className = 'zone-btn zone-' + zone.id + (locked ? ' zone-locked' : '');
     btn.id = 'zone-' + zone.id;
     const discovered = zone.species.filter(id => state.discovered.has(id)).length;
     btn.innerHTML = `
-      <div class="zone-icon">${zone.emoji}</div>
+      <div class="zone-icon">${locked ? '🔒' : zone.emoji}</div>
       <div class="zone-info">
         <div class="zone-name">${zone.name}</div>
-        <div class="zone-hint">${zone.hint}</div>
-        <div class="zone-count">${discovered}/${zone.species.length} discovered</div>
+        <div class="zone-hint">${locked ? 'Requires ' + zone.xpReq + ' XP to unlock' : zone.hint}</div>
+        <div class="zone-count">${locked ? 'Locked' : discovered + '/' + zone.species.length + ' discovered'}</div>
       </div>
     `;
     btn.onclick = () => showZone(zone);
@@ -2048,6 +2051,10 @@ function buildZones() {
 }
 
 function showZone(zone) {
+  if (state.xp < zone.xpReq) {
+    showToast('🔒 Need ' + zone.xpReq + ' XP to explore ' + zone.name + '! (You have ' + state.xp + ' XP)');
+    return;
+  }
   document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('zone-' + zone.id).classList.add('selected');
   document.getElementById('panelZoneTitle').textContent = zone.emoji + ' ' + zone.name;
@@ -2121,9 +2128,21 @@ function refreshZoneCounts() {
   ZONES.forEach(zone => {
     const btn = document.getElementById('zone-' + zone.id);
     if (btn) {
-      const discovered = zone.species.filter(id => state.discovered.has(id)).length;
+      const locked = state.xp < zone.xpReq;
+      btn.className = 'zone-btn zone-' + zone.id + (btn.classList.contains('selected') ? ' selected' : '') + (locked ? ' zone-locked' : '');
+      const iconEl = btn.querySelector('.zone-icon');
+      const hintEl = btn.querySelector('.zone-hint');
       const countEl = btn.querySelector('.zone-count');
-      if (countEl) countEl.textContent = discovered + '/' + zone.species.length + ' discovered';
+      if (locked) {
+        if (iconEl) iconEl.textContent = '🔒';
+        if (hintEl) hintEl.textContent = 'Requires ' + zone.xpReq + ' XP to unlock';
+        if (countEl) countEl.textContent = 'Locked';
+      } else {
+        const discovered = zone.species.filter(id => state.discovered.has(id)).length;
+        if (iconEl) iconEl.textContent = zone.emoji;
+        if (hintEl) hintEl.textContent = zone.hint;
+        if (countEl) countEl.textContent = discovered + '/' + zone.species.length + ' discovered';
+      }
     }
   });
 }
