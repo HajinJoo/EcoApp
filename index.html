@@ -517,10 +517,56 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 .fact-num{font-size:11px;font-weight:900;color:#4caf50;background:rgba(76,175,80,.15);border-radius:8px;padding:3px 7px;flex-shrink:0;margin-top:1px;min-width:24px;text-align:center}
 .fact-text{font-size:13px;color:#c8e6c9;line-height:1.55}
 .fact-text b{color:#e8f5e9}
+
+/* ===== SPLASH LOADER (app startup) ===== */
+.splash-loader{position:absolute;inset:0;background:#0a1a0c;z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:44px;transition:opacity .6s ease;pointer-events:all}
+.splash-loader.hiding{opacity:0;pointer-events:none}
+.splash-loader.gone{display:none}
+.splash-leaves{display:flex;gap:10px;font-size:24px;margin-bottom:10px;animation:splashLeaveFloat 1.6s ease-in-out infinite alternate}
+@keyframes splashLeaveFloat{from{transform:translateY(0) rotate(-3deg)}to{transform:translateY(-10px) rotate(3deg)}}
+.splash-logo{font-size:78px;animation:splashLogoSway 2s ease-in-out infinite alternate;margin-bottom:6px}
+@keyframes splashLogoSway{0%{transform:scale(1) rotate(-6deg)}50%{transform:scale(1.1) rotate(0deg)}100%{transform:scale(1.05) rotate(6deg)}}
+.splash-title{font-size:28px;font-weight:900;color:#e8f5e9;letter-spacing:3px;text-transform:uppercase}
+.splash-tagline{font-size:13px;color:#66bb6a;margin-top:4px;margin-bottom:24px;letter-spacing:.5px;opacity:.85}
+.splash-bar-wrap{width:180px;height:6px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden}
+.splash-bar{height:100%;width:0%;background:linear-gradient(90deg,#2d5a27,#4caf50,#b2ff59);border-radius:6px;animation:splashFill 2.2s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes splashFill{0%{width:0%}60%{width:70%}85%{width:88%}100%{width:100%}}
+.splash-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:44px}
+.sp{position:absolute;font-size:18px;animation:spFloat linear infinite;opacity:.55}
+@keyframes spFloat{0%{transform:translateY(120%) rotate(0deg);opacity:0}10%{opacity:.6}90%{opacity:.5}100%{transform:translateY(-20%) rotate(360deg);opacity:0}}
+
+/* ===== GAME LOADER (per-game) ===== */
+.game-loader{position:absolute;inset:0;background:rgba(8,20,10,.97);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .4s ease;pointer-events:all}
+.game-loader.hiding{opacity:0;pointer-events:none}
+.game-loader.gone{display:none}
+.gl-ring{width:90px;height:90px;position:relative;display:flex;align-items:center;justify-content:center}
+.gl-ring::before,.gl-ring::after{content:'';position:absolute;border-radius:50%;border:3px solid transparent}
+.gl-ring::before{inset:0;border-top-color:#4caf50;border-right-color:#4caf50;animation:glSpin 1s linear infinite}
+.gl-ring::after{inset:8px;border-bottom-color:#b2ff59;border-left-color:#b2ff59;animation:glSpin .7s linear infinite reverse}
+@keyframes glSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.gl-icon{font-size:44px;animation:glIconPop .9s ease-in-out infinite alternate}
+@keyframes glIconPop{from{transform:scale(.9)}to{transform:scale(1.12)}}
+.gl-label{font-size:16px;font-weight:800;color:#e8f5e9;letter-spacing:.5px}
+.gl-dots{display:flex;gap:8px;margin-top:2px}
+.gl-dots span{width:8px;height:8px;border-radius:50%;background:#4caf50;animation:glDot 1.1s ease-in-out infinite}
+.gl-dots span:nth-child(2){animation-delay:.18s;background:#66bb6a}
+.gl-dots span:nth-child(3){animation-delay:.36s;background:#b2ff59}
+@keyframes glDot{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.5);opacity:1}}
 </style>
 </head>
 <body>
 <div class="phone-wrap" id="phone">
+
+  <!-- App Startup Splash -->
+  <div class="splash-loader" id="splashLoader">
+    <div class="splash-particles" id="splashParticles"></div>
+    <div class="splash-leaves">🍃 🌿 🍃 🌲 🍃</div>
+    <div class="splash-logo">🌲</div>
+    <div class="splash-title">BorealQuest</div>
+    <div class="splash-tagline">Discover the Boreal Forest</div>
+    <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
+  </div>
+
   <!-- Status Bar -->
   <div class="status-bar">
     <div class="status-time" id="statusTime">9:41</div>
@@ -535,6 +581,13 @@ html,body{height:100%;background:#0d1f0f;font-family:'Segoe UI',system-ui,sans-s
 
   <!-- Screens -->
   <div class="screens">
+
+    <!-- Per-game / per-screen loader -->
+    <div class="game-loader gone" id="gameLoader">
+      <div class="gl-ring"><div class="gl-icon" id="glIcon">🌲</div></div>
+      <div class="gl-label" id="glLabel">Loading…</div>
+      <div class="gl-dots"><span></span><span></span><span></span></div>
+    </div>
 
     <!-- HOME -->
     <div class="screen active" id="screen-home">
@@ -1641,12 +1694,69 @@ function init() {
   updateDashHUD();
   rotateFunFact();
   setInterval(rotateFunFact, 8000);
+  showSplash();
 }
 
 function updateClock() {
   const now = new Date();
   document.getElementById('statusTime').textContent =
     now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+}
+
+// ===== SPLASH SCREEN =====
+function showSplash() {
+  const el = document.getElementById('splashLoader');
+  // Scatter floating particles (clear any previous run to avoid duplicates)
+  const particles = document.getElementById('splashParticles');
+  particles.innerHTML = '';
+  const emojis = ['🍃','🌿','❄️','🦊','🌲','🐇','⭐','🍂','🌾'];
+  for (let i = 0; i < 14; i++) {
+    const sp = document.createElement('span');
+    sp.className = 'sp';
+    sp.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    sp.style.left = (Math.random() * 100) + '%';
+    sp.style.animationDuration = (4 + Math.random() * 6) + 's';
+    sp.style.animationDelay = (Math.random() * 4) + 's';
+    particles.appendChild(sp);
+  }
+  // Dismiss after 2.6 seconds
+  setTimeout(() => {
+    el.classList.add('hiding');
+    setTimeout(() => el.classList.add('gone'), 650);
+  }, 2600);
+}
+
+// ===== GAME LOADER =====
+const GAME_LOADER_INFO = {
+  quiz:    { icon: '🧠', label: 'Loading Quiz…'         },
+  foodweb: { icon: '🎮', label: 'Opening Games Hub…'    },
+  explore: { icon: '🗺️', label: 'Entering the Forest…'  },
+  collection: { icon: '📖', label: 'Opening Collection…' },
+  learn:   { icon: '📚', label: 'Opening Study Zone…'    },
+  dash:    { icon: '🐇', label: 'Loading Forest Dash…'  },
+  memory:  { icon: '🧩', label: 'Loading Memory Match…' },
+  chain:   { icon: '🔗', label: 'Loading Food Chain…'   },
+  sorter:  { icon: '♻️', label: 'Loading Eco Sorter…'   },
+};
+let _glHideTimer = null;
+let _glGoneTimer = null;
+
+function showGameLoader(key, callback, duration) {
+  // Cancel any in-flight hide timers to prevent race conditions
+  if (_glHideTimer) { clearTimeout(_glHideTimer); _glHideTimer = null; }
+  if (_glGoneTimer) { clearTimeout(_glGoneTimer); _glGoneTimer = null; }
+  const info = GAME_LOADER_INFO[key] || { icon: '🌲', label: 'Loading…' };
+  const el = document.getElementById('gameLoader');
+  document.getElementById('glIcon').textContent = info.icon;
+  document.getElementById('glLabel').textContent = info.label;
+  el.classList.remove('gone', 'hiding');
+  const ms = duration || 1200;
+  _glHideTimer = setTimeout(() => {
+    _glHideTimer = null;
+    if (callback) callback();
+    el.classList.add('hiding');
+    _glGoneTimer = setTimeout(() => { _glGoneTimer = null; el.classList.add('gone'); }, 420);
+  }, ms);
 }
 
 function buildStars() {
@@ -1904,6 +2014,11 @@ function switchTab(tab, noHistory) {
   if (tab === 'collection') refreshCollection();
   if (tab === 'quiz') updateQuizStats();
   if (tab === 'foodweb') updateDashHUD();
+  // Show loader for game/content screens (not home, not when navigating back quickly)
+  const loaderTabs = ['quiz','foodweb','explore','collection','learn'];
+  if (!noHistory && loaderTabs.includes(tab)) {
+    showGameLoader(tab, null, 1100);
+  }
 }
 
 function goBack() {
@@ -2245,10 +2360,12 @@ function openGame(id) {
   const screenId = map[id];
   if (screenId) document.getElementById(screenId).style.display = 'block';
   _currentGame = id;
+  // Init game during the loading screen so it's ready when loader fades out
   if (id === 'dash') initForestDash();
   if (id === 'memory') initMemoryGame();
   if (id === 'chain') { buildFoodWeb(); }
   if (id === 'sorter') initSorterGame();
+  showGameLoader(id, null, 1400);
 }
 
 function closeGame() {
