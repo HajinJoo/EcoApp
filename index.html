@@ -2461,7 +2461,7 @@ function startDash() {
 function _dashDoJump() {
   if (!_dashState || _dashState.gameOver) return;
   if (_dashState.hare.jumpsLeft > 0) {
-    _dashState.hare.vy = -11.5;
+    _dashState.hare.vy = -9.5;
     _dashState.hare.onGround = false;
     _dashState.hare.jumpsLeft--;
   }
@@ -2504,7 +2504,7 @@ function _dashUpdate() {
   // Hare physics
   const GND = s.GND;
   if (!s.hare.onGround) {
-    s.hare.vy += 0.65;
+    s.hare.vy += 0.38;
     s.hare.y += s.hare.vy;
     if (s.hare.y >= GND) {
       s.hare.y = GND; s.hare.onGround = true;
